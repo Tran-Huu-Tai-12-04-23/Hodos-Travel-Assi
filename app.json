@@ -1,0 +1,61 @@
+{
+  "expo": {
+    "name": "travelsupporapp",
+    "slug": "travel-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/logo.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "enable": true,
+      "fallbackToCacheTimeout": 0,
+      "checkAutomatically": "ON_ERROR_RECOVERY",
+      "url": "https://u.expo.dev/7ca8040c-4f7a-4f44-9f3f-3034df13569e"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "y"
+    },
+    "android": {
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCwODDdAAlVuYb27NKf_vp0Vow4wRANZ6o"
+        }
+      },
+      "package": "com.travel.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "plugins": [
+      "expo-font",
+      [
+        "@react-native-voice/voice",
+        {
+          "microphonePermission": "Allow travel app to access your microphone",
+          "speechRecogntionPermission": "Allow travel app to securely recognize user speech"
+        }
+      ]
+    ],
+    "web": {
+      "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7ca8040c-4f7a-4f44-9f3f-3034df13569e"
+      }
+    },
+    "owner": "huutaidev2",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    }
+  }
+}
