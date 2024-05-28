@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import ImgBackgroundLayout from "@layout/ImgBackgroundLayout";
 import CustomHeader from "@navigation/CustomHeader";
 import Container from "@components/Container";
@@ -25,7 +25,7 @@ export default function LoginScreen() {
   const { isLoading, data, onLogin } = useLogin();
   const [input, setInput] = useState({
     username: "huutai123",
-    password: "huutai",
+    password: "123",
   });
 
   const handleChangeInput = (key: string, value: string) => {

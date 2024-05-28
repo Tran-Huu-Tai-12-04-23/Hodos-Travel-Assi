@@ -9,14 +9,15 @@ import MainLayout from "@layout/MainLayout";
 import { goBack } from "@navigation/NavigationService";
 import { localImages } from "assets/localImage";
 import React, { useState } from "react";
-import { FlatList, TouchableOpacity, View } from "react-native";
-import { ActivityIndicator, Chip } from "react-native-paper";
+import { FlatList, TouchableOpacity } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 import { styleGlobal } from "src/styles";
-import { debounce, head } from "lodash";
+import { debounce } from "lodash";
 import LocationItem from "@components/LocationItem";
 import { deviceWidth } from "@helper/utils";
 import usePaginationSearch from "@hooks/api/feature/usePaginationSearch";
 import FoodItem from "@components/FoodItem";
+import { useRoute } from "@react-navigation/native";
 
 export enum SEARCH_TYPE {
   ALL = "ALL",
@@ -43,8 +44,12 @@ const filters = [
 ];
 
 function SearchLocation() {
+  const { params } = useRoute();
+  const { query } = params as {
+    query: string;
+  };
   const [isLoading, setIsLoading] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(query || "");
   const [typeSearch, setTypeSearch] = useState<SEARCH_TYPE>(SEARCH_TYPE.ALL);
   const debouncedOnChangeText = debounce((text: string) => {
     setIsLoading(false);
@@ -121,6 +126,7 @@ function SearchLocation() {
           />
         </TouchableOpacity>
         <TextInputCustom
+          value={searchQuery}
           onChangeText={handleTextChange}
           flex={8}
           placeholder="Where do you go?"

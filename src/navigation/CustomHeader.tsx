@@ -6,6 +6,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { goBack } from "./NavigationService";
 import {
   blackColor,
+  inputColor,
   mainBg,
   primaryColor,
   whiteColor,
@@ -49,7 +50,7 @@ function CustomHeader({ title, style, isBack = true }: PropsType) {
               {
                 borderRadius: 100,
                 flex: 5,
-                backgroundColor: whiteColor,
+                backgroundColor: inputColor,
                 height: 40,
                 width: 40,
                 padding: 20,

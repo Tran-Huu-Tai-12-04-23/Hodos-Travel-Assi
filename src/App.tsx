@@ -15,28 +15,12 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ModalProvider from "@context/ModalContext";
 import BottomSheetProvider from "@context/BottomSheetContext";
 import { AlertNotificationRoot } from "react-native-alert-notification";
-import * as Updates from "expo-updates";
 import { UserLocationProvider } from "@context/userLocationContext";
 const queryClient = new QueryClient();
 
 export default function App() {
   const isLoadingComplete = useLoadedAssets();
-  useEffect(() => {
-    const checkForUpdates = async () => {
-      try {
-        const update = await Updates.checkForUpdateAsync();
 
-        if (update.isAvailable) {
-          await Updates.fetchUpdateAsync();
-          await Updates.reloadAsync();
-        }
-      } catch (error) {
-        console.error("Error checking for updates:", error);
-      }
-    };
-
-    checkForUpdates();
-  }, []);
   if (!isLoadingComplete) {
     return null;
   } else {

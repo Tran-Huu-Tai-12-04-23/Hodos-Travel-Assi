@@ -1,61 +1,61 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-import * as Font from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-import React from 'react';
+import Ionicons from "@expo/vector-icons/Ionicons";
+import * as Font from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
+import React from "react";
+import * as Updates from "expo-updates";
 
 export function useLoadedAssets() {
-   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
+  const [isLoadingComplete, setLoadingComplete] = React.useState(false);
 
-   // Load any resources or data that we need prior to rendering the app
-   React.useEffect(() => {
-      async function loadResourcesAndDataAsync() {
-         try {
-            SplashScreen.preventAutoHideAsync();
-
-            // Load fonts
-            await Font.loadAsync(Ionicons.font);
-         } catch (e) {
-            // We might want to provide this error information to an error reporting service
-            console.warn(e);
-         } finally {
-            setLoadingComplete(true);
-            SplashScreen.hideAsync();
-         }
+  // Load any resources or data that we need prior to rendering the app
+  React.useEffect(() => {
+    async function loadResourcesAndDataAsync() {
+      try {
+        SplashScreen.preventAutoHideAsync();
+        // Load fonts
+        await Font.loadAsync(Ionicons.font);
+      } catch (e) {
+        // We might want to provide this error information to an error reporting service
+        console.warn(e);
+      } finally {
+        setLoadingComplete(true);
+        SplashScreen.hideAsync();
       }
+    }
 
-      loadResourcesAndDataAsync();
-   }, []);
+    loadResourcesAndDataAsync();
+  }, []);
 
-   React.useEffect(() => {
-      const initAppUpdate = async () => {
-         try {
-            const update = await Updates.checkForUpdateAsync();
-            if (update.isAvailable) {
-               await Updates.fetchUpdateAsync();
-               await Updates.reloadAsync();
-            }
-         } catch (e) {}
-      };
+  React.useEffect(() => {
+    const initAppUpdate = async () => {
+      try {
+        const update = await Updates.checkForUpdateAsync();
+        if (update.isAvailable) {
+          await Updates.fetchUpdateAsync();
+          await Updates.reloadAsync();
+        }
+      } catch (e) {}
+    };
 
-      initAppUpdate();
-   }, []);
+    initAppUpdate();
+  }, []);
 
-   React.useEffect(() => {
-      const update = async () => {
-         try {
-            const update = await Updates.checkForUpdateAsync();
-            if (update.isAvailable) {
-               await Updates.fetchUpdateAsync();
-               // ... thông báo cho người dùng về bản cập nhật ...
-               await Updates.reloadAsync();
-            }
-         } catch (e) {
-            console.log(e);
-         }
-      };
+  React.useEffect(() => {
+    const update = async () => {
+      try {
+        const update = await Updates.checkForUpdateAsync();
+        if (update.isAvailable) {
+          await Updates.fetchUpdateAsync();
+          alert("An update is available now, the device is updating... ");
+          await Updates.reloadAsync();
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
 
-      update();
-   }, []);
+    update();
+  }, []);
 
-   return isLoadingComplete;
+  return isLoadingComplete;
 }

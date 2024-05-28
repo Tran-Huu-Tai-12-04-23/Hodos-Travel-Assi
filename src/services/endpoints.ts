@@ -20,4 +20,7 @@ export default {
   SEARCH_ANY: "feature/search_any",
   SEARCH_FOOD: "feature/food/search",
   SEARCH_LOCATION: "feature/location/search",
+
+  //
+  TRANSLATE: "feature/translate",
 };

@@ -43,6 +43,14 @@
           "microphonePermission": "Allow travel app to access your microphone",
           "speechRecogntionPermission": "Allow travel app to securely recognize user speech"
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
       ]
     ],
     "web": {

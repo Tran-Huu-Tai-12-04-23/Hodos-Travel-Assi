@@ -5,6 +5,7 @@ import TextDefault from "./TextDefault";
 import Row from "./Row";
 import { btnPrimary, whiteColor } from "@constants/Colors";
 import ButtonCustom from "./ButtonCustom";
+import { styleGlobal } from "src/styles";
 
 type CustomModalProps = {
   children?: React.ReactNode;
@@ -25,8 +26,8 @@ const CustomModal = ({
   onAccept,
   title,
   content,
-  nameBtnCancel = "Quay lại",
-  nameBtnConfirm = "Xác nhận",
+  nameBtnCancel,
+  nameBtnConfirm,
 }: CustomModalProps) => {
   return (
     <Modal
@@ -56,28 +57,38 @@ const CustomModal = ({
         )}
         {content && content}
         {children}
-        <Row full center colGap={20} style={{ paddingTop: 20 }}>
-          {onReject && (
-            <TouchableOpacity onPress={onReject} style={styles.btnCancel}>
-              <TextDefault
-                style={{
-                  color: "red",
-                }}
+        {!nameBtnCancel && !nameBtnConfirm && (
+          <Row full center colGap={20} style={{ paddingTop: 20 }}>
+            {onReject && nameBtnCancel && (
+              <TouchableOpacity
+                onPress={onReject}
+                style={styleGlobal.btnCancel}
               >
-                {nameBtnCancel}
-              </TextDefault>
-            </TouchableOpacity>
-          )}
-          <TouchableOpacity style={styles.btnAccept} onPress={onAccept}>
-            <TextDefault
-              style={{
-                color: whiteColor,
-              }}
-            >
-              {nameBtnConfirm}
-            </TextDefault>
-          </TouchableOpacity>
-        </Row>
+                <TextDefault
+                  style={{
+                    color: "red",
+                  }}
+                >
+                  {nameBtnCancel}
+                </TextDefault>
+              </TouchableOpacity>
+            )}
+            {nameBtnConfirm && (
+              <TouchableOpacity
+                style={styleGlobal.btnAccept}
+                onPress={onAccept}
+              >
+                <TextDefault
+                  style={{
+                    color: whiteColor,
+                  }}
+                >
+                  {nameBtnConfirm}
+                </TextDefault>
+              </TouchableOpacity>
+            )}
+          </Row>
+        )}
       </Row>
     </Modal>
   );
@@ -86,28 +97,6 @@ const CustomModal = ({
 export default CustomModal;
 
 const styles = StyleSheet.create({
-  btnAccept: {
-    width: 100,
-    borderRadius: 10,
-    backgroundColor: btnPrimary,
-    padding: 10,
-    textAlign: "center",
-    alignContent: "center",
-    justifyContent: "center",
-    alignItems: "center",
-    fontWeight: "800",
-  },
-  btnCancel: {
-    width: 100,
-    borderRadius: 10,
-    padding: 10,
-    textAlign: "center",
-    alignContent: "center",
-    alignItems: "center",
-    justifyContent: "center",
-    color: whiteColor,
-    fontWeight: "800",
-  },
   container: {
     backgroundColor: "white",
     paddingHorizontal: 30,

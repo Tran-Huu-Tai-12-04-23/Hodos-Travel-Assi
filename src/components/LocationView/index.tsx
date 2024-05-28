@@ -2,27 +2,14 @@ import ButtonCustom from "@components/ButtonCustom";
 import Icon from "@components/Icon";
 import Row from "@components/Row";
 import TextDefault from "@components/TextDefault";
-import {
-  blackColor,
-  borderColor,
-  btnPrimary,
-  hightLightColor,
-  primaryColor,
-  secondaryColor,
-  whiteColor,
-} from "@constants/Colors";
-import { navigate } from "@navigation/NavigationService";
-import { ROUTE_KEY } from "@navigation/route";
+import { btnPrimary, whiteColor } from "@constants/Colors";
 import { localImages } from "assets/localImage";
-import React, { memo, useCallback, useMemo, useRef } from "react";
-import { Image, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import React, { memo, useCallback } from "react";
 import { styleGlobal } from "src/styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useBottomSheet } from "@context/BottomSheetContext";
 import { ILocation } from "src/Models/location.model";
 import ImageCustom from "@components/ImageCustom";
-import { deviceWidth } from "@helper/utils";
 
 type PropsType = {
   data: ILocation;

@@ -1,7 +1,34 @@
-import { borderColor, btnPrimary, labelColor } from "@constants/Colors";
+import {
+  borderColor,
+  btnPrimary,
+  labelColor,
+  whiteColor,
+} from "@constants/Colors";
 import { StyleSheet } from "react-native";
 
 export const styleGlobal = StyleSheet.create({
+  btnAccept: {
+    width: 100,
+    borderRadius: 10,
+    backgroundColor: btnPrimary,
+    padding: 10,
+    textAlign: "center",
+    alignContent: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    fontWeight: "800",
+  },
+  btnCancel: {
+    width: 100,
+    borderRadius: 10,
+    padding: 10,
+    textAlign: "center",
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    color: whiteColor,
+    fontWeight: "800",
+  },
   point: {
     padding: 8,
     borderRadius: 100,

@@ -81,7 +81,7 @@ function DetailLocationScreen() {
       }}
     >
       <CustomHeader title={""} />
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 10 }}>
         <Row style={{ height: 300 }} full>
           <SlideImage
             images={lstImgs}
@@ -209,7 +209,7 @@ function DetailLocationScreen() {
         colGap={20}
         style={[
           styleGlobal.shadowForce,
-          { padding: 14, backgroundColor: mainBg },
+          { backgroundColor: mainBg, flex: 0.1, marginBottom: 50 },
         ]}
       >
         <ButtonCustom

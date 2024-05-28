@@ -17,7 +17,6 @@ import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
 import * as Location from "expo-location";
 import { Toast } from "react-native-alert-notification";
 import { useUserLocation } from "@context/userLocationContext";
-
 type PropsType = {};
 function MyPager({}: PropsType) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -200,14 +199,14 @@ export default function IntroScreen() {
           },
           (position) => {
             if (position.coords)
-              setUserLocation({
+              // setUserLocation({
+              //   latitude: position.coords.latitude,
+              //   longitude: position.coords.longitude,
+              // });
+              console.log("========================User position changed:", {
                 latitude: position.coords.latitude,
                 longitude: position.coords.longitude,
               });
-            console.log("========================User position changed:", {
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
-            });
           }
         );
       } catch (err) {
@@ -222,7 +221,6 @@ export default function IntroScreen() {
 
   return (
     <MainLayout>
-      <TextDefault>{process.env.EXPO_PUBLIC_LINK_API}</TextDefault>
       <MyPager />
     </MainLayout>
   );
