@@ -1,31 +1,27 @@
-import React, { useState } from "react";
+import ButtonCustom from "@components/ButtonCustom";
+import Container from "@components/Container";
+import PasswordInputCustom from "@components/PasswordInputCustom";
+import Row from "@components/Row";
+import Separator from "@components/Separator";
+import TextDefault from "@components/TextDefault";
+import TextInputCustom from "@components/TextInputCustom";
+import Title from "@components/Title";
+import { btnPrimary, primaryColor } from "@constants/Colors";
+import useLogin from "@hooks/api/auth/useLogin";
 import ImgBackgroundLayout from "@layout/ImgBackgroundLayout";
 import CustomHeader from "@navigation/CustomHeader";
-import Container from "@components/Container";
-import Row from "@components/Row";
-import Title from "@components/Title";
-import Separator from "@components/Separator";
-import TextInputCustom from "@components/TextInputCustom";
-import PasswordInputCustom from "@components/PasswordInputCustom";
-import { styleGlobal } from "src/styles";
-import { ScrollView, View } from "react-native";
-import ButtonCustom from "@components/ButtonCustom";
-import TextDefault from "@components/TextDefault";
-import { btnPrimary, primaryColor } from "@constants/Colors";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import Animated, { FadeInDown } from "react-native-reanimated";
 import { navigate } from "@navigation/NavigationService";
 import { ROUTE_KEY } from "@navigation/route";
-import BtnLoginWithGoogle from "./BtnLoginWithGoogle";
-import useLogin from "@hooks/api/auth/useLogin";
-import { useLoading } from "@context/loadingGlobalContext";
+import React, { useState } from "react";
+import { ScrollView } from "react-native";
 import { ALERT_TYPE, Toast } from "react-native-alert-notification";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { styleGlobal } from "src/styles";
 export default function LoginScreen() {
-  const { startLoading, stopLoading } = useLoading();
   const { isLoading, data, onLogin } = useLogin();
   const [input, setInput] = useState({
-    username: "huutai123",
-    password: "123",
+    username: "",
+    password: "",
   });
 
   const handleChangeInput = (key: string, value: string) => {
@@ -70,26 +66,16 @@ export default function LoginScreen() {
             rowGap={20}
           >
             <Title style={{ fontSize: 40 }}>Login</Title>
-            <Animated.View
-              style={{ width: "100%" }}
-              entering={FadeInDown.delay(100).springify()}
-            >
-              <TextInputCustom
-                value={input.username}
-                onChangeText={(text) => handleChangeInput("username", text)}
-                label="Username"
-              />
-            </Animated.View>
-            <Animated.View
-              style={{ width: "100%" }}
-              entering={FadeInDown.delay(200).springify()}
-            >
-              <PasswordInputCustom
-                value={input.password}
-                onChangeText={(text) => handleChangeInput("password", text)}
-                label="Password"
-              />
-            </Animated.View>
+            <TextInputCustom
+              value={input.username}
+              onChangeText={(text) => handleChangeInput("username", text)}
+              label="Username"
+            />
+            <PasswordInputCustom
+              value={input.password}
+              onChangeText={(text) => handleChangeInput("password", text)}
+              label="Password"
+            />
             <Row center full>
               <TouchableOpacity>
                 <TextDefault style={{ color: btnPrimary, textAlign: "center" }}>
@@ -98,18 +84,16 @@ export default function LoginScreen() {
               </TouchableOpacity>
             </Row>
             <Row full center>
-              <Animated.View entering={FadeInDown.delay(200).springify()}>
-                <ButtonCustom
-                  isLoading={isLoading}
-                  bold
-                  mode="contained"
-                  full
-                  style={{ padding: 14, width: 200 }}
-                  primary
-                  title="LOGIN"
-                  onPress={handleLogin}
-                />
-              </Animated.View>
+              <ButtonCustom
+                isLoading={isLoading}
+                bold
+                mode="contained"
+                full
+                style={{ padding: 14, width: 200 }}
+                primary
+                title="LOGIN"
+                onPress={handleLogin}
+              />
             </Row>
             <Row center full colGap={10}>
               <TextDefault style={[styleGlobal.label]}>
@@ -122,33 +106,17 @@ export default function LoginScreen() {
               </TouchableOpacity>
             </Row>
             <Separator height={20} />
-            <Animated.View
-              style={{ width: "100%" }}
-              entering={FadeInDown.delay(300).springify()}
-            >
-              <Row center full colGap={10}>
-                <View
-                  style={{
-                    width: "30%",
-                    height: 1,
-                    backgroundColor: "#B3B3B3",
-                  }}
-                ></View>
-                <TextDefault bold style={styleGlobal.label}>
-                  Sign In With
-                </TextDefault>
-                <View
-                  style={{
-                    width: "30%",
-                    height: 1,
-                    backgroundColor: "#B3B3B3",
-                  }}
-                ></View>
-              </Row>
-            </Animated.View>
-
-            <Separator height={20} />
-            <BtnLoginWithGoogle />
+          </Row>
+          <Row full direction="column">
+            <TextDefault>
+              Version: <TextDefault bold>1.0.0</TextDefault>
+            </TextDefault>
+            <TextDefault>
+              Environment: <TextDefault bold>Develop</TextDefault>
+            </TextDefault>
+            <TextDefault>
+              UpdateAt: <TextDefault bold>5:33 Am 1/6/2024</TextDefault>
+            </TextDefault>
           </Row>
         </Container>
       </ScrollView>

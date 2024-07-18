@@ -25,8 +25,8 @@ interface PropsType {
 }
 export const UserLocationProvider = ({ children }: PropsType) => {
   const [userLocation, setUserLocation] = useState({
-    latitude: 10.743321644716596,
-    longitude: 106.68507499797778,
+    latitude: -1,
+    longitude: -1,
   });
 
   return (

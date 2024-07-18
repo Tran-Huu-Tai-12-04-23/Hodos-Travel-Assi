@@ -18,16 +18,7 @@ function FoodSchedule({
   data: {
     from: IFood;
     to: IFood;
-    distance: {
-      distanceInKilometers: {
-        value: number;
-        text: string;
-      };
-      estimateTime: {
-        value: number;
-        text: string;
-      };
-    };
+    distance: any;
   };
 }) {
   const { from, to, distance } = data;
@@ -37,7 +28,14 @@ function FoodSchedule({
   }, [to]);
   return (
     <Row start direction="column" style={[{ borderRadius: 30 }]}>
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity
+        onPress={() => {
+          navigate(ROUTE_KEY.DETAIL_FOOD, {
+            _id: to._id,
+            distanceIF: distance,
+          });
+        }}
+      >
         <ImageCustom
           link={thumbnails()}
           style={{ borderRadius: 10, width: deviceWidth - 80, height: 120 }}
@@ -70,14 +68,11 @@ function FoodSchedule({
               {vndToUsd(to?.rangePrice[1] ?? 0) + "$"}{" "}
             </TextDefault>
           </Row>
-          <Row colGap={20}>
+          {distance && (
             <TextDefault bold>
-              {distance && distance.distanceInKilometers?.text}
+              {distance?.distanceInKilometers + "kms"}
             </TextDefault>
-            <TextDefault style={{ color: hightLightColor }} bold>
-              {distance && distance.estimateTime?.text}
-            </TextDefault>
-          </Row>
+          )}
         </Row>
 
         <Separator height={10} />

@@ -15,6 +15,7 @@ import { styleGlobal } from "src/styles";
 import Icon from "@components/Icon";
 import ButtonCustom from "@components/ButtonCustom";
 import { SafeAreaView } from "react-native";
+import { deviceHeight } from "@helper/utils";
 
 type PropsType = {
   title?: string;
@@ -27,7 +28,7 @@ function CustomHeader({ title, style, isBack = true }: PropsType) {
       style={{
         paddingHorizontal: 10,
         minHeight: 50,
-        top: 10,
+        top: deviceHeight * 0.03,
         position: "absolute",
         zIndex: 1000,
         ...style,

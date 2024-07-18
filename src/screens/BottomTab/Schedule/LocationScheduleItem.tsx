@@ -3,7 +3,6 @@ import ImageCustom from "@components/ImageCustom";
 import Row from "@components/Row";
 import Separator from "@components/Separator";
 import TextDefault from "@components/TextDefault";
-import { hightLightColor } from "@constants/Colors";
 import { deviceWidth } from "@helper/utils";
 import { navigate } from "@navigation/NavigationService";
 import { ROUTE_KEY } from "@navigation/route";
@@ -17,26 +16,24 @@ function LocationScheduleItem({
   data: {
     from: ILocation;
     to: ILocation;
-    distance: {
-      distanceInKilometers: {
-        value: number;
-        text: string;
-      };
-      estimateTime: {
-        value: number;
-        text: string;
-      };
-    };
+    distance: any;
   };
 }) {
   const { from, to, distance } = data;
-
+  console.log(distance);
   const thumbnails = useCallback(() => {
     return to?.lstImgs?.length > 0 ? to.lstImgs[0] : "  ";
   }, [to]);
   return (
     <Row start direction="column" style={[{ borderRadius: 30 }]}>
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity
+        onPress={() => {
+          navigate(ROUTE_KEY.DETAIL_LOCATION, {
+            _id: to._id,
+            distanceIF: distance,
+          });
+        }}
+      >
         <ImageCustom
           link={thumbnails()}
           style={{ borderRadius: 10, width: deviceWidth - 80, height: 120 }}
@@ -61,14 +58,11 @@ function LocationScheduleItem({
             {to?.address}
           </TextDefault>
 
-          <Row colGap={20}>
+          {distance && (
             <TextDefault bold>
-              {distance && distance.distanceInKilometers?.text}
+              {distance?.distanceInKilometers + "kms"}
             </TextDefault>
-            <TextDefault style={{ color: hightLightColor }} bold>
-              {distance && distance.estimateTime?.text}
-            </TextDefault>
-          </Row>
+          )}
         </Row>
 
         <Separator height={10} />

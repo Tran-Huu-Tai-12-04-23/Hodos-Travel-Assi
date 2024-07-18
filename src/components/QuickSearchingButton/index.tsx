@@ -1,30 +1,28 @@
+import FoodView from "@components/FoodView";
+import GifImage from "@components/Gif";
+import LocationView from "@components/LocationView";
 import { btnPrimary } from "@constants/Colors";
-import Animated, { FadeInDown } from "react-native-reanimated";
-import { TouchableOpacity } from "react-native";
-import React, { useEffect } from "react";
 import { useBottomSheet } from "@context/BottomSheetContext";
-import Row from "../Row";
-import ButtonCustom from "../ButtonCustom";
-import { styleGlobal } from "src/styles";
-import { FontAwesome } from "@expo/vector-icons";
-import { deviceWidth } from "@helper/utils";
-import { Ionicons } from "@expo/vector-icons";
-import * as ImagePicker from "expo-image-picker";
+import { useModal } from "@context/ModalContext";
 import { useUserLocation } from "@context/userLocationContext";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { deviceWidth } from "@helper/utils";
 import usePredictImage from "@hooks/api/feature/usePredictImage";
+import { navigate } from "@navigation/NavigationService";
+import { ROUTE_KEY } from "@navigation/route";
+import { GIF_LINK } from "assets/Gif";
+import * as ImagePicker from "expo-image-picker";
+import React, { useEffect } from "react";
+import { TouchableOpacity } from "react-native";
 import {
   ALERT_TYPE,
   AlertNotificationDialog,
   AlertNotificationToast,
 } from "react-native-alert-notification";
 import { uploadImageAsync } from "src/config/firebaseWeb";
-import { useModal } from "@context/ModalContext";
-import GifImage from "@components/Gif";
-import { GIF_LINK } from "assets/Gif";
-import LocationView from "@components/LocationView";
-import { navigate } from "@navigation/NavigationService";
-import { ROUTE_KEY } from "@navigation/route";
-import FoodView from "@components/FoodView";
+import { styleGlobal } from "src/styles";
+import ButtonCustom from "../ButtonCustom";
+import Row from "../Row";
 
 const _renderBottomChooseImg = (
   onPressTakePicture: () => void,
@@ -173,7 +171,7 @@ function QuickSearchingButton() {
     if (!isLoading && data)
       openModal({
         content: (
-          <Animated.View entering={FadeInDown.damping(200).springify()}>
+          <>
             {data?.food ? (
               <TouchableOpacity
                 onPress={() => {
@@ -199,7 +197,7 @@ function QuickSearchingButton() {
                 <LocationView data={data?.location} />
               </TouchableOpacity>
             ) : null}
-          </Animated.View>
+          </>
         ),
         title: "Predicting done!",
         nameAcceptButton: "Ok",
@@ -219,29 +217,27 @@ function QuickSearchingButton() {
     }
   }, [error]);
   return (
-    <Animated.View entering={FadeInDown.delay(400).springify()}>
-      <TouchableOpacity
-        style={{
-          width: 60,
-          height: 60,
-          alignContent: "center",
-          alignItems: "center",
-          alignSelf: "center",
-          backgroundColor: btnPrimary,
-          borderRadius: 1000,
-          // flex: 1,
-          transform: [{ translateY: -25 }],
-        }}
-        onPress={handleOpen}
-      >
-        <Ionicons
-          name="search-sharp"
-          size={30}
-          color="white"
-          style={{ marginTop: "auto", marginBottom: "auto" }}
-        />
-      </TouchableOpacity>
-    </Animated.View>
+    <TouchableOpacity
+      style={{
+        width: 60,
+        height: 60,
+        alignContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
+        backgroundColor: btnPrimary,
+        borderRadius: 1000,
+        // flex: 1,
+        transform: [{ translateY: -25 }],
+      }}
+      onPress={handleOpen}
+    >
+      <Ionicons
+        name="search-sharp"
+        size={30}
+        color="white"
+        style={{ marginTop: "auto", marginBottom: "auto" }}
+      />
+    </TouchableOpacity>
   );
 }
 

@@ -7,7 +7,6 @@ import {
   borderColor,
   inputColor,
   primaryColor,
-  whiteColor,
 } from "@constants/Colors";
 import Separator from "./Separator";
 import { styleGlobal } from "src/styles";
@@ -19,6 +18,7 @@ type PropsType = {
   flex?: number;
   disabled?: boolean;
   placeholder?: string;
+  defaultValue?: string;
 };
 function TextInputCustom({
   label,
@@ -27,6 +27,7 @@ function TextInputCustom({
   onChangeText,
   flex,
   disabled,
+  defaultValue,
 }: PropsType) {
   const [isFocus, setIsFocus] = useState(false);
   return (
@@ -38,6 +39,7 @@ function TextInputCustom({
         </>
       )}
       <TextInput
+        defaultValue={defaultValue}
         disabled={disabled}
         textColor={blackColor}
         placeholder={placeholder}

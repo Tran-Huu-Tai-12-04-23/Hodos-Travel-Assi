@@ -1,17 +1,27 @@
 {
   "scripts": {
     "ts": "ts-node",
-    "start": "NODE_ENV=development expo start --dev-client",
+    "start": "NODE_ENV=development && expo start --dev-client",
     "start:production": "NODE_ENV=production expo start --dev-client",
-    "ota:dev": "NODE_ENV=development eas update --branch dev",
+    "local:dev:ios": "NODE_ENV=development expo run:ios --scheme HodosDev",
+    "local:prod:ios": "NODE_ENV=production expo run:ios --scheme Hodos",
+    "local:dev:android": "NODE_ENV=development expo run:android ",
+    "local:prod:android": "NODE_ENV=production expo run:android",
+    "distribution:dev:ios": "NODE_ENV=development eas build --profile development --platform ios",
+    "distribution:prod:ios": "NODE_ENV=production eas build --profile production --platform ios",
+    "distribution:dev:android": "NODE_ENV=development eas build --profile development --platform android",
+    "distribution:prod:android": "NODE_ENV=production eas build --profile production --platform android",
+    "ota:dev": " NODE_ENV=development eas update --branch dev",
     "ota:production": "NODE_ENV=production eas update --branch production",
+    "ota:dev:wd": "EAS_NO_VCS=development eas update --branch dev",
+    "ota:production:wd": "EAS_NO_VCS=production eas update --branch production",
+    "prebuild:prod:ios": "NODE_ENV=production expo prebuild --platform ios",
     "prebuild:dev:ios": "NODE_ENV=development npx expo prebuild --platform ios",
     "prebuild:dev:android": "NODE_ENV=development expo prebuild --platform android",
     "local:build:prod:android": "NODE_ENV=production eas build --platform android --local",
-    "local:build:dev:android": "NODE_ENV=development eas build --platform android --local",
-    "android": "expo run:android",
-    "ios": "expo run:ios",
-    "web": "expo start --web"
+    "local:build:dev:android": " NODE_ENV=development eas build --platform android --local",
+    "android": "NODE_ENV=production expo run:android",
+    "ios": "NODE_ENV=production expo run:ios"
   },
   "dependencies": {
     "@babel/preset-env": "^7.1.6",
@@ -90,5 +100,5 @@
   },
   "version": "1.0.0",
   "private": true,
-  "name": "travel_suppor_app"
+  "name": "Hodos"
 }

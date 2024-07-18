@@ -2,7 +2,7 @@ import ImageCustom from "@components/ImageCustom";
 import Row from "@components/Row";
 import TextDefault from "@components/TextDefault";
 import { borderColor, hightLightColor, priceColor } from "@constants/Colors";
-import { vndToUsd } from "@helper/helpers";
+import Helper, { vndToUsd } from "@helper/helpers";
 import { navigate } from "@navigation/NavigationService";
 import { ROUTE_KEY } from "@navigation/route";
 import React, { memo, useCallback } from "react";
@@ -24,68 +24,79 @@ function FoodItem({ width = 250, data }: PropsType) {
 
   const [min, max] = rangePrice;
   return (
-    <Row
-      direction="column"
-      style={[
-        {
-          width: width,
-          borderTopEndRadius: 10,
-          borderTopStartRadius: 10,
-          overflow: "hidden",
-        },
-      ]}
+    <TouchableOpacity
+      onPress={() =>
+        navigate(ROUTE_KEY.DETAIL_FOOD, {
+          _id: _id,
+          distanceIF: distanceInfo,
+        })
+      }
     >
-      <TouchableOpacity
-        onPress={() =>
-          navigate(ROUTE_KEY.DETAIL_FOOD, {
-            _id: _id,
-            distanceIF: distanceInfo,
-          })
-        }
+      <Row
+        direction="column"
+        style={[
+          {
+            width: width,
+            borderTopEndRadius: 10,
+            borderTopStartRadius: 10,
+            overflow: "hidden",
+          },
+        ]}
       >
         <ImageCustom link={thumbnails()} style={{ width }} />
-      </TouchableOpacity>
-      <Row
-        style={{
-          backgroundColor: borderColor,
-          padding: 10,
-          borderBottomEndRadius: 10,
-          borderBottomStartRadius: 10,
-        }}
-      >
-        <Row start full direction="column" style={{ overflow: "hidden" }}>
-          <TextDefault
-            bold
-            style={{ fontSize: 18, width: "70%", overflow: "hidden" }}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            {name}
-          </TextDefault>
-          <Row direction="column" start colGap={4}>
-            <TextDefault numberOfLines={1} ellipsizeMode="tail">
-              {address}
+        <Row
+          style={{
+            backgroundColor: borderColor,
+            padding: 10,
+            borderBottomEndRadius: 10,
+            borderBottomStartRadius: 10,
+          }}
+        >
+          <Row start full direction="column" style={{ overflow: "hidden" }}>
+            <TextDefault
+              bold
+              style={{ fontSize: 18, overflow: "hidden" }}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {name}
             </TextDefault>
-            {rangePrice && (
-              <Row start colGap={4}>
-                <TextDefault style={{ color: priceColor, fontSize: 16 }} bold>
-                  {vndToUsd(+min) + "$"}
-                </TextDefault>
-                <TextDefault style={{ color: priceColor }}>-</TextDefault>
-                <TextDefault style={{ color: priceColor, fontSize: 16 }} bold>
-                  {vndToUsd(+max) + "$"}
+            <Row direction="column" start colGap={4}>
+              <TextDefault numberOfLines={1} ellipsizeMode="tail">
+                {address}
+              </TextDefault>
+              {rangePrice && (
+                <>
+                  <Row start colGap={4} wrap>
+                    <TextDefault style={{ color: priceColor }} bold>
+                      {Helper.formatVND(+rangePrice[0])}
+                    </TextDefault>
+                    <TextDefault style={{ color: priceColor }}>-</TextDefault>
+                    <TextDefault style={{ color: priceColor }} bold>
+                      {Helper.formatVND(+rangePrice[1])}
+                    </TextDefault>
+                  </Row>
+                  <Row start colGap={4} wrap>
+                    <TextDefault bold>
+                      {"($" + vndToUsd(+rangePrice[0])}
+                    </TextDefault>
+                    <TextDefault>-</TextDefault>
+                    <TextDefault bold>
+                      {"$" + vndToUsd(+rangePrice[1]) + ")"}
+                    </TextDefault>
+                  </Row>
+                </>
+              )}
+              <Row colGap={20}>
+                <TextDefault bold>
+                  {distanceInfo && distanceInfo.distanceInKilometers + "kms"}
                 </TextDefault>
               </Row>
-            )}
-            <Row colGap={20}>
-              <TextDefault bold>
-                {distanceInfo && distanceInfo.distanceInKilometers + "kms"}
-              </TextDefault>
             </Row>
           </Row>
         </Row>
       </Row>
-    </Row>
+    </TouchableOpacity>
   );
 }
 

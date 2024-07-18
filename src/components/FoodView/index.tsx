@@ -4,7 +4,7 @@ import React, { memo, useCallback, useRef } from "react";
 import ImageCustom from "@components/ImageCustom";
 import { IFood } from "src/Models/food.model";
 import { priceColor } from "@constants/Colors";
-import { vndToUsd } from "@helper/helpers";
+import Helper, { vndToUsd } from "@helper/helpers";
 
 type PropsType = {
   data: IFood;
@@ -40,15 +40,26 @@ function FoodView({ data }: PropsType) {
             </TextDefault>
 
             {rangePrice && (
-              <Row start colGap={4}>
-                <TextDefault style={{ color: priceColor, fontSize: 16 }} bold>
-                  {vndToUsd(+rangePrice[0]) + "$"}
-                </TextDefault>
-                <TextDefault style={{ color: priceColor }}>-</TextDefault>
-                <TextDefault style={{ color: priceColor, fontSize: 16 }} bold>
-                  {vndToUsd(+rangePrice[1]) + "$"}
-                </TextDefault>
-              </Row>
+              <>
+                <Row start colGap={4} wrap>
+                  <TextDefault style={{ color: priceColor }} bold>
+                    {Helper.formatVND(+rangePrice[0])}
+                  </TextDefault>
+                  <TextDefault style={{ color: priceColor }}>-</TextDefault>
+                  <TextDefault style={{ color: priceColor }} bold>
+                    {Helper.formatVND(+rangePrice[1])}
+                  </TextDefault>
+                </Row>
+                <Row start colGap={4} wrap>
+                  <TextDefault bold>
+                    {"($" + vndToUsd(+rangePrice[0])}
+                  </TextDefault>
+                  <TextDefault>-</TextDefault>
+                  <TextDefault bold>
+                    {"$" + vndToUsd(+rangePrice[1]) + ")"}
+                  </TextDefault>
+                </Row>
+              </>
             )}
             <Row colGap={20}>
               <TextDefault bold>

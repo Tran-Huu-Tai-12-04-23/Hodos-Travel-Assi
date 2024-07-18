@@ -1,29 +1,41 @@
 {
-  "cli": {
-    "version": ">= 7.8.5"
-  },
   "build": {
     "development": {
-      "developmentClient": true,
-      "distribution": "internal",
       "channel": "development",
+      "ios": {
+        "cocoapods": "1.14.3",
+        "scheme": "Hodos Dev"
+      },
       "android": {
-        "gradleCommand": ":app:assembleRelease",
         "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "development",
+        "EXPO_PUBLIC_APP_NAME": "Hodos Dev",
+        "EXPO_PUBLIC_BUNDLE_ID": "com.genny.hodos.dev",
+        "EXPO_PUBLIC_API": "https://life-manager-api.genny.id.vn/"
       }
-    },
-    "preview": {
-      "distribution": "internal"
     },
     "production": {
       "channel": "production",
+      "ios": {
+        "cocoapods": "1.14.3",
+        "scheme": "APP"
+      },
       "android": {
-        "gradleCommand": ":app:assembleRelease",
         "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_APP_VARIANT": "production",
+        "EXPO_PUBLIC_APP_NAME": "Hodos",
+        "EXPO_PUBLIC_BUNDLE_ID": "com.genny.hodos.pro",
+        "EXPO_PUBLIC_API": "https://life-manager-api.genny.id.vn/"
       }
     }
   },
-  "submit": {
-    "production": {}
+
+  "cli": {
+    "version": ">= 0.53.1",
+    "promptToConfigurePushNotifications": false
   }
 }

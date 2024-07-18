@@ -12,7 +12,7 @@ import {
 import MainLayout from "@layout/MainLayout";
 import CustomHeader from "@navigation/CustomHeader";
 import React, { useState } from "react";
-import { FlatList, Modal, View } from "react-native";
+import { FlatList, Modal, Platform, View } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import ImageViewer from "react-native-image-zoom-viewer";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
@@ -46,6 +46,12 @@ function DetailFoodScreen() {
       distanceInMeters: number;
     };
   };
+
+  console.log({
+    _id,
+    distanceIF,
+  });
+
   if (!_id) {
     return <NotFoundIdentity title="Food ID not found!" />;
   }
@@ -153,14 +159,14 @@ function DetailFoodScreen() {
             </TextDefault>
           </TouchableOpacity>
           <Separator height={20} />
-          <Row start colGap={20}>
+          {/* <Row start colGap={20}>
             <ButtonCustom
               style={{ padding: 5 }}
               primary
               onPress={() => {}}
               title={"Review"}
             />
-          </Row>
+          </Row> */}
           <Separator height={20} />
           <View
             style={{
@@ -219,7 +225,12 @@ function DetailFoodScreen() {
         colGap={20}
         style={[
           styleGlobal.shadowForce,
-          { backgroundColor: mainBg, flex: 0.1, marginBottom: 50 },
+          {
+            backgroundColor: mainBg,
+            flex: 0.1,
+            maxHeight: 60,
+            marginBottom: Platform.OS === "ios" ? 60 : 0,
+          },
         ]}
       >
         <ButtonCustom

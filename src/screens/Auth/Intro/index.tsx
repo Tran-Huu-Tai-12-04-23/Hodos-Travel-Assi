@@ -1,22 +1,20 @@
-import { styleGlobal } from "../../../styles";
-import { View, Image, StyleSheet } from "react-native";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import PagerView from "react-native-pager-view";
-import { primaryColor, secondaryColor, whiteColor } from "@constants/Colors";
-import Row from "@components/Row";
-import { localImages } from "assets/localImage";
-import TextDefault from "@components/TextDefault";
 import ButtonCustom from "@components/ButtonCustom";
+import Row from "@components/Row";
+import TextDefault from "@components/TextDefault";
+import { primaryColor, secondaryColor } from "@constants/Colors";
+import { useUserLocation } from "@context/userLocationContext";
 import { FontAwesome } from "@expo/vector-icons";
+import { deviceWidth } from "@helper/utils";
+import MainLayout from "@layout/MainLayout";
 import { navigate } from "@navigation/NavigationService";
 import { ROUTE_KEY } from "@navigation/route";
-import MainLayout from "@layout/MainLayout";
-import { deviceWidth } from "@helper/utils";
-import Animated, { FadeInDown, FadeInUp } from "react-native-reanimated";
+import { localImages } from "assets/localImage";
 import * as Location from "expo-location";
+import React, { useEffect, useRef, useState } from "react";
+import { Image, StyleSheet, View } from "react-native";
 import { Toast } from "react-native-alert-notification";
-import { useUserLocation } from "@context/userLocationContext";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import PagerView from "react-native-pager-view";
 type PropsType = {};
 function MyPager({}: PropsType) {
   const [currentPage, setCurrentPage] = useState(0);
@@ -45,25 +43,12 @@ function MyPager({}: PropsType) {
         onPageSelected={onPageSelected}
       >
         <View style={[styles.page]} key="1">
-          <Animated.Image
-            entering={FadeInUp.delay(200).springify()}
-            source={localImages().intro1}
-            style={{
-              width: deviceWidth - 20,
-              height: 400,
-            }}
-            resizeMode="contain"
-          />
           <TextDefault
-            entering={FadeInDown.delay(400).springify()}
             style={{ fontSize: 24, fontWeight: "bold", textAlign: "center" }}
           >
             Discover a Hotel & Resort to Book a Suitable Room
           </TextDefault>
-          <TextDefault
-            entering={FadeInDown.delay(600).springify()}
-            style={{ textAlign: "center" }}
-          >
+          <TextDefault style={{ textAlign: "center" }}>
             The hotel and resort business is one of the best and loyal business
             in the global market. We are the agency that helps to book you a
             good room in a suitable palace at a reasonable price.
@@ -90,8 +75,7 @@ function MyPager({}: PropsType) {
           </TextDefault>
         </View>
         <View style={[styles.page]} key="3">
-          <Animated.Image
-            entering={FadeInUp.delay(200).springify()}
+          <Image
             source={localImages().intro3}
             style={{
               width: deviceWidth - 20,
@@ -125,7 +109,6 @@ function MyPager({}: PropsType) {
         direction="column"
       >
         <ButtonCustom
-          entering={FadeInDown.delay(800).springify()}
           primary
           labelStyle={{ fontWeight: "bold" }}
           minWidth={deviceWidth / 2}
@@ -182,33 +165,30 @@ export default function IntroScreen() {
         });
 
         if (location.coords)
-          // setUserLocation({
-          //    latitude: location.coords.latitude,
-          //    longitude: location.coords.longitude,
-          // });
-          console.log(
-            "=====================Current Position:",
-            location.coords
-          );
+          setUserLocation({
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          });
+        console.log("=====================Current Position:", location.coords);
 
-        watchId = Location.watchPositionAsync(
-          {
-            accuracy: 4,
-            timeInterval: 4,
-            distanceInterval: 10,
-          },
-          (position) => {
-            if (position.coords)
-              // setUserLocation({
-              //   latitude: position.coords.latitude,
-              //   longitude: position.coords.longitude,
-              // });
-              console.log("========================User position changed:", {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-              });
-          }
-        );
+        // watchId = Location.watchPositionAsync(
+        //   {
+        //     accuracy: 4,
+        //     timeInterval: 4,
+        //     distanceInterval: 10,
+        //   },
+        //   (position) => {
+        //     // if (position.coords)
+        //     // setUserLocation({
+        //     //   latitude: position.coords.latitude,
+        //     //   longitude: position.coords.longitude,
+        //     // });
+        //     // console.log("========================User position changed:", {
+        //     //   latitude: position.coords.latitude,
+        //     //   longitude: position.coords.longitude,
+        //     // });
+        //   }
+        // );
       } catch (err) {
         console.warn(err);
       }

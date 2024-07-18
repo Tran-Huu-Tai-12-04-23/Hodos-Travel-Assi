@@ -1,18 +1,22 @@
-import React from "react";
+import QuickSearchingButton from "@components/QuickSearchingButton";
+import Row from "@components/Row";
+import { mainBg } from "@constants/Colors";
+import {
+  Entypo,
+  FontAwesome6,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
+import { config } from "@helper/helpers";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { TouchableOpacity, Image, View } from "react-native";
+import React from "react";
+import { TouchableOpacity } from "react-native";
 import HomeDrawer from "src/Drawer/HomeDrawer";
+import PersonalScreen from "src/screens/BottomTab/Personal";
 import ScheduleScreen from "src/screens/BottomTab/Schedule";
 import TextToSpeakScreen from "src/screens/BottomTab/SpeechToText";
-import PersonalScreen from "src/screens/BottomTab/Personal";
-import { ROUTE_KEY } from "./route";
-import { localImages } from "assets/localImage";
 import { styleGlobal } from "src/styles";
-import Animated, { FadeInDown } from "react-native-reanimated";
-import Row from "@components/Row";
-import { config } from "@helper/helpers";
-import QuickSearchingButton from "@components/QuickSearchingButton";
-import { mainBg } from "@constants/Colors";
+import { ROUTE_KEY } from "./route";
 
 const Tab = createBottomTabNavigator();
 
@@ -25,49 +29,64 @@ const CustomTabBar = ({ state, descriptors, navigation }: any) => {
 
   return (
     <Row
+      between
       style={[
         styleGlobal.shadowForce,
-        { flexDirection: "row", height: 60, backgroundColor: mainBg },
+        {
+          flexDirection: "row",
+          height: 60,
+          paddingHorizontal: 30,
+          backgroundColor: mainBg,
+        },
       ]}
     >
       {state.routes.map((route: any, index: number) => {
-        const { options } = descriptors[route.key];
         const isFocused = state.index === index;
 
         let icon;
 
         if (route.name === ROUTE_KEY.MAIN_APP) {
-          icon = isFocused
-            ? localImages().homeActiveIcon
-            : localImages().homeIcon;
+          icon = (
+            <Entypo
+              name="home"
+              size={24}
+              color={!isFocused ? "gray" : "black"}
+            />
+          );
         } else if (route.name === ROUTE_KEY.SCHEDULE) {
-          icon = isFocused
-            ? localImages().scheduleActiveIcon
-            : localImages().scheduleIcon;
+          icon = (
+            <MaterialCommunityIcons
+              name="calendar-collapse-horizontal"
+              size={24}
+              color={!isFocused ? "gray" : "black"}
+            />
+          );
         } else if (route.name === ROUTE_KEY.TEXT_TO_SPEAK) {
-          icon = isFocused
-            ? localImages().micActiveIcon
-            : localImages().micIcon;
+          icon = (
+            <FontAwesome6
+              name="microphone"
+              size={24}
+              color={!isFocused ? "gray" : "black"}
+            />
+          );
         } else if (route.name === ROUTE_KEY.PERSONAL) {
-          icon = isFocused
-            ? localImages().userActiveIcon
-            : localImages().userIcon;
+          icon = (
+            <MaterialIcons
+              name="person"
+              size={24}
+              color={!isFocused ? "gray" : "black"}
+            />
+          );
         } else return <QuickSearchingButton key={route.name} />;
 
         return (
-          <Animated.View
-            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-            entering={FadeInDown.delay(200).springify()}
-            key={route.name}
+          <TouchableOpacity
+            key={index}
+            style={{}}
+            onPress={() => navigation.navigate(route.name)}
           >
-            <TouchableOpacity onPress={() => navigation.navigate(route.name)}>
-              <Image
-                source={icon}
-                style={{ width: 24, height: 24 }}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
-          </Animated.View>
+            {icon}
+          </TouchableOpacity>
         );
       })}
       {/* Custom Button */}
