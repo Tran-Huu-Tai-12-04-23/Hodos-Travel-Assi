@@ -12,7 +12,7 @@ import useLoadHomeData from "@hooks/api/home/useLoadHomeData";
 import MainLayout from "@layout/MainLayout";
 import { localImages } from "assets/localImage";
 import * as Location from "expo-location";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   FlatList,
   Image,
@@ -29,7 +29,6 @@ import Search from "./Search";
 function HomeScreen() {
   const { logout } = useAuth();
   const { data, isLoading, onLoadHomeData } = useLoadHomeData();
-  const [isFirstLoad, setIsFirstLoad] = useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
   const { userLocation, setUserLocation } = useUserLocation();
   const onRefresh = React.useCallback(() => {
@@ -48,7 +47,6 @@ function HomeScreen() {
       onLoadHomeData({
         location: [userLocation?.longitude, userLocation?.latitude],
       });
-      setIsFirstLoad(true);
     }
   }, [userLocation]);
 
@@ -184,8 +182,8 @@ function HomeScreen() {
           </TextDefault>
         </Row>
         <View style={{ minHeight: 170 }}>
-          {isLoading && isFirstLoad === false && _renderSkeleton()}
-          {isLoading && (
+          {isLoading && _renderSkeleton()}
+          {!isLoading && (
             <FlatList
               showsHorizontalScrollIndicator={false}
               horizontal={true}
@@ -204,7 +202,7 @@ function HomeScreen() {
           </TextDefault>
         </Row>
         <View style={{ minHeight: 170 }}>
-          {isLoading && isFirstLoad === false && _renderSkeleton()}
+          {isLoading && _renderSkeleton()}
           {!isLoading && (
             <FlatList
               showsHorizontalScrollIndicator={false}

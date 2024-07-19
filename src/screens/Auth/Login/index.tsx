@@ -12,11 +12,13 @@ import ImgBackgroundLayout from "@layout/ImgBackgroundLayout";
 import CustomHeader from "@navigation/CustomHeader";
 import { navigate } from "@navigation/NavigationService";
 import { ROUTE_KEY } from "@navigation/route";
+import * as Updates from "expo-updates";
 import React, { useState } from "react";
 import { ScrollView } from "react-native";
 import { ALERT_TYPE, Toast } from "react-native-alert-notification";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { styleGlobal } from "src/styles";
+
 export default function LoginScreen() {
   const { isLoading, data, onLogin } = useLogin();
   const [input, setInput] = useState({
@@ -108,14 +110,20 @@ export default function LoginScreen() {
             <Separator height={20} />
           </Row>
           <Row full direction="column">
-            <TextDefault>
-              Version: <TextDefault bold>1.0.0</TextDefault>
+            <TextDefault style={{ fontSize: 12 }}>
+              Phiên bản:{" "}
+              {Updates.runtimeVersion != null && Updates.runtimeVersion !== ""
+                ? Updates.runtimeVersion
+                : "1.0.0"}
             </TextDefault>
-            <TextDefault>
-              Environment: <TextDefault bold>Develop</TextDefault>
+            <TextDefault style={{ fontSize: 12 }}>
+              Updated At:{" "}
+              {Updates.createdAt == null
+                ? "1.0.0"
+                : new Date(Updates.createdAt).toTimeString()}
             </TextDefault>
-            <TextDefault>
-              UpdateAt: <TextDefault bold>5:33 Am 1/6/2024</TextDefault>
+            <TextDefault style={{ fontSize: 12 }}>
+              Env: {process.env.EXPO_PUBLIC_APP_VARIANT}
             </TextDefault>
           </Row>
         </Container>
