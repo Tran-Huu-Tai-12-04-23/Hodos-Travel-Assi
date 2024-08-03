@@ -4,40 +4,29 @@ import Icon from "@components/Icon";
 import Row from "@components/Row";
 import Separator from "@components/Separator";
 import TextDefault from "@components/TextDefault";
-import {
-  blackColor,
-  btnPrimary,
-  secondaryColor,
-  whiteColor,
-} from "@constants/Colors";
-import { useModal } from "@context/ModalContext";
+import { btnPrimary, secondaryColor, whiteColor } from "@constants/Colors";
+import { useUserLocation } from "@context/userLocationContext";
 import BottomSheet from "@gorhom/bottom-sheet";
-import CustomHeader from "@navigation/CustomHeader";
+import MainLayout from "@layout/MainLayout";
+import { useRoute } from "@react-navigation/native";
 import { localImages } from "assets/localImage";
-import React, { useState, useRef, useMemo } from "react";
-import {
-  ScrollView,
-  Dimensions,
-  StyleSheet,
-  View,
-  Platform,
-} from "react-native";
+import LocationIcon from "assets/svg/LocationIcon";
+import React, { useMemo, useRef, useState } from "react";
+import { Dimensions, Linking, Platform, ScrollView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import MapView, { Marker, LatLng, Region } from "react-native-maps";
-import MapViewDirections, {
-  MapDirectionsResponse,
-} from "react-native-maps-directions";
+import MapView, { LatLng, Region } from "react-native-maps";
+import { MapDirectionsResponse } from "react-native-maps-directions";
 import { DirectionsData } from "src/Models/map.dto";
 import { styleGlobal } from "src/styles";
-
+import Map from "./Map";
 const { width, height } = Dimensions.get("window");
 const LATITUDE_DELTA = 0.0922;
 const ASPECT_RATIO =
   Dimensions.get("window").width / Dimensions.get("window").height;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
+// const GOOGLE_MAPS_APIKEY = "AIzaSyACFEyucHfjhPUl88GCY1spvYuHi8lNEUA";
 const GOOGLE_MAPS_APIKEY = "AIzaSyACFEyucHfjhPUl88GCY1spvYuHi8lNEUA";
-// const GOOGLE_MAPS_APIKEY = "AIzaSyCwODDdAAlVuYb27NKf_vp0Vow4wRANZ6o";
 
 enum MODE_MAP {
   DRIVING = "DRIVING",
@@ -69,10 +58,6 @@ const modes = [
   },
 ];
 
-import { Linking } from "react-native";
-import { useRoute } from "@react-navigation/native";
-import { useUserLocation } from "@context/userLocationContext";
-
 const openOnMaps = async (lat: any, lng: any, label: string) => {
   const scheme = Platform.select({ ios: "maps:0,0?q=", android: "geo:0,0?q=" });
   const latLng = `${lat},${lng}`;
@@ -101,7 +86,6 @@ const DirectionScreen: React.FC = () => {
   const { desLocation } = params as {
     desLocation: [number, number];
   };
-  const { openModal, hideModal } = useModal();
   const [steps, setSteps] = useState<DirectionsData>([]);
   const [mode, setMode] = useState(MODE_MAP.TRANSIT.toString());
   const [informationDir, setInformationDir] = useState({
@@ -111,9 +95,13 @@ const DirectionScreen: React.FC = () => {
     end_address: "",
   });
   const [coordinates, setCoordinates] = useState<Array<LatLng>>([
+    // {
+    //   latitude: userLocation?.latitude ?? 10.7326452,
+    //   longitude: userLocation?.longitude ?? 106.697189,
+    // },
     {
-      latitude: userLocation?.latitude ?? 10.7326452,
-      longitude: userLocation?.longitude ?? 106.697189,
+      latitude: 10.7326452,
+      longitude: 106.697189,
     },
     { latitude: desLocation[1], longitude: desLocation[0] },
   ]);
@@ -121,15 +109,11 @@ const DirectionScreen: React.FC = () => {
   const mapViewRef = useRef<MapView>(null);
   const bottomSheetRef = useRef<BottomSheet>(null);
 
-  const onMapPress = (e: { nativeEvent: { coordinate: LatLng } }) => {
-    const newCoordinates = [...coordinates, e.nativeEvent.coordinate];
-    setCoordinates(newCoordinates);
-  };
   const [region, setRegion] = useState<Region>({
     latitude: desLocation[1],
     longitude: desLocation[0],
-    latitudeDelta: userLocation?.latitude ?? LATITUDE_DELTA,
-    longitudeDelta: userLocation?.longitude ?? LONGITUDE_DELTA,
+    latitudeDelta: LATITUDE_DELTA,
+    longitudeDelta: LONGITUDE_DELTA,
   });
 
   const handleViewAreaMap = () => {
@@ -145,8 +129,8 @@ const DirectionScreen: React.FC = () => {
       const region: Region = {
         latitude: routeCoordinates[0].latitude,
         longitude: routeCoordinates[0].longitude,
-        latitudeDelta: userLocation?.latitude ?? LATITUDE_DELTA,
-        longitudeDelta: userLocation?.longitude ?? LONGITUDE_DELTA,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
       };
       setRegion(region);
       handleViewAreaMap();
@@ -183,65 +167,9 @@ const DirectionScreen: React.FC = () => {
   const handleOpenBottomSheet = () => bottomSheetRef?.current?.expand();
   const snapPoints = useMemo(() => [100, "25%", "50%", "90%"], []);
 
-  const handleOpenModalChooseMap = () => {
-    openModal({
-      content: undefined,
-      title: "Do you want open google Map app in the phone?",
-      nameAcceptButton: "Ok",
-      nameCancelButton: "Cancel",
-      onReject: () => {
-        hideModal();
-      },
-      onAccept: async () => {
-        await openOnMaps(
-          coordinates[0].longitude,
-          coordinates[0].latitude,
-          informationDir.end_address
-        );
-        hideModal();
-      },
-    });
-  };
-
   return (
-    <View style={StyleSheet.absoluteFillObject}>
-      <MapView
-        initialRegion={region}
-        style={StyleSheet.absoluteFillObject}
-        ref={mapViewRef}
-        onPress={onMapPress}
-      >
-        <Marker
-          coordinate={coordinates[0]}
-          title="Điểm bắt đầu"
-          description="Origin Point"
-          pinColor={blackColor}
-          icon={localImages().originIcon}
-        />
-        <Marker
-          coordinate={coordinates[1]}
-          title="Điểm kết thúc"
-          description="Destination Point"
-          pinColor={btnPrimary}
-          icon={localImages().destinationIcon}
-        />
-
-        <MapViewDirections
-          origin={coordinates[0]}
-          destination={coordinates[coordinates.length - 1]}
-          waypoints={coordinates.slice(1, -1) as LatLng[]}
-          mode={mode as MODE_MAP}
-          apikey={GOOGLE_MAPS_APIKEY}
-          strokeWidth={3}
-          strokeColor={btnPrimary}
-          optimizeWaypoints={true}
-          onReady={onReady}
-          onError={onError}
-          resetOnChange={false}
-        />
-      </MapView>
-
-      <CustomHeader title={""} style={{ top: 50 }} />
+    <MainLayout isBack>
+      <Map />
       <Row
         direction="column"
         full
@@ -264,7 +192,7 @@ const DirectionScreen: React.FC = () => {
             style={{
               padding: 20,
               paddingHorizontal: 30,
-              backgroundColor: "#DBE4E5",
+              backgroundColor: "rgba(0,0,0,0.03)",
               borderRadius: 20,
             }}
           >
@@ -282,7 +210,7 @@ const DirectionScreen: React.FC = () => {
               <Separator height={10} />
 
               <Row start full style={{ alignItems: "center" }} colGap={10}>
-                <Icon link={localImages().destinationIcon} />
+                <LocationIcon />
                 <TextDefault bold>
                   {informationDir.end_address
                     ? informationDir.end_address
@@ -352,22 +280,7 @@ const DirectionScreen: React.FC = () => {
 
         <Separator height={20} />
       </Row>
-      <Row
-        style={[
-          { position: "absolute", bottom: "40%", right: 10 },
-          styleGlobal.shadowForce,
-        ]}
-      >
-        <TouchableOpacity onPress={handleOpenModalChooseMap}>
-          <Icon
-            link={localImages().googleMapIcon}
-            style={{
-              width: 40,
-              height: 40,
-            }}
-          />
-        </TouchableOpacity>
-      </Row>
+
       <CustomBottomSheet
         onClose={handleClosePress}
         onOpen={handleOpenBottomSheet}
@@ -424,7 +337,7 @@ const DirectionScreen: React.FC = () => {
           ))}
         </Row>
       </CustomBottomSheet>
-    </View>
+    </MainLayout>
   );
 };
 

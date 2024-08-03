@@ -1,4 +1,6 @@
+import ButtonCustom from "@components/ButtonCustom";
 import Row from "@components/Row";
+import Separator from "@components/Separator";
 import SlideImage from "@components/SlideImage";
 import TextDefault from "@components/TextDefault";
 import {
@@ -9,31 +11,26 @@ import {
   priceColor,
   whiteColor,
 } from "@constants/Colors";
+import { AntDesign, MaterialIcons } from "@expo/vector-icons";
+import { vndToUsd } from "@helper/helpers";
+import { deviceHeight } from "@helper/utils";
+import useFindDetailFood from "@hooks/api/food/useFindDetailFood";
 import MainLayout from "@layout/MainLayout";
 import CustomHeader from "@navigation/CustomHeader";
-import React, { useState } from "react";
-import { FlatList, Modal, Platform, View } from "react-native";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import ImageViewer from "react-native-image-zoom-viewer";
-import { AntDesign, MaterialIcons } from "@expo/vector-icons";
-import { styleGlobal } from "src/styles";
-import ButtonCustom from "@components/ButtonCustom";
-import Separator from "@components/Separator";
-import Icon from "@components/Icon";
-import { localImages } from "assets/localImage";
 import { navigate } from "@navigation/NavigationService";
 import { ROUTE_KEY } from "@navigation/route";
-import MapView, { Marker } from "react-native-maps";
-import { infoArea } from "../_mock";
 import { useRoute } from "@react-navigation/native";
-import NotFoundIdentity from "src/webroot/NotFoundIdentity";
-import { deviceHeight } from "@helper/utils";
+import { localImages } from "assets/localImage";
+import React, { useState } from "react";
+import { Modal, Platform, View } from "react-native";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import ImageViewer from "react-native-image-zoom-viewer";
+import MapView, { Marker } from "react-native-maps";
+import LstFood from "src/screens/BottomTab/Home/LstFood";
+import { styleGlobal } from "src/styles";
 import LoadingScreen from "src/webroot/LoadingScreen";
-import HorizontalSkeleton from "@components/HorizontalSkeleton";
-import useFindDetailFood from "@hooks/api/food/useFindDetailFood";
-import FoodItem from "@components/FoodItem";
-import { IFood } from "src/Models/food.model";
-import { vndToUsd } from "@helper/helpers";
+import NotFoundIdentity from "src/webroot/NotFoundIdentity";
+import { infoArea } from "../_mock";
 
 function DetailFoodScreen() {
   const [isExpand, setIsExpand] = useState(false);
@@ -75,10 +72,6 @@ function DetailFoodScreen() {
 
   const infoMap = infoArea(latitude, longitude);
 
-  const _renderNearbyLocation = ({ item }: { item: IFood }) => (
-    <FoodItem data={item} key={item._id} width={250} />
-  );
-
   return (
     <MainLayout
       style={{
@@ -99,7 +92,12 @@ function DetailFoodScreen() {
 
         <Modal visible={isViewerImg}>
           <AntDesign
-            style={{ position: "absolute", top: 10, right: 10, zIndex: 1000 }}
+            style={{
+              position: "absolute",
+              top: Platform.OS === "ios" ? 60 : 10,
+              right: 10,
+              zIndex: 1000,
+            }}
             onPress={() => setIsViewerImg(false)}
             name="closecircleo"
             size={24}
@@ -201,22 +199,7 @@ function DetailFoodScreen() {
           <Separator height={30} />
           <TextDefault bold>Nearby Locations</TextDefault>
           <Separator height={20} />
-          <View style={{ height: 200 }}>
-            {!isLoading && data?.nearFoods && (
-              <FlatList
-                showsHorizontalScrollIndicator={false}
-                horizontal={true}
-                style={{ flex: 1 }}
-                ItemSeparatorComponent={() => <View style={{ width: 30 }} />}
-                data={data?.nearFoods}
-                renderItem={_renderNearbyLocation}
-                keyExtractor={(item) => item._id}
-              />
-            )}
-            {isLoading && <HorizontalSkeleton />}
-          </View>
-
-          <Separator height={10} />
+          <LstFood foods={data.nearFoods} />
         </Row>
       </ScrollView>
       <Row
@@ -235,16 +218,10 @@ function DetailFoodScreen() {
       >
         <ButtonCustom
           onPress={() => {}}
-          title={""}
-          startIcon={
-            <Icon
-              link={localImages().saveLocationIcon}
-              style={{
-                width: 20,
-                height: 20,
-              }}
-            />
-          }
+          title={"Save"}
+          labelStyle={{
+            color: "black",
+          }}
           style={{ padding: 10, width: 100 }}
           textColor={btnPrimary}
           background={whiteColor}

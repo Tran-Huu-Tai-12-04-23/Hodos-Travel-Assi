@@ -7,37 +7,44 @@ import { primaryColor } from "@constants/Colors";
 import { useAuth } from "@context/authContext";
 import { deviceWidth } from "@helper/utils";
 import MainLayout from "@layout/MainLayout";
+import CustomHeader from "@navigation/CustomHeader";
+import { localImages } from "assets/localImage";
+import * as Updates from "expo-updates";
 import React from "react";
-import { Text } from "react-native";
 import {
   ALERT_TYPE,
   AlertNotificationDialog,
 } from "react-native-alert-notification";
 
 function PersonalScreen() {
-  const { user } = useAuth();
+  const { logout, user } = useAuth();
+
   return (
-    <MainLayout>
+    <MainLayout isBack>
+    
       <Row
         direction="column"
         full
-        center
+        start
         rowGap={10}
-        style={{ padding: 10, marginTop: "auto", marginBottom: "auto" }}
+        style={{ padding: 10, marginBottom: "auto" }}
       >
-        <Text>Hi, </Text>
-        <TextDefault bold style={{ fontSize: 24, color: primaryColor }}>
+        <TextDefault
+          bold
+          style={{ fontSize: 24, color: primaryColor, marginTop: 100 }}
+        >
+          Hi,{" "}
           {user?.username
             ? user?.username?.substring(0, 1).toUpperCase() +
               user?.username?.substring(1).toLowerCase()
             : ""}
         </TextDefault>
-        <Avatar
-          style={{ width: 100, height: 100 }}
-          link={{
-            uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTWcCiaYRwLtYTSP7wf3wgPCo-ExPN2OZtFu16Hbx8Qg&s",
-          }}
-        />
+        <Row center full>
+          <Avatar
+            style={{ width: 100, height: 100 }}
+            link={localImages().avatarDefault}
+          />
+        </Row>
         <Separator height={10} />
         <Row direction="column" full center rowGap={10}>
           <ButtonCustom
@@ -88,26 +95,26 @@ function PersonalScreen() {
       >
         <ButtonCustom
           minWidth={deviceWidth - 40}
-          onPress={() => {
-            AlertNotificationDialog.show({
-              type: ALERT_TYPE.WARNING,
-              title: "Error",
-              textBody: "An update is not available yet!.",
-            });
-          }}
-          title={"Check update"}
+          onPress={logout}
+          title={"Log Out"}
           primary
           full
         />
         <Row full direction="column">
-          <TextDefault>
-            Version: <TextDefault bold>1.0.0</TextDefault>
+          <TextDefault style={{ fontSize: 12 }}>
+            Phiên bản:{" "}
+            {Updates.runtimeVersion != null && Updates.runtimeVersion !== ""
+              ? Updates.runtimeVersion
+              : "1.0.0"}
           </TextDefault>
-          <TextDefault>
-            Environment: <TextDefault bold>Develop</TextDefault>
+          <TextDefault style={{ fontSize: 12 }}>
+            Updated At:{" "}
+            {Updates.createdAt == null
+              ? "1.0.0"
+              : new Date(Updates.createdAt).toTimeString()}
           </TextDefault>
-          <TextDefault>
-            UpdateAt: <TextDefault bold>5:33 Am 1/6/2024</TextDefault>
+          <TextDefault style={{ fontSize: 12 }}>
+            Env: {process.env.EXPO_PUBLIC_APP_VARIANT}
           </TextDefault>
         </Row>
       </Row>

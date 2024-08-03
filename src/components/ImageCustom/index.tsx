@@ -1,7 +1,7 @@
 import Row from "@components/Row";
 import { btnPrimary } from "@constants/Colors";
 import React, { useState } from "react";
-import { ActivityIndicator, Image, View } from "react-native";
+import { ActivityIndicator, Image, Platform } from "react-native";
 
 type PropsType = {
   link: string;
@@ -16,7 +16,7 @@ const ImageCustom = ({ link, style }: PropsType) => {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading && Platform.OS !== "ios" ? (
         <Row full center style={[{ width: 250, height: 120 }]}>
           <ActivityIndicator color={btnPrimary} />
         </Row>

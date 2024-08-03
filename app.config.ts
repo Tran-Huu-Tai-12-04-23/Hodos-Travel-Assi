@@ -67,9 +67,12 @@ export default (): ExpoConfig => ({
     buildNumber: "1",
     infoPlist: {
       CFBundleAllowMixedLocalizations: true,
+      NSLocationWhenInUseUsageDescription:
+        "When in use permissions description",
     },
     config: {
       usesNonExemptEncryption: false,
+      googleMapsApiKey: "AIzaSyACFEyucHfjhPUl88GCY1spvYuHi8lNEUA",
     },
   },
   android: {
@@ -78,7 +81,7 @@ export default (): ExpoConfig => ({
     userInterfaceStyle: "automatic",
     config: {
       googleMaps: {
-        apiKey: "AIzaSyCwODDdAAlVuYb27NKf_vp0Vow4wRANZ6o",
+        apiKey: "AIzaSyACFEyucHfjhPUl88GCY1spvYuHi8lNEUA",
       },
     },
   },

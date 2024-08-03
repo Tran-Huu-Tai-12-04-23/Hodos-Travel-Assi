@@ -1,10 +1,10 @@
+import ImageCustom from "@components/ImageCustom";
 import Row from "@components/Row";
 import TextDefault from "@components/TextDefault";
-import React, { memo, useCallback, useRef } from "react";
-import ImageCustom from "@components/ImageCustom";
-import { IFood } from "src/Models/food.model";
 import { priceColor } from "@constants/Colors";
 import Helper, { vndToUsd } from "@helper/helpers";
+import React, { memo, useMemo } from "react";
+import { IFood } from "src/Models/food.model";
 
 type PropsType = {
   data: IFood;
@@ -12,7 +12,7 @@ type PropsType = {
 function FoodView({ data }: PropsType) {
   const { name, distanceInfo, rangePrice, lstImgs, address } = data;
 
-  const thumbnails = useCallback(() => {
+  const thumbnails = useMemo(() => {
     return lstImgs && lstImgs.length > 0
       ? lstImgs[0]
       : "https://www.androidauthority.com/wp-content/uploads/2015/07/location_marker_gps_shutterstock.jpg";
@@ -21,7 +21,7 @@ function FoodView({ data }: PropsType) {
   return (
     <Row direction="column" style={[{ width: "100%", borderRadius: 30 }]}>
       <ImageCustom
-        link={thumbnails()}
+        link={thumbnails}
         style={{ borderRadius: 10, width: "100%", height: 120 }}
       />
       <Row>

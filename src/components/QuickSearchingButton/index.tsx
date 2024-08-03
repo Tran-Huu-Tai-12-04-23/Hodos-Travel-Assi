@@ -1,6 +1,7 @@
 import FoodView from "@components/FoodView";
 import GifImage from "@components/Gif";
 import LocationView from "@components/LocationView";
+import { PressAnimate } from "@components/PressAnimate";
 import { btnPrimary } from "@constants/Colors";
 import { useBottomSheet } from "@context/BottomSheetContext";
 import { useModal } from "@context/ModalContext";
@@ -11,6 +12,7 @@ import usePredictImage from "@hooks/api/feature/usePredictImage";
 import { navigate } from "@navigation/NavigationService";
 import { ROUTE_KEY } from "@navigation/route";
 import { GIF_LINK } from "assets/Gif";
+import SearchIcon from "assets/svg/SearchIcon";
 import * as ImagePicker from "expo-image-picker";
 import React, { useEffect } from "react";
 import { TouchableOpacity } from "react-native";
@@ -217,27 +219,16 @@ function QuickSearchingButton() {
     }
   }, [error]);
   return (
-    <TouchableOpacity
-      style={{
-        width: 60,
-        height: 60,
-        alignContent: "center",
-        alignItems: "center",
-        alignSelf: "center",
-        backgroundColor: btnPrimary,
-        borderRadius: 1000,
-        // flex: 1,
-        transform: [{ translateY: -25 }],
-      }}
+    <PressAnimate
       onPress={handleOpen}
+      style={{
+        backgroundColor: "rgba(0,0,0,0.03)",
+        padding: 10,
+        borderRadius: 10,
+      }}
     >
-      <Ionicons
-        name="search-sharp"
-        size={30}
-        color="white"
-        style={{ marginTop: "auto", marginBottom: "auto" }}
-      />
-    </TouchableOpacity>
+      <SearchIcon color={btnPrimary} size={32} />
+    </PressAnimate>
   );
 }
 

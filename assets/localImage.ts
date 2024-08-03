@@ -43,5 +43,6 @@ export function localImages() {
     locationIcon: require("./images/locationIcon.png"),
     suggestIcon: require("./images/suggest.png"),
     voiceIcon: require("./images/voice.png"),
+    avatarDefault: require("./images/avatarDefault.png"),
   };
 }

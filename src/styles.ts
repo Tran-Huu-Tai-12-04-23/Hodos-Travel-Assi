@@ -59,19 +59,17 @@ export const styleGlobal = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
   },
-  shadow: {
-    elevation: 5,
-    shadowColor: borderColor,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 110,
-  },
+  shadow: {},
   shadowForce: {
-    elevation: 5,
-    shadowColor: borderColor,
-    shadowOffset: { width: 100, height: 100 },
-    shadowOpacity: 1,
-    shadowRadius: 1000000,
+    borderColor: "transparent",
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOffset: {
+      height: 1,
+      width: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 3.84,
   },
   icon: { width: 30, height: 30 },
   borderBottom: {
@@ -91,7 +89,6 @@ export const styleGlobal = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 10,
   },
   label: {
     color: labelColor,

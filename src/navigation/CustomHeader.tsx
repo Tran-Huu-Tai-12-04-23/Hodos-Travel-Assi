@@ -1,35 +1,33 @@
+import Icon from "@components/Icon";
 import Row from "@components/Row";
 import TextDefault from "@components/TextDefault";
+import { inputColor } from "@constants/Colors";
+import { getStatusBarHeight } from "@helper/utils";
 import { localImages } from "assets/localImage";
 import React from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { goBack } from "./NavigationService";
-import {
-  blackColor,
-  inputColor,
-  mainBg,
-  primaryColor,
-  whiteColor,
-} from "@constants/Colors";
-import { styleGlobal } from "src/styles";
-import Icon from "@components/Icon";
-import ButtonCustom from "@components/ButtonCustom";
 import { SafeAreaView } from "react-native";
-import { deviceHeight } from "@helper/utils";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { styleGlobal } from "src/styles";
+import { goBack } from "./NavigationService";
 
 type PropsType = {
   title?: string;
   isBack?: boolean;
   style?: any;
 };
-function CustomHeader({ title, style, isBack = true }: PropsType) {
+export default function CustomHeader({
+  title,
+  style,
+  isBack = true,
+}: PropsType) {
   return (
     <SafeAreaView
       style={{
         paddingHorizontal: 10,
         minHeight: 50,
-        top: deviceHeight * 0.03,
+        top: getStatusBarHeight(SafeAreaView) + 10,
         position: "absolute",
+        left: 10,
         zIndex: 1000,
         ...style,
       }}
@@ -82,5 +80,3 @@ function CustomHeader({ title, style, isBack = true }: PropsType) {
     </SafeAreaView>
   );
 }
-
-export default CustomHeader;

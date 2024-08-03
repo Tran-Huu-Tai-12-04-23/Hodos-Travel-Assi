@@ -43,6 +43,14 @@ function MyPager({}: PropsType) {
         onPageSelected={onPageSelected}
       >
         <View style={[styles.page]} key="1">
+          <Image
+            source={localImages().intro1}
+            style={{
+              width: deviceWidth - 20,
+              height: 400,
+            }}
+            resizeMode="contain"
+          />
           <TextDefault
             style={{ fontSize: 24, fontWeight: "bold", textAlign: "center" }}
           >
@@ -99,10 +107,6 @@ function MyPager({}: PropsType) {
       <Row
         center
         style={{
-          position: "absolute",
-          bottom: 20,
-          left: 0,
-          right: 0,
           display: "flex",
           rowGap: 30,
         }}
@@ -112,7 +116,7 @@ function MyPager({}: PropsType) {
           primary
           labelStyle={{ fontWeight: "bold" }}
           minWidth={deviceWidth / 2}
-          style={{ paddingHorizontal: 30, padding: 24, marginTop: 30 }}
+          style={{ paddingHorizontal: 30, padding: 20, marginTop: 30 }}
           title="GET STARTED"
           onPress={() => navigate(ROUTE_KEY.LOGIN)}
           endIcon={<FontAwesome name="arrow-right" size={16} color="white" />}
@@ -170,25 +174,6 @@ export default function IntroScreen() {
             longitude: location.coords.longitude,
           });
         console.log("=====================Current Position:", location.coords);
-
-        // watchId = Location.watchPositionAsync(
-        //   {
-        //     accuracy: 4,
-        //     timeInterval: 4,
-        //     distanceInterval: 10,
-        //   },
-        //   (position) => {
-        //     // if (position.coords)
-        //     // setUserLocation({
-        //     //   latitude: position.coords.latitude,
-        //     //   longitude: position.coords.longitude,
-        //     // });
-        //     // console.log("========================User position changed:", {
-        //     //   latitude: position.coords.latitude,
-        //     //   longitude: position.coords.longitude,
-        //     // });
-        //   }
-        // );
       } catch (err) {
         console.warn(err);
       }

@@ -1,22 +1,23 @@
-import React, { useState, useCallback } from "react";
-import { FlatList, TouchableOpacity } from "react-native";
-import { ActivityIndicator } from "react-native-paper";
-import { useRoute } from "@react-navigation/native";
-import { debounce } from "lodash";
-import MainLayout from "@layout/MainLayout";
-import TextInputCustom from "@components/TextInputCustom";
 import ButtonCustom from "@components/ButtonCustom";
-import Icon from "@components/Icon";
 import Row from "@components/Row";
 import Separator from "@components/Separator";
 import TextDefault from "@components/TextDefault";
-import LocationItem from "@components/LocationItem";
-import FoodItem from "@components/FoodItem";
-import { deviceWidth } from "@helper/utils";
-import { localImages } from "assets/localImage";
-import { whiteColor, primaryColor } from "@constants/Colors";
+import TextInputCustom from "@components/TextInputCustom";
+import { btnPrimary, primaryColor, whiteColor } from "@constants/Colors";
 import usePaginationSearch from "@hooks/api/feature/usePaginationSearch";
+import MainLayout from "@layout/MainLayout";
 import { goBack } from "@navigation/NavigationService";
+import { useRoute } from "@react-navigation/native";
+import ArrowLeftIcon from "assets/svg/ArrowLeftIcon";
+import LocationIcon from "assets/svg/LocationIcon";
+import SaveFoodIcon from "assets/svg/SaveFood";
+import { debounce } from "lodash";
+import React, { Fragment, useCallback, useState } from "react";
+import { FlatList, TouchableOpacity } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
+import { IFood } from "src/Models/food.model";
+import FoodSearchItem from "./components/FoodSearchItem";
+import LocationSearchItem from "./components/LocationSearchItem";
 
 export enum SEARCH_TYPE {
   ALL = "ALL",
@@ -52,17 +53,18 @@ const SearchLocation = () => {
     debouncedOnChangeText(text);
   };
 
-  const renderSearchItem = ({ item, index }: { item: any; index: number }) => (
-    <Row full key={index}>
-      {item.type === SEARCH_TYPE.LOCATION && (
-        <LocationItem key={index} width={deviceWidth - 40} data={item} />
-      )}
-      {item.type === SEARCH_TYPE.FOOD && (
-        <FoodItem key={index} width={deviceWidth - 40} data={item} />
-      )}
-    </Row>
-  );
-
+  const renderSearchItem = ({ item, index }: { item: any; index: number }) => {
+    return (
+      <Fragment key={item.id}>
+        {item.type === SEARCH_TYPE.LOCATION && (
+          <LocationSearchItem index={index} data={item} />
+        )}
+        {item.type === SEARCH_TYPE.FOOD && (
+          <FoodSearchItem index={index} data={item as IFood} />
+        )}
+      </Fragment>
+    );
+  };
   return (
     <MainLayout
       style={{
@@ -73,11 +75,8 @@ const SearchLocation = () => {
       }}
     >
       <Row between wrap colGap={20}>
-        <TouchableOpacity onPress={goBack}>
-          <Icon
-            link={localImages().arrBackIcon}
-            style={{ width: 14, height: 14 }}
-          />
+        <TouchableOpacity onPress={goBack} style={{ paddingLeft: 10 }}>
+          <ArrowLeftIcon size={30} />
         </TouchableOpacity>
         <TextInputCustom
           defaultValue={searchQuery}
@@ -86,9 +85,8 @@ const SearchLocation = () => {
           placeholder="Where do you go?"
         />
       </Row>
-
       <Separator height={10} />
-      <Row style={{ padding: 10 }} colGap={20}>
+      <Row style={{ padding: 10 }} colGap={10}>
         {Object.values(SEARCH_TYPE).map((type) => (
           <ButtonCustom
             key={type}
@@ -96,17 +94,23 @@ const SearchLocation = () => {
             primary={typeSearch === type}
             onPress={() => setTypeSearch(type)}
             title={type}
+            labelStyle={{
+              fontSize: 12,
+            }}
+            style={{
+              minHeight: 46,
+              paddingHorizontal: 15,
+            }}
             startIcon={
-              type !== SEARCH_TYPE.ALL && (
-                <Icon
-                  link={
-                    type === SEARCH_TYPE.LOCATION
-                      ? localImages().locationIcon
-                      : localImages().foodIcon
-                  }
-                  style={{ height: 18 }}
+              type !== SEARCH_TYPE.ALL && type === SEARCH_TYPE.LOCATION ? (
+                <LocationIcon
+                  color={typeSearch === type ? "white" : btnPrimary}
                 />
-              )
+              ) : type === SEARCH_TYPE.FOOD ? (
+                <SaveFoodIcon
+                  color={typeSearch === type ? "white" : btnPrimary}
+                />
+              ) : null
             }
           />
         ))}
@@ -125,11 +129,11 @@ const SearchLocation = () => {
         <FlatList
           showsVerticalScrollIndicator={false}
           onRefresh={refetch}
+          numColumns={2}
           refreshing={isRefetching}
           onEndReached={() => fetchNextPage()}
           onEndReachedThreshold={0.2}
           scrollEventThrottle={2}
-          ItemSeparatorComponent={() => <Separator height={20} />}
           ListFooterComponent={() =>
             hasNextPage ? (
               <ActivityIndicator color={primaryColor} />
@@ -146,7 +150,6 @@ const SearchLocation = () => {
               </Row>
             )
           }
-          style={{ paddingTop: 10, padding: 10 }}
           data={data}
           renderItem={renderSearchItem}
           keyExtractor={(item, index) => index.toString()}

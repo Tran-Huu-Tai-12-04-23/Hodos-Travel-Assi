@@ -5,7 +5,6 @@ import {
   NavigationContainer,
   NavigationState,
 } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 import * as Updates from "expo-updates";
 import React, { useEffect } from "react";
 import { StatusBar } from "react-native";
@@ -13,8 +12,6 @@ import "react-native-gesture-handler";
 import AuthNavigator from "./AuthNavigator";
 import { navigationRef } from "./NavigationService";
 import RootStackNavigation from "./RootStackNavigation";
-
-const Stack = createStackNavigator();
 
 function screenTracking(state: NavigationState | undefined): void {
   if (state) {

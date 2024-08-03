@@ -1,14 +1,14 @@
 import GifImage from "@components/Gif";
 import Row from "@components/Row";
 import TextDefault from "@components/TextDefault";
+import { dangerColor, mainBg, primaryColor } from "@constants/Colors";
+import { MaterialIcons } from "@expo/vector-icons";
+import useTranslate from "@hooks/api/translate/useTranslate";
 import { useVoiceRecognition } from "@hooks/voice";
 import MainLayout from "@layout/MainLayout";
 import { GIF_LINK } from "assets/Gif";
 import React, { useEffect, useState } from "react";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { MaterialIcons } from "@expo/vector-icons";
-import { dangerColor, mainBg, primaryColor } from "@constants/Colors";
-import useTranslate from "@hooks/api/translate/useTranslate";
 import { ActivityIndicator } from "react-native-paper";
 function TextToSpeakScreen() {
   const { startRecognizing, stopRecognizing, state } = useVoiceRecognition();
@@ -26,9 +26,14 @@ function TextToSpeakScreen() {
   }, [state.results[0]]);
 
   return (
-    <MainLayout>
+    <MainLayout isBack>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Row direction="column" full style={{ padding: 10 }} rowGap={20}>
+        <Row
+          direction="column"
+          full
+          style={{ padding: 10, paddingTop: 60 }}
+          rowGap={20}
+        >
           <Row
             style={{ padding: 20, backgroundColor: mainBg, borderRadius: 20 }}
             full

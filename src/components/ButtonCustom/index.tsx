@@ -87,7 +87,7 @@ function ButtonCustom(props: ButtonProps) {
       }
       case "contained": {
         setStyleCus({
-          backgroundColor: whiteColor,
+          backgroundColor: "rgba(0,0,0,0.1)",
           color: blackColor,
         });
         return;
@@ -143,7 +143,7 @@ function ButtonCustom(props: ButtonProps) {
         {isLoading && (
           <>
             <ActivityIndicator color={btnPrimary} />
-            <TextDefault>Loading ....</TextDefault>
+            <TextDefault style={{ color: "white" }}>Loading ....</TextDefault>
           </>
         )}
         {!isLoading && startIcon}

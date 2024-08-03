@@ -12,9 +12,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import HomeDrawer from "src/Drawer/HomeDrawer";
-import PersonalScreen from "src/screens/BottomTab/Personal";
-import ScheduleScreen from "src/screens/BottomTab/Schedule";
-import TextToSpeakScreen from "src/screens/BottomTab/SpeechToText";
 import { styleGlobal } from "src/styles";
 import { ROUTE_KEY } from "./route";
 
@@ -105,13 +102,6 @@ const BottomTabNavigator = () => {
       tabBar={(props) => <CustomTabBar {...props} />}
     >
       <Tab.Screen name={ROUTE_KEY.MAIN_APP} component={HomeDrawer} />
-      <Tab.Screen name={ROUTE_KEY.SCHEDULE} component={ScheduleScreen} />
-      <Tab.Screen name={"any"} component={ScheduleScreen} />
-      <Tab.Screen
-        name={ROUTE_KEY.TEXT_TO_SPEAK}
-        component={TextToSpeakScreen}
-      />
-      <Tab.Screen name={ROUTE_KEY.PERSONAL} component={PersonalScreen} />
     </Tab.Navigator>
   );
 };

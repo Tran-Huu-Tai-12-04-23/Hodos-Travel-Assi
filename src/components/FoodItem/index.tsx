@@ -1,20 +1,73 @@
 import ImageCustom from "@components/ImageCustom";
 import Row from "@components/Row";
 import TextDefault from "@components/TextDefault";
-import { borderColor, hightLightColor, priceColor } from "@constants/Colors";
+import {
+  CARD_LENGTH,
+  SIDECARD_LENGTH,
+  SPACING,
+  priceColor,
+} from "@constants/Colors";
 import Helper, { vndToUsd } from "@helper/helpers";
 import { navigate } from "@navigation/NavigationService";
 import { ROUTE_KEY } from "@navigation/route";
 import React, { memo, useCallback } from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
 import { IFood } from "src/Models/food.model";
+import { styleGlobal } from "src/styles";
 
 type PropsType = {
   width: any;
   data: IFood;
+  index: number;
+  scrollX: number;
 };
-function FoodItem({ width = 250, data }: PropsType) {
+function FoodItem({ width = 250, data, index, scrollX }: PropsType) {
   const { _id, name, distanceInfo, lstImgs, address, rangePrice } = data;
+  const size = useSharedValue(0.8);
+  const inputRange = [
+    (index - 1) * CARD_LENGTH,
+    index * CARD_LENGTH,
+    (index + 1) * CARD_LENGTH,
+  ];
+
+  const opacity = useSharedValue(1);
+  const opacityInputRange = [
+    (index - 1) * CARD_LENGTH,
+    index * CARD_LENGTH,
+    (index + 1) * CARD_LENGTH,
+  ];
+
+  const cardStyle = useAnimatedStyle(() => {
+    opacity.value = interpolate(
+      scrollX,
+      opacityInputRange,
+      [0.5, 1, 0.5],
+      Extrapolate.CLAMP
+    );
+    size.value = interpolate(
+      scrollX,
+      inputRange,
+      [0.8, 1, 0.8],
+      Extrapolate.CLAMP
+    );
+
+    size.value = interpolate(
+      scrollX,
+      inputRange,
+      [0.8, 1, 0.8],
+      Extrapolate.CLAMP
+    );
+    return {
+      transform: [{ scaleY: size.value }],
+      opacity: opacity.value,
+    };
+  });
 
   const thumbnails = useCallback(() => {
     return lstImgs && lstImgs?.length > 0
@@ -22,80 +75,89 @@ function FoodItem({ width = 250, data }: PropsType) {
       : "https://www.androidauthority.com/wp-content/uploads/2015/07/location_marker_gps_shutterstock.jpg";
   }, [lstImgs]);
 
-  const [min, max] = rangePrice;
   return (
     <TouchableOpacity
-      onPress={() =>
+      activeOpacity={0.9}
+      style={{ backgroundColor: "white" }}
+      onPress={() => {
         navigate(ROUTE_KEY.DETAIL_FOOD, {
           _id: _id,
           distanceIF: distanceInfo,
-        })
-      }
+        });
+      }}
     >
-      <Row
-        direction="column"
+      <Animated.View
         style={[
+          cardStyle,
+          styleGlobal.shadowForce,
           {
             width: width,
-            borderTopEndRadius: 10,
-            borderTopStartRadius: 10,
-            overflow: "hidden",
+            borderRadius: 10,
+            backgroundColor: "white",
+            maxHeight: 240,
+          },
+          {
+            marginLeft: index == 0 ? SIDECARD_LENGTH * 0.2 : SPACING,
+            marginRight: SPACING,
           },
         ]}
       >
-        <ImageCustom link={thumbnails()} style={{ width }} />
-        <Row
-          style={{
-            backgroundColor: borderColor,
-            padding: 10,
-            borderBottomEndRadius: 10,
-            borderBottomStartRadius: 10,
-          }}
-        >
-          <Row start full direction="column" style={{ overflow: "hidden" }}>
-            <TextDefault
-              bold
-              style={{ fontSize: 18, overflow: "hidden" }}
-              numberOfLines={1}
-              ellipsizeMode="tail"
-            >
-              {name}
-            </TextDefault>
-            <Row direction="column" start colGap={4}>
-              <TextDefault numberOfLines={1} ellipsizeMode="tail">
-                {address}
+        <Row direction="column" full>
+          <ImageCustom
+            link={thumbnails()}
+            style={{ borderRadius: 10, height: 120, width }}
+          />
+          <Row
+            style={{
+              padding: 10,
+              maxHeight: 120,
+            }}
+          >
+            <Row start full direction="column" style={{ overflow: "hidden" }}>
+              <TextDefault
+                bold
+                style={{ fontSize: 18, overflow: "hidden" }}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {name}
               </TextDefault>
-              {rangePrice && (
-                <>
-                  <Row start colGap={4} wrap>
-                    <TextDefault style={{ color: priceColor }} bold>
-                      {Helper.formatVND(+rangePrice[0])}
-                    </TextDefault>
-                    <TextDefault style={{ color: priceColor }}>-</TextDefault>
-                    <TextDefault style={{ color: priceColor }} bold>
-                      {Helper.formatVND(+rangePrice[1])}
-                    </TextDefault>
-                  </Row>
-                  <Row start colGap={4} wrap>
-                    <TextDefault bold>
-                      {"($" + vndToUsd(+rangePrice[0])}
-                    </TextDefault>
-                    <TextDefault>-</TextDefault>
-                    <TextDefault bold>
-                      {"$" + vndToUsd(+rangePrice[1]) + ")"}
-                    </TextDefault>
-                  </Row>
-                </>
-              )}
-              <Row colGap={20}>
-                <TextDefault bold>
-                  {distanceInfo && distanceInfo.distanceInKilometers + "kms"}
+              <Row direction="column" start colGap={4}>
+                <TextDefault numberOfLines={1} ellipsizeMode="tail">
+                  {address}
                 </TextDefault>
+                {rangePrice && (
+                  <>
+                    <Row start colGap={4} wrap>
+                      <TextDefault style={{ color: priceColor }} bold>
+                        {Helper.formatVND(+rangePrice[0])}
+                      </TextDefault>
+                      <TextDefault style={{ color: priceColor }}>-</TextDefault>
+                      <TextDefault style={{ color: priceColor }} bold>
+                        {Helper.formatVND(+rangePrice[1])}
+                      </TextDefault>
+                    </Row>
+                    <Row start colGap={4} wrap>
+                      <TextDefault bold>
+                        {"($" + vndToUsd(+rangePrice[0])}
+                      </TextDefault>
+                      <TextDefault>-</TextDefault>
+                      <TextDefault bold>
+                        {"$" + vndToUsd(+rangePrice[1]) + ")"}
+                      </TextDefault>
+                    </Row>
+                  </>
+                )}
+                <Row colGap={20}>
+                  <TextDefault bold>
+                    {distanceInfo && distanceInfo.distanceInKilometers + "kms"}
+                  </TextDefault>
+                </Row>
               </Row>
             </Row>
           </Row>
         </Row>
-      </Row>
+      </Animated.View>
     </TouchableOpacity>
   );
 }
