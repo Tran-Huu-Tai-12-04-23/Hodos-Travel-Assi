@@ -44,7 +44,7 @@ const CustomBottomSheet = forwardRef<Ref, Props>(
         ref={ref}
       >
         <BottomSheetView
-          onTouchStart={(e) => e.stopPropagation()}
+          // onTouchStart={(e) => e.stopPropagation()}
           style={{ flex: 1, alignItems: "center" }}
         >
           {children}

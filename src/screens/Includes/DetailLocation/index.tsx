@@ -3,13 +3,7 @@ import Row from "@components/Row";
 import Separator from "@components/Separator";
 import SlideImage from "@components/SlideImage";
 import TextDefault from "@components/TextDefault";
-import {
-  blackColor,
-  btnPrimary,
-  hightLightColor,
-  mainBg,
-  whiteColor,
-} from "@constants/Colors";
+import { btnPrimary, hightLightColor, whiteColor } from "@constants/Colors";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { deviceHeight } from "@helper/utils";
 import useFindDetailLocation from "@hooks/api/location/useFindDetailLocation";
@@ -17,12 +11,11 @@ import MainLayout from "@layout/MainLayout";
 import { navigate } from "@navigation/NavigationService";
 import { ROUTE_KEY } from "@navigation/route";
 import { useRoute } from "@react-navigation/native";
-import { localImages } from "assets/localImage";
+import Vietmap from "@vietmap/vietmap-gl-react-native";
 import React, { useState } from "react";
 import { Modal, Platform, View } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import ImageViewer from "react-native-image-zoom-viewer";
-import MapView, { Marker } from "react-native-maps";
 import LstLocation from "src/screens/BottomTab/Home/LstLocation";
 import { styleGlobal } from "src/styles";
 import LoadingScreen from "src/webroot/LoadingScreen";
@@ -74,7 +67,15 @@ export default function DetailLocationScreen() {
       isBack
     >
       <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 10 }}>
-        <Row style={{ height: 300 }} full>
+        <Row
+          style={{
+            height: 300,
+            borderBottomEndRadius: 20,
+            borderBottomStartRadius: 20,
+            overflow: "hidden",
+          }}
+          full
+        >
           <SlideImage
             images={lstImgs}
             onPressImage={() => setIsViewerImg(true)}
@@ -103,12 +104,10 @@ export default function DetailLocationScreen() {
 
         <Row
           style={{
-            minHeight: "80%",
             backgroundColor: whiteColor,
-            transform: [{ translateY: -100 }],
             borderTopLeftRadius: 24,
             borderTopRightRadius: 24,
-            paddingHorizontal: 20,
+            paddingHorizontal: 10,
             paddingVertical: 14,
           }}
           full
@@ -139,15 +138,6 @@ export default function DetailLocationScreen() {
             </TextDefault>
           </TouchableOpacity>
           <Separator height={20} />
-          {/* <Row start colGap={20}>
-            <ButtonCustom
-              style={{ padding: 5 }}
-              primary
-              onPress={() => {}}
-              title={"Review"}
-            />
-          </Row> */}
-          <Separator height={20} />
 
           <View
             style={{
@@ -157,72 +147,50 @@ export default function DetailLocationScreen() {
               overflow: "hidden",
             }}
           >
-            <MapView
-              initialRegion={{
-                latitude: infoMap.LATITUDE,
-                longitude: infoMap.LONGITUDE,
-                latitudeDelta: infoMap.LATITUDE_DELTA,
-                longitudeDelta: infoMap.LONGITUDE_DELTA,
-              }}
-              style={{ width: "100%", height: 200, borderRadius: 20 }}
+            <Vietmap.MapView
+              styleURL={
+                "https://maps.vietmap.vn/api/maps/dark/styles.json?apikey=9cbf0bc15d3901b7e043d8f76be8d73f370a82fe629a2d46"
+              }
+              style={{ flex: 1 }}
+              logoEnabled={false}
             >
-              <Marker
-                coordinate={{
-                  latitude: infoMap.LATITUDE,
-                  longitude: infoMap.LONGITUDE,
-                }}
-                title="You location"
-                description="Origin Point"
-                pinColor={blackColor}
-                icon={localImages().originIcon}
+              <Vietmap.Camera
+                zoomLevel={13}
+                followZoomLevel={13}
+                followUserLocation={false}
+                centerCoordinate={coordinates.coordinates}
               />
-            </MapView>
+              <Vietmap.MarkerView coordinate={coordinates.coordinates}>
+                <Vietmap.Callout title={address} />
+              </Vietmap.MarkerView>
+            </Vietmap.MapView>
           </View>
-
-          <Separator height={30} />
-          <TextDefault bold>Nearby Locations</TextDefault>
-          <Separator height={20} />
-          <LstLocation locations={data?.nearLocations || []} />
-
-          <Separator height={10} />
         </Row>
+        <LstLocation locations={data?.nearLocations || []} />
+
+        <Separator height={100} />
       </ScrollView>
-      <Row
+      <ButtonCustom
+        primary
+        onPress={() =>
+          navigate(ROUTE_KEY.DIRECTION_LOCATION, {
+            desLocation: [longitude, latitude],
+            locationId: _id,
+          })
+        }
+        title={""}
         full
-        center
-        colGap={20}
-        style={[
-          {
-            backgroundColor: mainBg,
-            flex: 0.1,
-            maxHeight: 60,
-            marginBottom: Platform.OS === "ios" ? 60 : 30,
-          },
-        ]}
-      >
-        <ButtonCustom
-          onPress={() => {}}
-          title={"Save"}
-          labelStyle={{ color: "black" }}
-          style={{ padding: 10, width: 100 }}
-          textColor={btnPrimary}
-          background={whiteColor}
-        />
-        <ButtonCustom
-          primary
-          onPress={() =>
-            navigate(ROUTE_KEY.DIRECTION, {
-              desLocation: [longitude, latitude],
-            })
-          }
-          title={"Director"}
-          full
-          style={{ width: 200, padding: 10 }}
-          endIcon={
-            <MaterialIcons name="directions" size={20} color={whiteColor} />
-          }
-        />
-      </Row>
+        style={{
+          padding: 10,
+          position: "absolute",
+          maxWidth: 50,
+          bottom: 10,
+          right: 10,
+        }}
+        endIcon={
+          <MaterialIcons name="directions" size={36} color={whiteColor} />
+        }
+      />
     </MainLayout>
   );
 }

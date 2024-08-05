@@ -8,13 +8,13 @@ const envs = {
     EXPO_PUBLIC_APP_VARIANT: "development",
     EXPO_PUBLIC_APP_NAME: "Hodos Dev",
     EXPO_PUBLIC_BUNDLE_ID: "com.genny.hodos.dev",
-    EXPO_PUBLIC_API: "",
+    EXPO_PUBLIC_API: "https://travel-support-api.genny.id.vn",
   },
   production: {
     EXPO_PUBLIC_APP_VARIANT: "production",
     EXPO_PUBLIC_APP_NAME: "Hodos",
     EXPO_PUBLIC_BUNDLE_ID: "com.genny.hodos.prod",
-    EXPO_PUBLIC_API: "",
+    EXPO_PUBLIC_API: "https://travel-support-api.genny.id.vn",
   },
 };
 
@@ -38,7 +38,7 @@ export default (): ExpoConfig => ({
   userInterfaceStyle: "automatic",
   name: EXPO_PUBLIC_APP_NAME,
   slug: "hodos",
-  version: "2.0.1",
+  version: "2.0.2",
   icon: "./assets/logo.png",
   splash: {
     image: "./assets/splash.png",
@@ -66,9 +66,15 @@ export default (): ExpoConfig => ({
     bundleIdentifier: EXPO_PUBLIC_BUNDLE_ID,
     buildNumber: "1",
     infoPlist: {
+      VietMapAPIBaseURL: "https://maps.vietmap.vn/api/navigations/route/",
+      VietMapAccessToken: "9cbf0bc15d3901b7e043d8f76be8d73f370a82fe629a2d46",
+      VietMapURL:
+        "https://maps.vietmap.vn/api/maps/light/styles.json?apikey=9cbf0bc15d3901b7e043d8f76be8d73f370a82fe629a2d46",
       CFBundleAllowMixedLocalizations: true,
-      NSLocationWhenInUseUsageDescription:
-        "When in use permissions description",
+      NSLocationAlwaysAndWhenInUseUsageDescription:
+        "Your request location description",
+      NSLocationAlwaysUsageDescription: "Your request location description",
+      NSLocationWhenInUseUsageDescription: "Your request location description",
     },
     config: {
       usesNonExemptEncryption: false,

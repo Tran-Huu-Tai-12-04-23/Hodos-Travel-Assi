@@ -3,7 +3,7 @@ import ImageCustom from "@components/ImageCustom";
 import Row from "@components/Row";
 import Separator from "@components/Separator";
 import TextDefault from "@components/TextDefault";
-import { hightLightColor, priceColor } from "@constants/Colors";
+import { priceColor } from "@constants/Colors";
 import { vndToUsd } from "@helper/helpers";
 import { deviceWidth } from "@helper/utils";
 import { navigate } from "@navigation/NavigationService";
@@ -80,8 +80,9 @@ function FoodSchedule({
           mode="outlined"
           style={{ paddingHorizontal: 30 }}
           onPress={() =>
-            navigate(ROUTE_KEY.DIRECTION, {
+            navigate(ROUTE_KEY.DIRECTION_FOOD, {
               desLocation: to.coordinates.coordinates,
+              foodId: to._id,
             })
           }
           title={"Director"}

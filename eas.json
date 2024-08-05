@@ -13,7 +13,8 @@
         "EXPO_PUBLIC_APP_VARIANT": "development",
         "EXPO_PUBLIC_APP_NAME": "Hodos Dev",
         "EXPO_PUBLIC_BUNDLE_ID": "com.genny.hodos.dev",
-        "EXPO_PUBLIC_API": "https://life-manager-api.genny.id.vn/"
+        "EXPO_PUBLIC_API": "https://life-manager-api.genny.id.vn/",
+        "VIETMAP_API_URL": "https://maps.vietmap.vn/api/"
       }
     },
     "production": {
@@ -29,7 +30,8 @@
         "EXPO_PUBLIC_APP_VARIANT": "production",
         "EXPO_PUBLIC_APP_NAME": "Hodos",
         "EXPO_PUBLIC_BUNDLE_ID": "com.genny.hodos.pro",
-        "EXPO_PUBLIC_API": "https://life-manager-api.genny.id.vn/"
+        "EXPO_PUBLIC_API": "https://life-manager-api.genny.id.vn/",
+        "VIETMAP_API_URL": "https://maps.vietmap.vn/api/"
       }
     }
   },

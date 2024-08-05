@@ -18,10 +18,11 @@ const TabComponent = ({ tabs, names }: PropsType) => {
         tabBarStyle: {
           borderRadius: 9999,
           justifyContent: "center",
-          width: deviceWidth - 20,
+          width: deviceWidth - 40,
           padding: 5,
           borderWidth: 1,
           borderColor: "#F2EAEA",
+          margin: 10,
         },
         tabBarIndicatorStyle: {
           top: 6,

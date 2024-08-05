@@ -9,8 +9,7 @@ import Title from "@components/Title";
 import { primaryColor } from "@constants/Colors";
 import { useLoading } from "@context/loadingGlobalContext";
 import useRegister from "@hooks/api/auth/useRegister";
-import ImgBackgroundLayout from "@layout/ImgBackgroundLayout";
-import CustomHeader from "@navigation/CustomHeader";
+import MainLayout from "@layout/MainLayout";
 import { navigate } from "@navigation/NavigationService";
 import { ROUTE_KEY } from "@navigation/route";
 import React, { useState } from "react";
@@ -59,7 +58,7 @@ export default function RegisterScreen() {
   };
 
   return (
-    <ImgBackgroundLayout>
+    <MainLayout isBack>
       <ScrollView
         contentContainerStyle={[
           styleGlobal.scrollContainer,
@@ -68,7 +67,6 @@ export default function RegisterScreen() {
           },
         ]}
       >
-        <CustomHeader title="" />
         <Separator height={20} />
         <Container>
           <Row
@@ -122,6 +120,6 @@ export default function RegisterScreen() {
           </Row>
         </Container>
       </ScrollView>
-    </ImgBackgroundLayout>
+    </MainLayout>
   );
 }

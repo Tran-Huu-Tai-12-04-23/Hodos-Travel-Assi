@@ -1,9 +1,8 @@
-import Icon from "@components/Icon";
 import Row from "@components/Row";
 import TextDefault from "@components/TextDefault";
 import { inputColor } from "@constants/Colors";
 import { getStatusBarHeight } from "@helper/utils";
-import { localImages } from "assets/localImage";
+import ArrowLeftIcon from "assets/svg/ArrowLeftIcon";
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -56,10 +55,7 @@ export default function CustomHeader({
               },
             ]}
           >
-            <Icon
-              link={localImages().arrBackIcon}
-              style={{ width: 14, height: 14 }}
-            />
+            <ArrowLeftIcon />
           </TouchableOpacity>
         )}
         <TextDefault

@@ -20,7 +20,6 @@ function LocationScheduleItem({
   };
 }) {
   const { from, to, distance } = data;
-  console.log(distance);
   const thumbnails = useCallback(() => {
     return to?.lstImgs?.length > 0 ? to.lstImgs[0] : "  ";
   }, [to]);
@@ -70,8 +69,9 @@ function LocationScheduleItem({
           mode="outlined"
           style={{ paddingHorizontal: 30 }}
           onPress={() =>
-            navigate(ROUTE_KEY.DIRECTION, {
+            navigate(ROUTE_KEY.DIRECTION_LOCATION, {
               desLocation: to.coordinates.coordinates,
+              locationId: to._id,
             })
           }
           title={"Director"}

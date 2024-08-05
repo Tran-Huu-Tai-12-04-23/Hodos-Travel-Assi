@@ -14,34 +14,35 @@ function LstLocation({ locations }: { locations: ILocation[] }) {
       <TextDefault style={{ fontSize: 12, paddingHorizontal: 10 }}>
         Places nearest
       </TextDefault>
-      <Animated.View style={{ maxHeight: 220 }}>
-        <Animated.FlatList
-          scrollEventThrottle={16}
-          showsHorizontalScrollIndicator={false}
-          decelerationRate={0.8}
-          snapToInterval={CARD_LENGTH + SPACING * 2}
-          disableIntervalMomentum={true}
-          disableScrollViewPanResponder={true}
-          snapToAlignment={"center"}
-          data={locations}
-          horizontal={true}
-          renderItem={({ item, index }) => {
-            return (
-              <LocationItem
-                key={index}
-                width={CARD_LENGTH}
-                data={item}
-                index={index}
-                scrollX={scrollX}
-              />
-            );
-          }}
-          keyExtractor={(item, index) => index.toString()}
-          onScroll={(event) => {
-            setScrollX(event.nativeEvent.contentOffset.x);
-          }}
-        />
-      </Animated.View>
+      <Animated.FlatList
+        contentContainerStyle={{
+          padding: 10,
+        }}
+        scrollEventThrottle={16}
+        showsHorizontalScrollIndicator={false}
+        decelerationRate={0.8}
+        snapToInterval={CARD_LENGTH + SPACING * 2}
+        disableIntervalMomentum={true}
+        disableScrollViewPanResponder={true}
+        snapToAlignment={"center"}
+        data={locations}
+        horizontal={true}
+        renderItem={({ item, index }) => {
+          return (
+            <LocationItem
+              key={index}
+              width={CARD_LENGTH}
+              data={item}
+              index={index}
+              scrollX={scrollX}
+            />
+          );
+        }}
+        keyExtractor={(item, index) => index.toString()}
+        onScroll={(event) => {
+          setScrollX(event.nativeEvent.contentOffset.x);
+        }}
+      />
     </Row>
   );
 }

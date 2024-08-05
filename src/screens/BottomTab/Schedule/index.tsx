@@ -18,7 +18,7 @@ function ScheduleScreen() {
       }}
     >
       <SafeAreaView
-        style={{ flex: 1, marginBottom: Platform.OS === "ios" ? 70 : 0 }}
+        style={{ flex: 1, marginBottom: Platform.OS === "ios" ? 70 : 20 }}
       >
         <TabComponent
           tabs={[<LocationSchedule />, <FoodSchedule />]}

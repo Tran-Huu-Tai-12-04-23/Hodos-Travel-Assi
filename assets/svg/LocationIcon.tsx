@@ -4,8 +4,8 @@ import Svg, { Circle, Path } from "react-native-svg";
 function LocationIcon(props: any) {
   return (
     <Svg
-      width={24}
-      height={24}
+      width={props?.size ? props.size : 24}
+      height={props?.size ? props.size : 24}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -8,8 +8,7 @@ import TextInputCustom from "@components/TextInputCustom";
 import Title from "@components/Title";
 import { btnPrimary, primaryColor } from "@constants/Colors";
 import useLogin from "@hooks/api/auth/useLogin";
-import ImgBackgroundLayout from "@layout/ImgBackgroundLayout";
-import CustomHeader from "@navigation/CustomHeader";
+import MainLayout from "@layout/MainLayout";
 import { navigate } from "@navigation/NavigationService";
 import { ROUTE_KEY } from "@navigation/route";
 
@@ -48,7 +47,7 @@ export default function LoginScreen() {
   };
 
   return (
-    <ImgBackgroundLayout>
+    <MainLayout isBack>
       <ScrollView
         contentContainerStyle={[
           styleGlobal.scrollContainer,
@@ -57,8 +56,6 @@ export default function LoginScreen() {
           },
         ]}
       >
-        <CustomHeader title="" />
-
         <Separator height={20} />
         <Container>
           <Row
@@ -111,6 +108,6 @@ export default function LoginScreen() {
           </Row>
         </Container>
       </ScrollView>
-    </ImgBackgroundLayout>
+    </MainLayout>
   );
 }

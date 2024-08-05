@@ -1,21 +1,20 @@
-import GifImage from "@components/Gif";
+import ButtonCustom from "@components/ButtonCustom";
 import Row from "@components/Row";
+import Separator from "@components/Separator";
+import TextDefault from "@components/TextDefault";
 import { borderColor, whiteColor } from "@constants/Colors";
 import { useModal } from "@context/ModalContext";
 import { useUserLocation } from "@context/userLocationContext";
+import { deviceHeight } from "@helper/utils";
 import useSuggestLocationSchedule from "@hooks/api/feature/useSuggestLocationSchedule";
-import { GIF_LINK } from "assets/Gif";
+import LocationIcon from "assets/svg/LocationIcon";
+import SearchIcon from "assets/svg/SearchIcon";
+import SuggestIcon from "assets/svg/SuggestIcon";
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { styleGlobal } from "src/styles";
 import LocationScheduleItem from "./LocationScheduleItem";
-import TextDefault from "@components/TextDefault";
-import Separator from "@components/Separator";
-import ButtonCustom from "@components/ButtonCustom";
-import { ScrollView } from "react-native-gesture-handler";
-import { deviceHeight } from "@helper/utils";
-import { localImages } from "assets/localImage";
-import Icon from "@components/Icon";
 
 function LocationSchedule() {
   const { userLocation } = useUserLocation();
@@ -34,10 +33,10 @@ function LocationSchedule() {
     openModal({
       content: (
         <Row style={{ padding: 20 }} center>
-          <GifImage source={GIF_LINK.FIND_LOCATION} />
+          <SearchIcon size={40} />
         </Row>
       ),
-      title: "Wait...",
+      title: "Wait for result",
       nameAcceptButton: "Ok",
       nameCancelButton: "Cancel",
       onReject: () => {
@@ -64,22 +63,22 @@ function LocationSchedule() {
         style={{ padding: 20, flex: 1, backgroundColor: whiteColor }}
         center
       >
-        <GifImage source={GIF_LINK.FIND_SCHEDULE} />
+        <LocationIcon size={200} />
         <TextDefault bold style={{ textAlign: "center", fontSize: 22 }}>
           You don't have location schedule to travel
         </TextDefault>
 
         <Separator height={20} />
+        <TextDefault>
+          We will suggest schedule for you base your location. Keep your phone.
+        </TextDefault>
+        <Separator height={20} />
         <ButtonCustom
           primary
           onPress={handleSuggestSchedule}
-          title={"Create your schedule"}
+          title={"Start suggest"}
+          minWidth={200}
         />
-        <Separator height={20} />
-        <TextDefault>
-          We will suggest schedule for you base your location. Keep your
-          phone...
-        </TextDefault>
       </Row>
     );
 
@@ -134,8 +133,8 @@ function LocationSchedule() {
             primary
             style={{ paddingHorizontal: 30 }}
             onPress={handleSuggestSchedule}
-            title={"Re-Find Schedule "}
-            endIcon={<Icon link={localImages().suggestIcon} />}
+            title={"Refresh"}
+            endIcon={<SuggestIcon size={20} color={"white"} />}
           />
 
           <Separator height={100} />

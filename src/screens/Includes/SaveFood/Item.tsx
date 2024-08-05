@@ -1,7 +1,6 @@
-import Icon from "@components/Icon";
+import TextDefault from "@components/TextDefault";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
 import { deviceWidth } from "@helper/utils";
-import { localImages } from "assets/localImage";
 import React, { useRef } from "react";
 import { Animated, Image, StyleSheet, Text, View } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
@@ -28,10 +27,7 @@ const SaveFoodItem = ({ item }: any) => {
           ]}
         >
           <TouchableOpacity onPress={close}>
-            <Icon
-              link={localImages().trashIcon}
-              style={{ height: 40, width: 40 }}
-            />
+            <TextDefault>Remove</TextDefault>
           </TouchableOpacity>
         </Animated.View>
       </RectButton>

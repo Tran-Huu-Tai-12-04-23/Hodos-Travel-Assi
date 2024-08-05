@@ -43,7 +43,12 @@ export const LoadingProvider = ({ children }: PropsType) => {
         visible={isLoading}
         onRequestClose={() => {}}
       >
-        <BlurView intensity={5} tint="light" style={styles.blurContainer}>
+        <BlurView
+          intensity={10}
+          tint="light"
+          style={styles.blurContainer}
+          experimentalBlurMethod="dimezisBlurView"
+        >
           <ActivityIndicator color={btnPrimary} size="large" />
         </BlurView>
       </Modal>

@@ -32,7 +32,7 @@ export {
 
 const SRC_WIDTH = deviceWidth;
 const CARD_LENGTH = SRC_WIDTH * 0.8;
-const SPACING = SRC_WIDTH * 0.02;
+const SPACING = SRC_WIDTH * 0.04;
 const SIDECARD_LENGTH = (SRC_WIDTH * 0.18) / 2;
 
 export { CARD_LENGTH, SIDECARD_LENGTH, SPACING, SRC_WIDTH };

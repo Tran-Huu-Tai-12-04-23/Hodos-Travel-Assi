@@ -1,9 +1,8 @@
-import { ILocation } from "src/Models/location.model";
 import { useMutation } from "@tanstack/react-query";
 import { ALERT_TYPE, Toast } from "react-native-alert-notification";
-import endpoints from "src/services/endpoints";
-import rootApi, { predictApi } from "src/services/rootApi";
 import { IFood } from "src/Models/food.model";
+import endpoints from "src/services/endpoints";
+import rootApi from "src/services/rootApi";
 
 export type variables = {
   location: [number, number];

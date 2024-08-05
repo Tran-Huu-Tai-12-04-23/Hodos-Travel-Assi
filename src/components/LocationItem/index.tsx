@@ -1,17 +1,12 @@
 import ImageCustom from "@components/ImageCustom";
 import Row from "@components/Row";
 import TextDefault from "@components/TextDefault";
-import { CARD_LENGTH, SIDECARD_LENGTH, SPACING } from "@constants/Colors";
+import { SIDECARD_LENGTH, SPACING } from "@constants/Colors";
 import { TouchableOpacity } from "@gorhom/bottom-sheet";
 import { navigate } from "@navigation/NavigationService";
 import { ROUTE_KEY } from "@navigation/route";
 import React, { useCallback } from "react";
-import Animated, {
-  Extrapolate,
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-} from "react-native-reanimated";
+import { View } from "react-native";
 import { ILocation } from "src/Models/location.model";
 import { styleGlobal } from "src/styles";
 
@@ -28,48 +23,6 @@ export default function LocationItem({
   scrollX,
 }: PropsType) {
   const { name, distanceInfo, lstImgs, address } = data;
-  const size = useSharedValue(0.8);
-
-  const inputRange = [
-    (index - 1) * CARD_LENGTH,
-    index * CARD_LENGTH,
-    (index + 1) * CARD_LENGTH,
-  ];
-
-  size.value = interpolate(
-    scrollX,
-    inputRange,
-    [0.8, 1, 0.8],
-    Extrapolate.CLAMP
-  );
-
-  size.value = interpolate(
-    scrollX,
-    inputRange,
-    [0.8, 1, 0.8],
-    Extrapolate.CLAMP
-  );
-
-  const opacity = useSharedValue(1);
-  const opacityInputRange = [
-    (index - 1) * CARD_LENGTH,
-    index * CARD_LENGTH,
-    (index + 1) * CARD_LENGTH,
-  ];
-  opacity.value = interpolate(
-    scrollX,
-    opacityInputRange,
-    [0.5, 1, 0.5],
-    Extrapolate.CLAMP
-  );
-
-  const cardStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ scaleY: size.value }],
-      opacity: opacity.value,
-    };
-  });
-
   const thumbnails = useCallback(() => {
     return lstImgs && lstImgs.length > 0
       ? lstImgs[0]
@@ -87,15 +40,13 @@ export default function LocationItem({
       }}
       style={{ backgroundColor: "white" }}
     >
-      <Animated.View
+      <View
         style={[
-          cardStyle,
           styleGlobal.shadowForce,
           {
             width: width,
             borderRadius: 10,
             backgroundColor: "white",
-            maxHeight: 200,
           },
           {
             marginLeft: index == 0 ? SIDECARD_LENGTH * 0.2 : SPACING,
@@ -137,7 +88,7 @@ export default function LocationItem({
             </Row>
           </Row>
         </Row>
-      </Animated.View>
+      </View>
     </TouchableOpacity>
   );
 }

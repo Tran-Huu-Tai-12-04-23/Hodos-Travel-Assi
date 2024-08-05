@@ -1,23 +1,12 @@
 import ImageCustom from "@components/ImageCustom";
 import Row from "@components/Row";
 import TextDefault from "@components/TextDefault";
-import {
-  CARD_LENGTH,
-  SIDECARD_LENGTH,
-  SPACING,
-  priceColor,
-} from "@constants/Colors";
+import { SIDECARD_LENGTH, SPACING, priceColor } from "@constants/Colors";
 import Helper, { vndToUsd } from "@helper/helpers";
 import { navigate } from "@navigation/NavigationService";
 import { ROUTE_KEY } from "@navigation/route";
 import React, { memo, useCallback } from "react";
-import { TouchableOpacity } from "react-native";
-import Animated, {
-  Extrapolate,
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-} from "react-native-reanimated";
+import { TouchableOpacity, View } from "react-native";
 import { IFood } from "src/Models/food.model";
 import { styleGlobal } from "src/styles";
 
@@ -29,45 +18,6 @@ type PropsType = {
 };
 function FoodItem({ width = 250, data, index, scrollX }: PropsType) {
   const { _id, name, distanceInfo, lstImgs, address, rangePrice } = data;
-  const size = useSharedValue(0.8);
-  const inputRange = [
-    (index - 1) * CARD_LENGTH,
-    index * CARD_LENGTH,
-    (index + 1) * CARD_LENGTH,
-  ];
-
-  const opacity = useSharedValue(1);
-  const opacityInputRange = [
-    (index - 1) * CARD_LENGTH,
-    index * CARD_LENGTH,
-    (index + 1) * CARD_LENGTH,
-  ];
-
-  const cardStyle = useAnimatedStyle(() => {
-    opacity.value = interpolate(
-      scrollX,
-      opacityInputRange,
-      [0.5, 1, 0.5],
-      Extrapolate.CLAMP
-    );
-    size.value = interpolate(
-      scrollX,
-      inputRange,
-      [0.8, 1, 0.8],
-      Extrapolate.CLAMP
-    );
-
-    size.value = interpolate(
-      scrollX,
-      inputRange,
-      [0.8, 1, 0.8],
-      Extrapolate.CLAMP
-    );
-    return {
-      transform: [{ scaleY: size.value }],
-      opacity: opacity.value,
-    };
-  });
 
   const thumbnails = useCallback(() => {
     return lstImgs && lstImgs?.length > 0
@@ -86,15 +36,13 @@ function FoodItem({ width = 250, data, index, scrollX }: PropsType) {
         });
       }}
     >
-      <Animated.View
+      <View
         style={[
-          cardStyle,
           styleGlobal.shadowForce,
           {
             width: width,
             borderRadius: 10,
             backgroundColor: "white",
-            maxHeight: 240,
           },
           {
             marginLeft: index == 0 ? SIDECARD_LENGTH * 0.2 : SPACING,
@@ -157,7 +105,7 @@ function FoodItem({ width = 250, data, index, scrollX }: PropsType) {
             </Row>
           </Row>
         </Row>
-      </Animated.View>
+      </View>
     </TouchableOpacity>
   );
 }

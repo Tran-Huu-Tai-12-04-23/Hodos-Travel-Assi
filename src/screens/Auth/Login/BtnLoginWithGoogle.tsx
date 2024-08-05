@@ -1,8 +1,6 @@
 import ButtonCustom from "@components/ButtonCustom";
 import Row from "@components/Row";
-import { localImages } from "assets/localImage";
 import React, { useEffect } from "react";
-import { Image } from "react-native";
 
 // import login with google
 import { useAuth } from "@context/authContext";
@@ -75,13 +73,6 @@ function BtnLoginWithGoogle() {
         style={{ padding: 10 }}
         mode="contained"
         bold
-        startIcon={
-          <Image
-            source={localImages().googleIcon}
-            style={{ width: 24, height: 24 }}
-            resizeMode="contain"
-          />
-        }
         onPress={() => {
           AlertNotificationDialog.show({
             type: ALERT_TYPE.INFO,

@@ -34,7 +34,7 @@ export const styleGlobal = StyleSheet.create({
     borderRadius: 100,
     elevation: 10,
     backgroundColor: btnPrimary,
-    shadowColor: "#00ff20",
+    shadowColor: "#000",
     shadowOffset: { width: 20, height: 2 },
     shadowOpacity: 0.9,
     shadowRadius: 110,

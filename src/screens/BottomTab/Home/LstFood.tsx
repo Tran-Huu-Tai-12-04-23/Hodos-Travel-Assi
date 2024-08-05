@@ -13,34 +13,35 @@ function LstFood({ foods }: { foods: IFood[] }) {
       <TextDefault style={{ fontSize: 12, paddingHorizontal: 10 }}>
         Foods nearest
       </TextDefault>
-      <Animated.View style={{ height: 300 }}>
-        <Animated.FlatList
-          scrollEventThrottle={16}
-          showsHorizontalScrollIndicator={false}
-          decelerationRate={0.9}
-          snapToInterval={CARD_LENGTH + SPACING * 2}
-          disableIntervalMomentum={true}
-          disableScrollViewPanResponder={true}
-          snapToAlignment={"center"}
-          data={foods}
-          horizontal={true}
-          renderItem={({ item, index }) => {
-            return (
-              <FoodItem
-                key={index}
-                width={CARD_LENGTH}
-                data={item}
-                index={index}
-                scrollX={scrollX}
-              />
-            );
-          }}
-          keyExtractor={(item, index) => index.toString()}
-          onScroll={(event) => {
-            setScrollX(event.nativeEvent.contentOffset.x);
-          }}
-        />
-      </Animated.View>
+      <Animated.FlatList
+        contentContainerStyle={{
+          padding: 10,
+        }}
+        scrollEventThrottle={16}
+        showsHorizontalScrollIndicator={false}
+        decelerationRate={0.9}
+        snapToInterval={CARD_LENGTH + SPACING * 2}
+        disableIntervalMomentum={true}
+        disableScrollViewPanResponder={true}
+        snapToAlignment={"center"}
+        data={foods}
+        horizontal={true}
+        renderItem={({ item, index }) => {
+          return (
+            <FoodItem
+              key={index}
+              width={CARD_LENGTH}
+              data={item}
+              index={index}
+              scrollX={scrollX}
+            />
+          );
+        }}
+        keyExtractor={(item, index) => index.toString()}
+        onScroll={(event) => {
+          setScrollX(event.nativeEvent.contentOffset.x);
+        }}
+      />
     </Row>
   );
 }

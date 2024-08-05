@@ -1,15 +1,13 @@
 import ButtonCustom from "@components/ButtonCustom";
-import Icon from "@components/Icon";
+import ImageCustom from "@components/ImageCustom";
 import Row from "@components/Row";
 import TextDefault from "@components/TextDefault";
 import { btnPrimary, whiteColor } from "@constants/Colors";
-import { localImages } from "assets/localImage";
-import React, { memo, useCallback } from "react";
-import { styleGlobal } from "src/styles";
-import { MaterialIcons } from "@expo/vector-icons";
 import { useBottomSheet } from "@context/BottomSheetContext";
+import { MaterialIcons } from "@expo/vector-icons";
+import React, { memo, useCallback } from "react";
 import { ILocation } from "src/Models/location.model";
-import ImageCustom from "@components/ImageCustom";
+import { styleGlobal } from "src/styles";
 
 type PropsType = {
   data: ILocation;
@@ -48,23 +46,11 @@ function LocationView({ data }: PropsType) {
           />
         </Row>
         <ButtonCustom
-          startIcon={
-            <Icon
-              link={localImages().addIcon}
-              style={{ height: 18, width: 18 }}
-            />
-          }
           style={{ padding: 10, width: "100%" }}
           onPress={() => {}}
           title={"Add to schedule"}
         />
         <ButtonCustom
-          startIcon={
-            <Icon
-              link={localImages().addIcon}
-              style={{ height: 18, width: 18 }}
-            />
-          }
           style={{ padding: 10, width: "100%" }}
           onPress={() => {}}
           title={"Add to my favourite"}

@@ -31,7 +31,7 @@ const _renderDrawerContent = (props: any) => {
         direction="column"
         start
         full
-        style={{ padding: 20, alignItems: "center", maxHeight: 80 }}
+        style={{ padding: 20, alignItems: "center" }}
       >
         <Avatar size={92} link={localImages().avatarDefault} />
         <TextDefault bold>{user?.username || user?.displayName}</TextDefault>

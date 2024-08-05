@@ -4,8 +4,8 @@ import Svg, { Path } from "react-native-svg";
 function SuggestIcon(props: any) {
   return (
     <Svg
-      width={46}
-      height={46}
+      width={props?.size ? props.size : 46}
+      height={props?.size ? props.size : 46}
       viewBox="0 0 46 46"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
