@@ -27,7 +27,7 @@ const useLogin = () => {
       Toast.show({
         type: ALERT_TYPE.DANGER,
         title: "Error",
-        textBody: e?.response?.data?.message || "Has error, ...",
+        textBody: e?.response?.data?.message || "Network err...",
       });
     },
     onSuccess: (data) => {

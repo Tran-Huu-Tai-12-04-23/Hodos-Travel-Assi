@@ -38,7 +38,7 @@ export default (): ExpoConfig => ({
   userInterfaceStyle: "automatic",
   name: EXPO_PUBLIC_APP_NAME,
   slug: "hodos",
-  version: "2.0.2",
+  version: "2.0.1",
   icon: "./assets/logo.png",
   splash: {
     image: "./assets/splash.png",
@@ -55,7 +55,7 @@ export default (): ExpoConfig => ({
       projectId: "f24d885a-f8e1-4c5f-8ddf-f46fbc9a8397",
     },
   },
-  runtimeVersion: "2.0.0",
+  runtimeVersion: "3.0.0",
   updates: {
     enabled: true,
     fallbackToCacheTimeout: 60_000,
@@ -103,7 +103,13 @@ export default (): ExpoConfig => ({
     [
       "expo-build-properties",
       {
+        android: {
+          usesCleartextTraffic: true, // ? enable HTTP requests
+        },
         ios: {
+          infoPlist: {
+            NSAppTransportSecurity: { NSAllowsArbitraryLoads: true },
+          },
           useFrameworks: "static",
         },
       },
