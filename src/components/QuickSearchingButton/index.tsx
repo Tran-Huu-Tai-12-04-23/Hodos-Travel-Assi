@@ -219,16 +219,20 @@ function QuickSearchingButton() {
     }
   }, [error]);
   return (
-    <PressAnimate
-      onPress={handleOpen}
-      style={{
-        backgroundColor: "rgba(0,0,0,0.03)",
-        padding: 10,
-        borderRadius: 10,
-      }}
-    >
-      <SearchIcon color={btnPrimary} size={32} />
-    </PressAnimate>
+    <>
+      <PressAnimate
+        onPress={handleOpen}
+        style={{
+          backgroundColor: "rgba(0,0,0,0.03)",
+          padding: 10,
+          borderRadius: 10,
+        }}
+      >
+        <SearchIcon color={btnPrimary} size={32} />
+      </PressAnimate>
+
+      {!isLoading && data && <></>}
+    </>
   );
 }
 
