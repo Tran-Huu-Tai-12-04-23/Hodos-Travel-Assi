@@ -1,6 +1,4 @@
-import FoodView from "@components/FoodView";
 import GifImage from "@components/Gif";
-import LocationView from "@components/LocationView";
 import { PressAnimate } from "@components/PressAnimate";
 import { btnPrimary } from "@constants/Colors";
 import { useBottomSheet } from "@context/BottomSheetContext";
@@ -15,7 +13,6 @@ import { GIF_LINK } from "assets/Gif";
 import SearchIcon from "assets/svg/SearchIcon";
 import * as ImagePicker from "expo-image-picker";
 import React, { useEffect } from "react";
-import { TouchableOpacity } from "react-native";
 import {
   ALERT_TYPE,
   AlertNotificationDialog,
@@ -170,47 +167,11 @@ function QuickSearchingButton() {
   };
 
   useEffect(() => {
-    if (!isLoading && data)
-      openModal({
-        content: (
-          <>
-            {data?.food ? (
-              <TouchableOpacity
-                onPress={() => {
-                  navigate(ROUTE_KEY.DETAIL_FOOD, {
-                    _id: data?.food?._id,
-                    distanceIF: data?.food?.distanceInfo,
-                  });
-                  hideModal();
-                }}
-              >
-                <FoodView data={data?.food} />
-              </TouchableOpacity>
-            ) : data?.location ? (
-              <TouchableOpacity
-                onPress={() => {
-                  navigate(ROUTE_KEY.DETAIL_LOCATION, {
-                    _id: data?.location?._id,
-                    distanceIF: data?.location?.distanceInfo,
-                  });
-                  hideModal();
-                }}
-              >
-                <LocationView data={data?.location} />
-              </TouchableOpacity>
-            ) : null}
-          </>
-        ),
-        title: "Predicting done!",
-        nameAcceptButton: "Ok",
-        nameCancelButton: "Cancel",
-        onReject: () => {
-          hideModal();
-        },
-        onAccept: async () => {
-          hideModal();
-        },
-      });
+    if (!isLoading && data) {
+      hideBottomSheet();
+      hideModal();
+      navigate(ROUTE_KEY.RESULT_AF_PREDICT, { data });
+    }
   }, [isLoading]);
 
   useEffect(() => {
@@ -219,16 +180,18 @@ function QuickSearchingButton() {
     }
   }, [error]);
   return (
-    <PressAnimate
-      onPress={handleOpen}
-      style={{
-        backgroundColor: "rgba(0,0,0,0.03)",
-        padding: 10,
-        borderRadius: 10,
-      }}
-    >
-      <SearchIcon color={btnPrimary} size={32} />
-    </PressAnimate>
+    <>
+      <PressAnimate
+        onPress={handleOpen}
+        style={{
+          backgroundColor: "rgba(0,0,0,0.03)",
+          padding: 10,
+          borderRadius: 10,
+        }}
+      >
+        <SearchIcon color={btnPrimary} size={32} />
+      </PressAnimate>
+    </>
   );
 }
 

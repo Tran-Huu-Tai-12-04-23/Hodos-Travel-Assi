@@ -1,26 +1,26 @@
-import { ILocation } from "src/Models/location.model";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useModal } from "@context/ModalContext";
+import { useMutation } from "@tanstack/react-query";
 import {
   ALERT_TYPE,
   AlertNotificationDialog,
-  AlertNotificationToast,
-  Toast,
 } from "react-native-alert-notification";
 import { IFood } from "src/Models/food.model";
+import { ILocation } from "src/Models/location.model";
 import endpoints from "src/services/endpoints";
-import rootApi, { predictApi } from "src/services/rootApi";
-import { useModal } from "@context/ModalContext";
+import rootApi from "src/services/rootApi";
 
 export type variables = {
   image_url: string;
   location?: [number, number];
 };
+export type IPredictRes = {
+  locations: ILocation[];
+  foods: IFood[];
+  isFood: boolean;
+  isLocation: boolean;
+};
 type response = {
-  data: {
-    location: ILocation | null;
-    food: IFood | null;
-    meta: [number, number] | null; // user location
-  };
+  data: IPredictRes;
 };
 const usePredictImage = () => {
   const { hideModal } = useModal();

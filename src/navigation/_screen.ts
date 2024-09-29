@@ -2,6 +2,7 @@ import { default as DetailFood } from "src/screens/Includes/DetailFood";
 import DetailLocationScreen from "src/screens/Includes/DetailLocation";
 import DirectionFoodScreen from "src/screens/Includes/DirectionFood";
 import { default as DirectionLocationScreen } from "src/screens/Includes/DirectionLocation";
+import ResultAfterPredict from "src/screens/Includes/ResultAfterPredict";
 import SearchLocation from "src/screens/Includes/Search";
 import { ROUTE_KEY } from "./route";
 
@@ -25,5 +26,9 @@ export const _DETAIL_SCREENS = [
   {
     route: ROUTE_KEY.SEARCH,
     component: SearchLocation,
+  },
+  {
+    route: ROUTE_KEY.RESULT_AF_PREDICT,
+    component: ResultAfterPredict,
   },
 ];
