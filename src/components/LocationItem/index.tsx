@@ -24,8 +24,6 @@ function LocationItem({
       }}
       style={
         {
-          marginRight: normalize(5),
-          marginLeft: normalize(5),
           width: width ? width : deviceWidth * 0.7,
         } as any
       }
@@ -38,7 +36,6 @@ function LocationItem({
           {
             padding: normalize(5),
             borderRadius: normalize(10),
-            backgroundColor: "white",
           },
         ]}
         rowGap={10}
