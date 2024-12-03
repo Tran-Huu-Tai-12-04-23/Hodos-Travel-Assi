@@ -1,94 +1,78 @@
-import ImageCustom from "@components/ImageCustom";
 import Row from "@components/Row";
 import TextDefault from "@components/TextDefault";
-import { SIDECARD_LENGTH, SPACING } from "@constants/Colors";
-import { TouchableOpacity } from "@gorhom/bottom-sheet";
+import { useTheme } from "@context/themContext";
+import { normalize } from "@helper/helpers";
+import { deviceWidth } from "@helper/utils";
 import { navigate } from "@navigation/NavigationService";
-import { ROUTE_KEY } from "@navigation/route";
-import React, { useCallback } from "react";
-import { View } from "react-native";
-import { ILocation } from "src/Models/location.model";
-import { styleGlobal } from "src/styles";
+import { APP_ROUTE } from "@navigation/route";
+import React from "react";
+import { Image, TouchableOpacity } from "react-native";
+import { ILocation } from "src/services/hooks/location/dto";
 
-type PropsType = {
-  width: any;
-  data: ILocation;
-  index: number;
-  scrollX: number;
-};
-export default function LocationItem({
-  width = 350,
+function LocationItem({
   data,
-  index,
-  scrollX,
-}: PropsType) {
-  const { name, distanceInfo, lstImgs, address } = data;
-  const thumbnails = useCallback(() => {
-    return lstImgs && lstImgs.length > 0
-      ? lstImgs[0]
-      : "https://www.androidauthority.com/wp-content/uploads/2015/07/location_marker_gps_shutterstock.jpg";
-  }, [lstImgs]);
-
+  width,
+}: {
+  data: ILocation;
+  width?: number | string;
+}) {
+  const { theme } = useTheme();
   return (
     <TouchableOpacity
-      activeOpacity={0.9}
       onPress={() => {
-        navigate(ROUTE_KEY.DETAIL_LOCATION, {
-          _id: data._id,
-          distanceIF: distanceInfo,
-        });
+        navigate(APP_ROUTE.LOCATION_DETAIL, { id: data?.id });
       }}
-      style={{ backgroundColor: "white" }}
+      style={
+        {
+          marginRight: normalize(5),
+          marginLeft: normalize(5),
+          width: width ? width : deviceWidth * 0.7,
+        } as any
+      }
     >
-      <View
+      <Row
+        direction="column"
+        start
+        colGap={10}
         style={[
-          styleGlobal.shadowForce,
           {
-            width: width,
-            borderRadius: 10,
+            padding: normalize(5),
+            borderRadius: normalize(10),
             backgroundColor: "white",
           },
-          {
-            marginLeft: index == 0 ? SIDECARD_LENGTH * 0.2 : SPACING,
-            marginRight: SPACING,
-          },
         ]}
+        rowGap={10}
       >
-        <Row direction="column" full>
-          <ImageCustom
-            link={thumbnails()}
-            style={{ borderRadius: 10, height: 120, width }}
-          />
-          <Row
-            style={{
-              padding: 10,
-              borderBottomEndRadius: 10,
-              borderBottomStartRadius: 10,
-            }}
-          >
-            <Row start full direction="column" style={{ overflow: "hidden" }}>
-              <TextDefault
-                bold
-                style={{ fontSize: 18, overflow: "hidden" }}
-                numberOfLines={1}
-                ellipsizeMode="tail"
-              >
-                {name}
-              </TextDefault>
-              <Row direction="column" start colGap={4}>
-                <TextDefault numberOfLines={1} ellipsizeMode="tail">
-                  {address}
+        <Image
+          style={{
+            height: normalize(120),
+            width: "100%",
+            borderRadius: normalize(10),
+          }}
+          source={{ uri: data?.img }}
+        />
+        <Row direction="column" start rowGap={5} full>
+          <TextDefault bold size={normalize(12)} numberOfLines={1}>
+            {data.name}
+          </TextDefault>
+          <TextDefault color="gray" numberOfLines={1}>
+            {data.address}
+          </TextDefault>
+
+          <Row start colGap={10}>
+            {data.distance && (
+              <>
+                <TextDefault bold style={{ color: "orange" }}>
+                  {data.distance}
                 </TextDefault>
-                <Row colGap={20}>
-                  <TextDefault bold>
-                    {distanceInfo && distanceInfo.distanceInKilometers + "kms"}
-                  </TextDefault>
-                </Row>
-              </Row>
-            </Row>
+                <TextDefault>/</TextDefault>
+              </>
+            )}
           </Row>
         </Row>
-      </View>
+      </Row>
     </TouchableOpacity>
   );
 }
+
+export default LocationItem;

@@ -1,4 +1,4 @@
-import { btnPrimary } from "@constants/Colors";
+import { useIsMutating } from "@tanstack/react-query";
 import { BlurView } from "expo-blur";
 import React, { createContext, useContext, useState } from "react";
 import { ActivityIndicator, Modal, StyleSheet } from "react-native";
@@ -27,6 +27,7 @@ interface PropsType {
 export const LoadingProvider = ({ children }: PropsType) => {
   const [isLoading, setIsLoading] = useState(false);
 
+  const isMuting = useIsMutating();
   const startLoading = () => {
     setIsLoading(true);
   };
@@ -40,16 +41,11 @@ export const LoadingProvider = ({ children }: PropsType) => {
       <Modal
         animationType="fade"
         transparent={true}
-        visible={isLoading}
+        visible={isLoading || isMuting > 0}
         onRequestClose={() => {}}
       >
-        <BlurView
-          intensity={10}
-          tint="light"
-          style={styles.blurContainer}
-          experimentalBlurMethod="dimezisBlurView"
-        >
-          <ActivityIndicator color={btnPrimary} size="large" />
+        <BlurView intensity={10} tint="light" style={styles.blurContainer}>
+          <ActivityIndicator color={"#0C66E4"} size="large" />
         </BlurView>
       </Modal>
 
@@ -66,6 +62,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    backgroundColor: "rgba(0,0,0,0.02)",
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",

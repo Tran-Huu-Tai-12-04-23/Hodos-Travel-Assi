@@ -50,14 +50,6 @@ export function closeDrawer() {
 export function openDrawer() {
    navigationRef.current?.dispatch(DrawerActions.openDrawer());
 }
-export function reloadScreen(routeName: string) {
-   navigationRef.current?.dispatch(
-      CommonActions.reset({
-         index: 0,
-         routes: [{ name: routeName }],
-      }),
-   );
-}
 
 export default {
    navigate,

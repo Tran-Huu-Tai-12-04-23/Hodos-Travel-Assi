@@ -1,17 +1,17 @@
-import { whiteColor } from "@constants/Colors";
 import { useAuth } from "@context/authContext";
+import { useTheme } from "@context/themContext";
+import { ETheme } from "@context/useThemUtil";
 import {
   DefaultTheme,
   NavigationContainer,
   NavigationState,
 } from "@react-navigation/native";
-import * as Updates from "expo-updates";
-import React, { useEffect } from "react";
+import React from "react";
 import { StatusBar } from "react-native";
 import "react-native-gesture-handler";
-import AuthNavigator from "./AuthNavigator";
+import AppNavigator from "./AppNavigator";
 import { navigationRef } from "./NavigationService";
-import RootStackNavigation from "./RootStackNavigation";
+import NotificationHandler from "./NotificationHandler";
 
 function screenTracking(state: NavigationState | undefined): void {
   if (state) {
@@ -31,26 +31,18 @@ const MyTheme = {
 };
 const MainNavigation = () => {
   const { user } = useAuth();
-
-  useEffect(() => {
-    const checkUpdate = async () => {
-      try {
-        const update = await Updates.checkForUpdateAsync();
-        if (update.isAvailable) {
-        }
-      } catch (e) {}
-    };
-    checkUpdate();
-  }, []);
-
+  const { themeName } = useTheme();
   return (
     <NavigationContainer
       theme={MyTheme}
       ref={navigationRef}
       onStateChange={screenTracking}
     >
-      <StatusBar barStyle="dark-content" backgroundColor={whiteColor} />
-      {user ? <RootStackNavigation /> : <AuthNavigator />}
+      <StatusBar
+        barStyle={themeName === ETheme.DARK ? "light-content" : "dark-content"}
+      />
+      <NotificationHandler />
+      <AppNavigator />
     </NavigationContainer>
   );
 };

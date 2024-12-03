@@ -1,10 +1,5 @@
-import initApi from "./initApi";
-import preInitApi from "./preInitApi";
+import initApi from "./initAPI";
 
-const rootApi = initApi(process.env.EXPO_PUBLIC_LINK_API);
-const predictApi = preInitApi(process.env.EXPO_PUBLIC_LINK_API);
-const vietmapAPI = initApi("https://maps.vietmap.vn/api/");
+const rootApi = initApi(process.env.EXPO_PUBLIC_API);
 
 export default rootApi;
-
-export { predictApi, vietmapAPI };

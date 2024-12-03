@@ -1,28 +1,33 @@
 import React from "react";
-import { Image } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 
-function Avatar({
-  link,
-  size,
-  style,
-}: {
-  link: any;
+type Props = {
+  url?: string;
+  source?: any;
   size?: number;
-  style?: any;
-}) {
+};
+function Avatar({ url, source, size = 50 }: Props) {
   return (
-    <Image
-      source={link}
-      style={[
-        {
-          width: size ? size : 45,
-          height: size ? size : 45,
-          borderRadius: 100,
-        },
-        style,
-      ]}
-    />
+    <TouchableOpacity>
+      <Image
+        source={source ? source : { uri: url }}
+        style={[
+          styles.avatar,
+          {
+            width: size,
+            height: size,
+          },
+        ]}
+      />
+    </TouchableOpacity>
   );
 }
 
+const styles = StyleSheet.create({
+  avatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+  },
+});
 export default Avatar;

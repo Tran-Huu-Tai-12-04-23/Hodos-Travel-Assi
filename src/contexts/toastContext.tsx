@@ -1,77 +1,111 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { IUser } from 'src/Models/user.model';
-import { clearUserData, getUserInfo, saveToken, saveUserInfo } from './login.utils';
-import { useLoading } from './loadingGlobalContext';
-import { ActivityIndicator } from 'react-native';
-import { btnPrimary } from '@constants/Colors';
-import { signOut } from 'firebase/auth';
-import { authFirebase } from 'src/config/firebaseWeb';
-import { ILoginResponse } from 'src/Models/loginResponse.dto';
+import SheetCustom, { BottomSheetMethods } from "@components/Toast";
+import Toast from "@components/Toast/toast";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { useTheme } from "./themContext";
 
 interface ToastContextValue {
-   user: IUser | null;
-   login: (userData: ILoginResponse, isLoginGoogle?: boolean) => void;
-   logout: () => void;
+  showToast: (params: {
+    title: string;
+    type: "ERROR" | "SUCCESS" | "WARN" | "INFO";
+    message?: string;
+  }) => void;
 }
 
-const AuthContext = createContext<ToastContextValue | undefined>(undefined);
+const ToastContext = createContext<ToastContextValue | undefined>(undefined);
 
-export const useToastContext = () => {
-   const context = useContext(AuthContext);
-   if (!context) {
-      throw new Error('useToastContext must be used within an AuthProvider');
-   }
-   return context;
+export const useToast = () => {
+  const context = useContext(ToastContext);
+  if (!context) {
+    throw new Error("useToast must be used within a ToastProvider");
+  }
+  return context;
 };
 
 interface PropsType {
-   children: React.ReactNode;
+  children: React.ReactNode;
 }
-export const AuthProvider = ({ children }: PropsType) => {
-   const [user, setUser] = useState<IUser | null>(null);
-   const { startLoading, stopLoading } = useLoading();
-   const [isLoading, setIsLoading] = useState(true);
-   const [isLoginWithGoogle, serIsLoginWithGoogle] = useState<boolean>(false);
 
-   const login = (userData: ILoginResponse, isLoginGoogle?: boolean) => {
-      startLoading();
-      setTimeout(async () => {
-         isLoginGoogle && serIsLoginWithGoogle(isLoginGoogle);
-         isLoginGoogle && console.log('====================== login with google');
-         if (userData?.token) {
-            setUser(userData?.user);
-            await saveUserInfo(userData?.user);
-         }
-         userData?.token && (await saveToken(userData?.token));
-         stopLoading();
-      }, 1000);
-   };
+export const ToastProvider = ({ children }: PropsType) => {
+  const topSheetRef = useRef<BottomSheetMethods>(null);
+  const [toast, setToast] = useState({
+    type: "WARN" as "ERROR" | "SUCCESS" | "WARN" | "INFO",
+    title: "",
+    message: "",
+  });
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const { themeName } = useTheme();
 
-   const logout = () => {
-      startLoading();
-      setTimeout(async () => {
-         if (isLoginWithGoogle) {
-            await signOut(authFirebase);
-         }
-         setUser(null);
-         await clearUserData();
-         stopLoading();
-      }, 1000);
-   };
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
-   const initUserInfo = async () => {
-      startLoading();
-      setIsLoading(true);
-      const userData = await getUserInfo();
-      stopLoading();
-      setIsLoading(false);
-      userData && setUser(userData);
-   };
+  const showToast = ({
+    title,
+    type,
+    message = "",
+  }: {
+    title: string;
+    type: "ERROR" | "SUCCESS" | "WARN" | "INFO";
+    message?: string;
+  }) => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setToast({ title, type, message });
+    topSheetRef?.current?.expand();
 
-   useEffect(() => {
-      initUserInfo();
-   }, []);
+    timeoutRef.current = setTimeout(() => {
+      topSheetRef.current?.close();
+    }, 3000);
+  };
 
-   if (isLoading) return <ActivityIndicator color={btnPrimary} />;
-   return <AuthContext.Provider value={{ user, login, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <ToastContext.Provider value={{ showToast }}>
+      {children}
+      <SheetCustom ref={topSheetRef} themeName={themeName}>
+        {toast.type === "ERROR" && (
+          <Toast
+            onClose={() => topSheetRef.current?.close()}
+            type="error"
+            title={toast.title}
+            message={toast.message}
+          />
+        )}
+        {toast.type === "INFO" && (
+          <Toast
+            onClose={() => topSheetRef.current?.close()}
+            type="info"
+            title={toast.title}
+            message={toast.message}
+          />
+        )}
+        {toast.type === "SUCCESS" && (
+          <Toast
+            onClose={() => topSheetRef.current?.close()}
+            type="success"
+            title={toast.title}
+            message={toast.message}
+          />
+        )}
+        {toast.type === "WARN" && (
+          <Toast
+            onClose={() => topSheetRef.current?.close()}
+            type="warning"
+            title={toast.title}
+            message={toast.message}
+          />
+        )}
+      </SheetCustom>
+    </ToastContext.Provider>
+  );
 };

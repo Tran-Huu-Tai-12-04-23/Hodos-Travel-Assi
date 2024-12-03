@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1062708350844",
+    "project_id": "hodos-42e2a",
+    "storage_bucket": "hodos-42e2a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062708350844:android:20f98b9fc312c2575a5ef9",
+        "android_client_info": {
+          "package_name": "com.genny.hodos.prod"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9JygYvfr4oiZ9K8rUSgTqXAVGFLOFkO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

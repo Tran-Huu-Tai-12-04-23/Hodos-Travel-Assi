@@ -1,113 +1,141 @@
-import ButtonCustom from "@components/ButtonCustom";
-import Container from "@components/Container";
-import PasswordInputCustom from "@components/PasswordInputCustom";
+import BackBtn from "@components/BackBtn";
+import { ButtonLink, ButtonPrimary } from "@components/Button";
+import { Input } from "@components/Input";
 import Row from "@components/Row";
 import Separator from "@components/Separator";
 import TextDefault from "@components/TextDefault";
-import TextInputCustom from "@components/TextInputCustom";
-import Title from "@components/Title";
-import { btnPrimary, primaryColor } from "@constants/Colors";
-import useLogin from "@hooks/api/auth/useLogin";
+import { LoginRequireInput } from "@constants/Require";
+import { useTheme } from "@context/themContext";
+import { normalize } from "@helper/helpers";
 import MainLayout from "@layout/MainLayout";
 import { navigate } from "@navigation/NavigationService";
-import { ROUTE_KEY } from "@navigation/route";
-
+import { AUTH_ROUTE } from "@navigation/route";
 import React, { useState } from "react";
-import { ScrollView } from "react-native";
-import { ALERT_TYPE, Toast } from "react-native-alert-notification";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { styleGlobal } from "src/styles";
+import { StyleSheet } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
+import useLogin from "src/services/hooks/auth/useLogin";
 
+interface LoginBody {
+  username: string;
+  password: string;
+  usernameReq: string;
+  passwordReq: string;
+}
+const InitState: LoginBody = {
+  username: "",
+  password: "",
+  usernameReq: "",
+  passwordReq: "",
+};
 export default function LoginScreen() {
-  const { isLoading, onLogin } = useLogin();
-  const [input, setInput] = useState({
-    username: "",
-    password: "",
-  });
+  const { theme } = useTheme();
+  const [userInput, setUserInput] = useState<LoginBody>(InitState);
+  const { onLogin, isLoading } = useLogin();
+  const handleSubmit = async (body: LoginBody) => {
+    await onLogin(body);
+  };
+  const handleLogin = async () => {
+    let isHasError = false;
+    const newUserInput = { ...userInput };
+
+    if (!userInput.username) {
+      newUserInput.usernameReq = LoginRequireInput.emailUsername;
+      isHasError = true;
+    }
+    if (!userInput.password) {
+      newUserInput.passwordReq = LoginRequireInput.password;
+      isHasError = true;
+    }
+
+    setUserInput(newUserInput);
+
+    if (isHasError) return;
+    await handleSubmit(userInput);
+  };
 
   const handleChangeInput = (key: string, value: string) => {
-    setInput((prev) => {
-      return {
-        ...prev,
-        [key]: value,
-      };
+    setUserInput({
+      ...userInput,
+      usernameReq: "",
+      passwordReq: "",
+      [key]: value,
     });
   };
 
-  const handleLogin = () => {
-    if (!input.username || !input.password) {
-      Toast.show({
-        type: ALERT_TYPE.WARNING,
-        title: "Error",
-        textBody: "Please provided full information!",
-      });
-      return;
-    }
-    onLogin(input);
-  };
-
   return (
-    <MainLayout isBack>
-      <ScrollView
-        contentContainerStyle={[
-          styleGlobal.scrollContainer,
-          {
-            alignContent: "center",
-          },
-        ]}
+    <MainLayout>
+      <KeyboardAwareScrollView
+        bottomOffset={50}
+        contentContainerStyle={styles.flex}
       >
-        <Separator height={20} />
-        <Container>
+        <Separator height={normalize(50)} />
+        <BackBtn />
+        <Separator height={normalize(50)} />
+
+        <Row
+          direction="column"
+          full
+          rowGap={normalize(10)}
+          style={{
+            paddingHorizontal: normalize(20),
+          }}
+        >
+          <TextDefault size={normalize(18)}>Sign in now</TextDefault>
+          <TextDefault center style={{ color: theme.textSecond }}>
+            Please sign in to continue our app
+          </TextDefault>
+          <Separator height={normalize(20)} />
+
+          <Input
+            placeholder="Username or email"
+            text={userInput.username}
+            onChangeText={(text) => handleChangeInput("username", text)}
+            error={userInput.usernameReq}
+          />
+          <Separator height={normalize(0)} />
+          <Input
+            isPassword
+            placeholder="Your password"
+            text={userInput.password}
+            onChangeText={(text) => handleChangeInput("password", text)}
+            error={userInput.passwordReq}
+          />
+
+          {/* <Row end full>
+            <ButtonLink title="Forgot password?" onPress={() => {}} />
+          </Row> */}
+          <Separator height={normalize(20)} />
+          <ButtonPrimary
+            onPress={handleLogin}
+            title="Sign in"
+            minWidth={"100%"}
+            isLoading={isLoading}
+          />
+          <Separator height={normalize(20)} />
           <Row
-            style={{ marginTop: "auto", marginBottom: "auto" }}
-            start
-            direction="column"
-            rowGap={20}
+            center
+            full
+            style={{
+              paddingLeft: normalize(40),
+            }}
+            colGap={10}
           >
-            <Title style={{ fontSize: 40 }}>Login</Title>
-            <TextInputCustom
-              value={input.username}
-              onChangeText={(text) => handleChangeInput("username", text)}
-              label="Username"
+            <TextDefault center style={{ color: theme.textSecond }}>
+              Don't have an account?{" "}
+            </TextDefault>
+            <ButtonLink
+              title="Sign up"
+              onPress={() => navigate(AUTH_ROUTE.REGISTER)}
             />
-            <PasswordInputCustom
-              value={input.password}
-              onChangeText={(text) => handleChangeInput("password", text)}
-              label="Password"
-            />
-            <Row center full>
-              <TouchableOpacity>
-                <TextDefault style={{ color: btnPrimary, textAlign: "center" }}>
-                  Forgot password?
-                </TextDefault>
-              </TouchableOpacity>
-            </Row>
-            <Row full center>
-              <ButtonCustom
-                isLoading={isLoading}
-                bold
-                mode="contained"
-                full
-                style={{ padding: 14, width: 200 }}
-                primary
-                title="LOGIN"
-                onPress={handleLogin}
-              />
-            </Row>
-            <Row center full colGap={10}>
-              <TextDefault style={[styleGlobal.label]}>
-                ADon’t have an account?
-              </TextDefault>
-              <TouchableOpacity onPress={() => navigate(ROUTE_KEY.REGISTER)}>
-                <TextDefault bold style={{ color: primaryColor }}>
-                  Sign Up
-                </TextDefault>
-              </TouchableOpacity>
-            </Row>
-            <Separator height={20} />
           </Row>
-        </Container>
-      </ScrollView>
+        </Row>
+      </KeyboardAwareScrollView>
     </MainLayout>
   );
 }
+
+const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
+});

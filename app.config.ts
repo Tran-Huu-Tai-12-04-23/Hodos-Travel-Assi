@@ -6,44 +6,54 @@ dotenv.config();
 const envs = {
   development: {
     EXPO_PUBLIC_APP_VARIANT: "development",
-    EXPO_PUBLIC_APP_NAME: "Hodos Dev",
+    EXPO_PUBLIC_APP_NAME: "Hodos DEV",
     EXPO_PUBLIC_BUNDLE_ID: "com.genny.hodos.dev",
-    EXPO_PUBLIC_API: "https://travel-support-api.genny.id.vn",
+    EXPO_PUBLIC_API: "",
   },
   production: {
     EXPO_PUBLIC_APP_VARIANT: "production",
     EXPO_PUBLIC_APP_NAME: "Hodos",
     EXPO_PUBLIC_BUNDLE_ID: "com.genny.hodos.prod",
-    EXPO_PUBLIC_API: "https://travel-support-api.genny.id.vn",
+    EXPO_PUBLIC_API: "",
   },
 };
 
 const { EXPO_PUBLIC_APP_VARIANT, EXPO_PUBLIC_APP_NAME, EXPO_PUBLIC_BUNDLE_ID } =
-  envs[(process.env.NODE_ENV as keyof typeof envs) || "production"];
+  envs["production"];
 
-if (EXPO_PUBLIC_BUNDLE_ID == null) {
+if (!EXPO_PUBLIC_BUNDLE_ID) {
   throw new Error("EXPO_PUBLIC_BUNDLE_ID is not defined");
 }
 
-if (EXPO_PUBLIC_APP_NAME == null) {
+if (!EXPO_PUBLIC_APP_NAME) {
   throw new Error("EXPO_PUBLIC_APP_NAME is not defined");
 }
 
-if (EXPO_PUBLIC_APP_VARIANT == null) {
+if (!EXPO_PUBLIC_APP_VARIANT) {
   throw new Error("EXPO_PUBLIC_APP_VARIANT is not defined");
 }
+
+const IOSGoogleServices = {
+  development: "./metadata/GoogleService-Info-dev.plist",
+  production: "./metadata/GoogleService-Info-pro.plist",
+};
+
+const AndroidGoogleServices = {
+  development: "./metadata/google-services-dev.json",
+  production: "./metadata/google-services-pro.json",
+};
 
 export default (): ExpoConfig => ({
   orientation: "portrait",
   userInterfaceStyle: "automatic",
   name: EXPO_PUBLIC_APP_NAME,
   slug: "hodos",
-  version: "2.0.1",
-  icon: "./assets/logo.png",
+  version: "1.0.1",
+  icon: "./assets/icon.png",
   splash: {
     image: "./assets/splash.png",
     resizeMode: "cover",
-    backgroundColor: "#ffffff",
+    backgroundColor: "transparent",
   },
   assetBundlePatterns: ["**/*"],
   web: {
@@ -52,66 +62,59 @@ export default (): ExpoConfig => ({
   owner: "huutaidev",
   extra: {
     eas: {
-      projectId: "f24d885a-f8e1-4c5f-8ddf-f46fbc9a8397",
+      projectId: "3c1da8bb-1305-4bac-a8d3-2df33b10bb8d",
     },
   },
-  runtimeVersion: "3.0.0",
+  runtimeVersion: "1.0.0",
   updates: {
     enabled: true,
     fallbackToCacheTimeout: 60_000,
     checkAutomatically: "ON_LOAD",
-    url: "https://u.expo.dev/f24d885a-f8e1-4c5f-8ddf-f46fbc9a8397",
+    url: "https://u.expo.dev/3c1da8bb-1305-4bac-a8d3-2df33b10bb8d",
   },
   ios: {
     bundleIdentifier: EXPO_PUBLIC_BUNDLE_ID,
     buildNumber: "1",
     infoPlist: {
-      VietMapAPIBaseURL: "https://maps.vietmap.vn/api/navigations/route/",
-      VietMapAccessToken: "9cbf0bc15d3901b7e043d8f76be8d73f370a82fe629a2d46",
-      VietMapURL:
-        "https://maps.vietmap.vn/api/maps/light/styles.json?apikey=9cbf0bc15d3901b7e043d8f76be8d73f370a82fe629a2d46",
       CFBundleAllowMixedLocalizations: true,
-      NSLocationAlwaysAndWhenInUseUsageDescription:
-        "Your request location description",
-      NSLocationAlwaysUsageDescription: "Your request location description",
-      NSLocationWhenInUseUsageDescription: "Your request location description",
     },
     config: {
       usesNonExemptEncryption: false,
-      googleMapsApiKey: "AIzaSyACFEyucHfjhPUl88GCY1spvYuHi8lNEUA",
+    },
+    googleServicesFile: IOSGoogleServices["production"],
+    entitlements: {
+      "aps-environment": "production",
     },
   },
   android: {
     versionCode: 1,
     package: EXPO_PUBLIC_BUNDLE_ID,
     userInterfaceStyle: "automatic",
-    config: {
-      googleMaps: {
-        apiKey: "AIzaSyACFEyucHfjhPUl88GCY1spvYuHi8lNEUA",
-      },
-    },
+    permissions: ["INTERNET", "ACCESS_NETWORK_STATE", "WAKE_LOCK"],
+    googleServicesFile: AndroidGoogleServices["production"],
   },
   plugins: [
     [
-      "@react-native-voice/voice",
+      "expo-build-properties",
       {
-        microphonePermission: "Allow travel app to access your microphone",
-        speechRecogntionPermission:
-          "Allow travel app to securely recognize user speech",
+        ios: {
+          useFrameworks: "static",
+        },
+      },
+    ],
+    "@react-native-firebase/app",
+    "@react-native-firebase/auth",
+    [
+      "expo-secure-store",
+      {
+        faceIDPermission:
+          "Allow $(PRODUCT_NAME) to access your Face ID biometric data.",
       },
     ],
     [
-      "expo-build-properties",
+      "expo-font",
       {
-        android: {
-          usesCleartextTraffic: true, // ? enable HTTP requests
-        },
-        ios: {
-          infoPlist: {
-            NSAppTransportSecurity: { NSAllowsArbitraryLoads: true },
-          },
-          useFrameworks: "static",
-        },
+        fonts: ["./assets/fonts/Roboto.ttf"],
       },
     ],
   ],

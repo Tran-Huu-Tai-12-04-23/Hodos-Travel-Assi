@@ -4,7 +4,7 @@
       "channel": "development",
       "ios": {
         "cocoapods": "1.14.3",
-        "scheme": "Hodos Dev"
+        "scheme": "HodosDev"
       },
       "android": {
         "buildType": "apk"
@@ -13,8 +13,7 @@
         "EXPO_PUBLIC_APP_VARIANT": "development",
         "EXPO_PUBLIC_APP_NAME": "Hodos Dev",
         "EXPO_PUBLIC_BUNDLE_ID": "com.genny.hodos.dev",
-        "EXPO_PUBLIC_API": "https://life-manager-api.genny.id.vn/",
-        "VIETMAP_API_URL": "https://maps.vietmap.vn/api/"
+        "EXPO_PUBLIC_API": "https://hodos-hackathon.genny.id.vn"
       }
     },
     "production": {
@@ -27,11 +26,10 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_APP_VARIANT": "production",
+        "EXPO_PUBLIC_APP_VARIANT": "pro",
         "EXPO_PUBLIC_APP_NAME": "Hodos",
         "EXPO_PUBLIC_BUNDLE_ID": "com.genny.hodos.pro",
-        "EXPO_PUBLIC_API": "https://life-manager-api.genny.id.vn/",
-        "VIETMAP_API_URL": "https://maps.vietmap.vn/api/"
+        "EXPO_PUBLIC_API": "https://hodos-hackathon.genny.id.vn"
       }
     }
   },

@@ -1,59 +1,51 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import "expo-dev-client";
-import { StatusBar } from "expo-status-bar";
-import "react-native-gesture-handler";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-
-import BottomSheetProvider from "@context/BottomSheetContext";
-import ModalProvider from "@context/ModalContext";
+import AppLoading from "@components/AppLoading";
 import { AuthProvider } from "@context/authContext";
+import BottomSheetProvider from "@context/bottomSheetContext";
 import { LoadingProvider } from "@context/loadingGlobalContext";
-import { UserLocationProvider } from "@context/userLocationContext";
-import Vietmap from "@vietmap/vietmap-gl-react-native";
+import { ThemeProvider } from "@context/themContext";
+import { ToastProvider } from "@context/toastContext";
+import useFonts from "@helper/hooks";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
-import { KeyboardAvoidingView, Platform } from "react-native";
-import { AlertNotificationRoot } from "react-native-alert-notification";
+import { StatusBar } from "react-native";
+import "react-native-gesture-handler";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { PaperProvider } from "react-native-paper";
+import { KeyboardProvider } from "react-native-keyboard-controller";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useLoadedAssets } from "./hooks/useLoadedAssets";
 import Navigation from "./navigation";
-const queryClient = new QueryClient();
-Vietmap.setApiKey("9cbf0bc15d3901b7e043d8f76be8d73f370a82fe629a2d46");
-export default function App() {
-  const isLoadingComplete = useLoadedAssets();
 
+const queryClient = new QueryClient();
+export default function App() {
+  const fontsLoaded = useFonts();
+
+  const isLoadingComplete = useLoadedAssets();
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
   if (!isLoadingComplete) {
     return null;
   } else {
     return (
       <QueryClientProvider client={queryClient}>
-        <AlertNotificationRoot>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <PaperProvider>
-              <LoadingProvider>
-                <BottomSheetProvider>
-                  <AuthProvider>
-                    <UserLocationProvider>
-                      <ModalProvider>
-                        <KeyboardAvoidingView
-                          style={{ flex: 1 }}
-                          behavior={
-                            Platform.OS === "ios" ? "padding" : "height"
-                          }
-                        >
-                          <SafeAreaProvider>
-                            <StatusBar style="dark" />
-                            <Navigation />
-                          </SafeAreaProvider>
-                        </KeyboardAvoidingView>
-                      </ModalProvider>
-                    </UserLocationProvider>
-                  </AuthProvider>
-                </BottomSheetProvider>
-              </LoadingProvider>
-            </PaperProvider>
-          </GestureHandlerRootView>
-        </AlertNotificationRoot>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <SafeAreaProvider>
+            <KeyboardProvider>
+              <BottomSheetProvider>
+                <ThemeProvider>
+                  <ToastProvider>
+                    <AuthProvider>
+                      <LoadingProvider>
+                        <Navigation />
+                        <StatusBar />
+                      </LoadingProvider>
+                    </AuthProvider>
+                  </ToastProvider>
+                </ThemeProvider>
+              </BottomSheetProvider>
+            </KeyboardProvider>
+          </SafeAreaProvider>
+        </GestureHandlerRootView>
       </QueryClientProvider>
     );
   }

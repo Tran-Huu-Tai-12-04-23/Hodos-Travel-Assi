@@ -1,8 +1,16 @@
-export function localImages() {
-  return {
-    intro1: require("./images/intro1.png"),
-    intro2: require("./images/intro2.png"),
-    intro3: require("./images/intro3.png"),
-    avatarDefault: require("./images/avatarDefault.jpg"),
-  };
-}
+export const IMG = {
+  intro1: require("./images/intro1.png"),
+  intro2: require("./images/intro2.png"),
+  intro3: require("./images/intro3.png"),
+  defaultAv: require("./images/default-icon.png"),
+  beachImg: require("./images/beach.png"),
+  entertainmentImg: require("./images/entertainment.png"),
+  foodImg: require("./images/food.png"),
+  architectImg: require("./images/architect.png"),
+  parkImg: require("./images/park.png"),
+  mountainImg: require("./images/mountain.png"),
+  banner1: require("./images/banner1.png"),
+  banner2: require("./images/banner2.png"),
+  banner3: require("./images/banner3.png"),
+  banner4: require("./images/banner4.png"),
+};

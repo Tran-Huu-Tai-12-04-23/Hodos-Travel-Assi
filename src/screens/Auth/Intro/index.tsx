@@ -1,224 +1,182 @@
-import ButtonCustom from "@components/ButtonCustom";
+import { ButtonPrimary } from "@components/Button";
+import Carousel from "@components/Carousel";
 import Row from "@components/Row";
+import Separator from "@components/Separator";
 import TextDefault from "@components/TextDefault";
-import { primaryColor, secondaryColor } from "@constants/Colors";
-import { useUserLocation } from "@context/userLocationContext";
-import { FontAwesome } from "@expo/vector-icons";
-import { deviceWidth } from "@helper/utils";
-import MainLayout from "@layout/MainLayout";
+import { useTheme } from "@context/themContext";
+import Helper, { normalize } from "@helper/helpers";
+import { deviceHeight, deviceWidth } from "@helper/utils";
 import { navigate } from "@navigation/NavigationService";
-import { ROUTE_KEY } from "@navigation/route";
-import { localImages } from "assets/localImage";
-import * as Location from "expo-location";
-import React, { useEffect, useRef, useState } from "react";
-import { Image, StyleSheet, View } from "react-native";
-import { Toast } from "react-native-alert-notification";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import PagerView from "react-native-pager-view";
-type PropsType = {};
-function MyPager({}: PropsType) {
+import { APP_ROUTE, AUTH_ROUTE } from "@navigation/route";
+import { IMG } from "assets/localImage";
+import React, { useEffect, useMemo, useState } from "react";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import useLogin from "src/services/hooks/auth/useLogin";
+import { styleGlobal } from "../../../styles";
+
+export default function IntroScreen() {
+  const { theme } = useTheme();
+  const { onLogin } = useLogin();
   const [currentPage, setCurrentPage] = useState(0);
-  const slide = useRef<PagerView | null>(null);
+
+  const pages = useMemo(
+    () => [
+      <Image style={styles.image} source={IMG.intro1} />,
+      <Image style={styles.image} source={IMG.intro2} />,
+      <Image style={styles.image} source={IMG.intro3} />,
+    ],
+    []
+  );
+
+  const pagesContent = useMemo(
+    () => [
+      {
+        title: "Life is short and the world is Wide",
+        description:
+          "At Friends tours and travel, we customize reliable and trustworthy educational tours to destinations all over the world",
+      },
+      {
+        title: "It`s a big world out there go Explore",
+        description:
+          "To get the best of your adventure you just need to leave and go where you like. we are waiting for you",
+      },
+      {
+        title: "People don’t take trips, trips take People",
+        description:
+          "To get the best of your adventure you just need to leave and go where you like. we are waiting for you",
+      },
+    ],
+    []
+  );
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const nextPage = (currentPage + 1) % 3;
-      setCurrentPage(nextPage);
-      slide?.current?.setPage(nextPage);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [currentPage]);
+    const startUserData = async () => {
+      const data = await Helper.getUserLoginData();
+      if (data) {
+        const res = await onLogin(JSON.parse(data));
+        if (!res) return;
+      }
+    };
+    startUserData();
+  }, [onLogin]);
 
-  const onPageSelected = (event: { nativeEvent: { position: any } }) => {
-    const { position } = event.nativeEvent;
-    setCurrentPage(position);
-  };
+  const currentTitle = pagesContent[currentPage].title;
+  const titleWords = currentTitle.split(" ");
+  const lastWord = titleWords.pop();
+  const titleWithoutLastWord = titleWords.join(" ");
 
   return (
-    <>
-      <PagerView
-        ref={slide}
-        style={styles.container}
-        initialPage={0}
-        onPageSelected={onPageSelected}
+    <View
+      style={[
+        styleGlobal.container,
+        styles.container,
+        { backgroundColor: theme.background },
+      ]}
+    >
+      <TouchableOpacity
+        onPress={() => navigate(APP_ROUTE.BOTTOM_TAB)}
+        style={[styles.skipButton, { backgroundColor: theme.primary }]}
       >
-        <View style={[styles.page]} key="1">
-          <Image
-            source={localImages().intro1}
+        <TextDefault style={{ color: theme.background }}>Skip</TextDefault>
+      </TouchableOpacity>
+      <View style={{ flex: 1 }}>
+        <View style={styles.carouselContainer}>
+          <Carousel
             style={{
-              width: deviceWidth - 20,
-              height: 400,
+              flex: 1,
             }}
-            resizeMode="contain"
+            pages={pages}
+            onChangeCurrentPage={setCurrentPage}
           />
+        </View>
+        <View style={styles.textContainer}>
           <TextDefault
-            style={{ fontSize: 24, fontWeight: "bold", textAlign: "center" }}
+            bold
+            center
+            style={{ color: theme.hightLight }}
+            size={normalize(22)}
           >
-            Discover a Hotel & Resort to Book a Suitable Room
+            <TextDefault bold center size={normalize(22)}>
+              {titleWithoutLastWord}
+            </TextDefault>
+            {" " + lastWord}
           </TextDefault>
-          <TextDefault style={{ textAlign: "center" }}>
-            The hotel and resort business is one of the best and loyal business
-            in the global market. We are the agency that helps to book you a
-            good room in a suitable palace at a reasonable price.
+          <Separator height={normalize(10)} />
+          <TextDefault center style={{ color: theme.textSecond }}>
+            {pagesContent[currentPage].description}
           </TextDefault>
         </View>
-        <View style={[styles.page]} key="2">
-          <Image
-            source={localImages().intro2}
-            style={{
-              width: deviceWidth - 20,
-              height: 400,
-            }}
-            resizeMode="contain"
-          />
-          <TextDefault
-            style={{ fontSize: 24, fontWeight: "bold", textAlign: "center" }}
-          >
-            Discover a Hotel & Resort to Book a Suitable Room
-          </TextDefault>
-          <TextDefault style={{ textAlign: "center" }}>
-            The hotel and resort business is one of the best and loyal business
-            in the global market. We are the agency that helps to book you a
-            good room in a suitable palace at a reasonable price.
-          </TextDefault>
-        </View>
-        <View style={[styles.page]} key="3">
-          <Image
-            source={localImages().intro3}
-            style={{
-              width: deviceWidth - 20,
-              height: 400,
-            }}
-            resizeMode="contain"
-          />
-
-          <TextDefault
-            style={{ fontSize: 24, fontWeight: "bold", textAlign: "center" }}
-          >
-            Discover a Hotel & Resort to Book a Suitable Room
-          </TextDefault>
-          <TextDefault style={{ textAlign: "center" }}>
-            The hotel and resort business is one of the best and loyal business
-            in the global market. We are the agency that helps to book you a
-            good room in a suitable palace at a reasonable price.
-          </TextDefault>
-        </View>
-      </PagerView>
-      <Row
-        center
-        style={{
-          display: "flex",
-          rowGap: 30,
-        }}
-        direction="column"
-      >
-        <ButtonCustom
-          primary
-          labelStyle={{ fontWeight: "bold" }}
-          minWidth={deviceWidth / 2}
-          style={{ paddingHorizontal: 30, padding: 20, marginTop: 30 }}
-          title="GET STARTED"
-          onPress={() => navigate(ROUTE_KEY.LOGIN)}
-          endIcon={<FontAwesome name="arrow-right" size={16} color="white" />}
-        />
-
-        <Row center style={{ columnGap: 10 }}>
-          {[1, 2, 3].map((key) => (
-            <TouchableOpacity
-              key={key}
-              onPress={() => {
-                slide?.current?.setPage(key - 1);
-                setCurrentPage(key - 1);
-              }}
-            >
+        <Row
+          full
+          direction="column"
+          rowGap={normalize(10)}
+          style={styles.rowContainer}
+        >
+          <Row full center>
+            {[0, 1, 2].map((index) => (
               <View
+                key={index}
                 style={[
                   styles.dot,
                   {
-                    paddingHorizontal: key === currentPage + 1 ? 20 : 10,
+                    width:
+                      index === currentPage ? normalize(40) : normalize(10),
                     backgroundColor:
-                      key === currentPage + 1 ? primaryColor : secondaryColor,
+                      index === currentPage ? theme.primary : theme.second,
                   },
                 ]}
               />
-            </TouchableOpacity>
-          ))}
+            ))}
+          </Row>
+          <ButtonPrimary
+            minWidth={"100%"}
+            onPress={() => navigate(AUTH_ROUTE.LOGIN)}
+            title="Get Started"
+          />
         </Row>
-      </Row>
-    </>
-  );
-}
-export default function IntroScreen() {
-  const { setUserLocation } = useUserLocation();
-  useEffect(() => {
-    let watchId: any;
-    const getLocation = async () => {
-      try {
-        const { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== "granted") {
-          Toast.show({
-            title: "Permission to access location was denied",
-          });
-          return;
-        }
-
-        const location = await Location.getCurrentPositionAsync({
-          accuracy: 4,
-          timeInterval: 4,
-          distanceInterval: 10,
-        });
-
-        if (location.coords)
-          setUserLocation({
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          });
-        console.log("=====================Current Position:", location.coords);
-      } catch (err) {
-        console.warn(err);
-      }
-    };
-    getLocation();
-    return () => {
-      Location.stopLocationUpdatesAsync(watchId);
-    };
-  }, []);
-
-  return (
-    <MainLayout>
-      <MyPager />
-    </MainLayout>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 24,
+    position: "relative",
   },
-  contentContainer: {
-    flex: 1,
-    alignItems: "center",
+  skipButton: {
+    position: "absolute",
+    right: 0,
+    top: normalize(50),
+    zIndex: 100000,
+    padding: normalize(10),
+    paddingHorizontal: normalize(30),
+    borderTopLeftRadius: normalize(16),
+    borderBottomLeftRadius: normalize(16),
+  },
+  carouselContainer: {
+    flex: 0.7,
+    borderBottomEndRadius: normalize(30),
+    borderBottomStartRadius: normalize(30),
+    overflow: "hidden",
+  },
+  textContainer: {
+    flex: 0.2,
+    padding: normalize(20),
+  },
+  rowContainer: {
+    flex: 0.1,
+    padding: normalize(20),
+    marginTop: "auto",
+    paddingBottom: normalize(30),
   },
   dot: {
-    padding: 6,
-    paddingHorizontal: 10,
-    borderRadius: 2000,
-    backgroundColor: secondaryColor,
+    height: normalize(8),
+    borderRadius: normalize(5),
+    marginHorizontal: normalize(5),
   },
-  page: {
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-  text: {
-    fontSize: 24,
-    color: "white",
-    marginBottom: 10,
-  },
-  swipeText: {
-    fontSize: 18,
-    color: "white",
-    fontStyle: "italic",
+  image: {
+    flex: 1,
+    height: deviceHeight,
+    width: deviceWidth,
   },
 });

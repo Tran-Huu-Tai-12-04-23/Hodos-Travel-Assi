@@ -1,38 +1,44 @@
-import { deviceWidth } from "@helper/utils";
-
-const primaryColor = "#000";
-const btnPrimary = "#000";
-const secondaryColor = "rgba(0,0,0,0.1)";
-const blackColor = "#000";
-const whiteColor = "#fff";
-const borderColor = "#E3EAEB";
-const iconDefault = "#E3EAEB";
-const mainBg = "#F5F5F5";
-const labelColor = "#575E69";
-const dangerColor = "#FF3F5B";
-const inputColor = "white";
-const hightLightColor = "#4FAE5A";
-const priceColor = "#eb984e";
-
-export {
-  blackColor,
-  borderColor,
-  btnPrimary,
-  dangerColor,
-  hightLightColor,
-  iconDefault,
-  inputColor,
-  labelColor,
-  mainBg,
-  priceColor,
-  primaryColor,
-  secondaryColor,
-  whiteColor,
+const themeData = {
+  light: {
+    text: "#111827",
+    hightLight: "#F3702A",
+    textSecond: "#90959F",
+    background: "#FEFEFE",
+    inputBackground: "#F7F7F9",
+    backgroundSecond: "#9CA3AF",
+    tabIconDefault: "#7D848D",
+    tabIconSelected: "#48BAEC",
+    primary: "#48BAEC",
+    second: "#CAEAFF",
+    danger: "#F86F6F",
+    warning: "#FE8A1F",
+    success: "#1BB937",
+    active: "#39B000",
+    wait: "#F9D336",
+    icon: "#9CA3AF",
+    pause: "#7D848D",
+    border: "#EEEFF2",
+  },
+  dark: {
+    text: "#111827",
+    hightLight: "#F3702A",
+    textSecond: "#90959F",
+    background: "#FFFFFF",
+    inputBackground: "#F7F7F9",
+    backgroundSecond: "#9CA3AF",
+    tabIconDefault: "#7D848D",
+    tabIconSelected: "#48BAEC",
+    primary: "#48BAEC",
+    second: "#CAEAFF",
+    danger: "#F86F6F",
+    warning: "#FE8A1F",
+    success: "#1BB937",
+    active: "#39B000",
+    wait: "#F9D336",
+    icon: "#9CA3AF",
+    pause: "#7D848D",
+    border: "#EEEFF2",
+  },
 };
 
-const SRC_WIDTH = deviceWidth;
-const CARD_LENGTH = SRC_WIDTH * 0.8;
-const SPACING = SRC_WIDTH * 0.04;
-const SIDECARD_LENGTH = (SRC_WIDTH * 0.18) / 2;
-
-export { CARD_LENGTH, SIDECARD_LENGTH, SPACING, SRC_WIDTH };
+export default themeData;
