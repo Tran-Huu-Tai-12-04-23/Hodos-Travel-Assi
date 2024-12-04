@@ -80,6 +80,7 @@ export default (): ExpoConfig => ({
     },
     config: {
       usesNonExemptEncryption: false,
+      googleMapsApiKey: "AIzaSyAvGEN00rga0fODH-EwKK6kFLwP894s-ds",
     },
     googleServicesFile: IOSGoogleServices["production"],
     entitlements: {
@@ -92,6 +93,11 @@ export default (): ExpoConfig => ({
     userInterfaceStyle: "automatic",
     permissions: ["INTERNET", "ACCESS_NETWORK_STATE", "WAKE_LOCK"],
     googleServicesFile: AndroidGoogleServices["production"],
+    config: {
+      googleMaps: {
+        apiKey: "AIzaSyAvGEN00rga0fODH-EwKK6kFLwP894s-ds",
+      },
+    },
   },
   plugins: [
     [

@@ -11,7 +11,6 @@ import SearchIcon from "assets/svg/search-icon";
 import React from "react";
 import { Platform, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import BannerSlide from "./BannerSlide";
 import BestDestination from "./BestDestination";
 import Header from "./Header";
 import LoginHelper from "./LoginHelper";
@@ -73,7 +72,7 @@ function HomeScreen() {
         {/* <Separator height={20} />
         <Categories /> */}
         <Separator height={20} />
-        <BannerSlide />
+        {/* <BannerSlide /> */}
         <Separator height={20} />
         <BestDestination />
         <Separator height={100} />

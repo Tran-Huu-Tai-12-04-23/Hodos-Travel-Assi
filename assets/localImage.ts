@@ -9,8 +9,4 @@ export const IMG = {
   architectImg: require("./images/architect.png"),
   parkImg: require("./images/park.png"),
   mountainImg: require("./images/mountain.png"),
-  banner1: require("./images/banner1.png"),
-  banner2: require("./images/banner2.png"),
-  banner3: require("./images/banner3.png"),
-  banner4: require("./images/banner4.png"),
 };

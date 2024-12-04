@@ -6,6 +6,7 @@ import { APP_ROUTE } from "@navigation/route";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import LocationDetailScreen from "src/screens/Global/LocationDetail";
+import LocationMapSearchScreen from "src/screens/Global/LocationMapSearch";
 import NotificationScreen from "src/screens/Global/Notification";
 import SettingScreen from "src/screens/Global/Profile/Setting";
 import SearchScreen from "src/screens/Global/Search";
@@ -34,6 +35,11 @@ export const AppRoutes = () => {
         name={APP_ROUTE.SETTING}
         options={{ ...verticalTransaction } as any}
         component={SettingScreen}
+      />
+      <Screen
+        name={APP_ROUTE.LOCATION_MAP_SEARCH_SCREEN}
+        options={{ ...verticalTransaction } as any}
+        component={LocationMapSearchScreen}
       />
     </>
   );

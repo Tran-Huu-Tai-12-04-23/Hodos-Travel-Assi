@@ -2,12 +2,11 @@ import Carousel from "@components/Carousel";
 import Row from "@components/Row";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
-import { IMG } from "assets/localImage";
+import { Image } from "expo-image";
 import React, { useState } from "react";
-import { Image, StyleSheet, View } from "react-native";
-
+import { StyleSheet, View } from "react-native";
 function BannerSlide() {
-  const pages = [IMG.banner1, IMG.banner2, IMG.banner3, IMG.banner4];
+  const pages = [];
   const [currentPage, setCurrentPage] = useState(0);
   const { theme } = useTheme();
 

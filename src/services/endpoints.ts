@@ -6,4 +6,5 @@ export const endpoints = {
   LOCATION_PAGINATION: "location/pagination",
   LOCATION: "location",
   // #endregion team
+  FIND_ROUTE: "vietmap/find-route",
 };

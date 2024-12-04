@@ -8,10 +8,10 @@ import { deviceWidth } from "@helper/utils";
 import MainLayout from "@layout/MainLayout";
 import { useRoute } from "@react-navigation/native";
 import LocationIcon from "assets/svg/location-icon";
+import { Image } from "expo-image";
 import React from "react";
 import {
   ActivityIndicator,
-  Image,
   ScrollView,
   TouchableOpacity,
   View,

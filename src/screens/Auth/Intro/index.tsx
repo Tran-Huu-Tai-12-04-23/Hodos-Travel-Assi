@@ -9,11 +9,11 @@ import { deviceHeight, deviceWidth } from "@helper/utils";
 import { navigate } from "@navigation/NavigationService";
 import { APP_ROUTE, AUTH_ROUTE } from "@navigation/route";
 import { IMG } from "assets/localImage";
+import { Image } from "expo-image";
 import React, { useEffect, useMemo, useState } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import useLogin from "src/services/hooks/auth/useLogin";
 import { styleGlobal } from "../../../styles";
-
 export default function IntroScreen() {
   const { theme } = useTheme();
   const { onLogin } = useLogin();

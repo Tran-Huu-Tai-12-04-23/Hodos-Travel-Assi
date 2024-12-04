@@ -2,9 +2,9 @@ import Row from "@components/Row";
 import TextDefault from "@components/TextDefault";
 import { normalize } from "@helper/helpers";
 import { IMG } from "assets/localImage";
+import { Image } from "expo-image";
 import React from "react";
-import { Image, ScrollView, TouchableOpacity, View } from "react-native";
-
+import { ScrollView, TouchableOpacity, View } from "react-native";
 const Cate = [
   {
     name: "Location",

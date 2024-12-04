@@ -1,6 +1,6 @@
+import { Image } from "expo-image";
 import React from "react";
-import { Image, StyleSheet, TouchableOpacity } from "react-native";
-
+import { StyleSheet, TouchableOpacity } from "react-native";
 type Props = {
   url?: string;
   source?: any;

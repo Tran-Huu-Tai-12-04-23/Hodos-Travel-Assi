@@ -79,7 +79,9 @@ function CustomBottomBar({ state, descriptors, navigation }: any) {
                 }}
               >
                 <TouchableOpacity
-                  onPress={() => navigation.navigate(APP_ROUTE.SEARCH_SCREEN)}
+                  onPress={() =>
+                    navigation.navigate(APP_ROUTE.LOCATION_MAP_SEARCH_SCREEN)
+                  }
                   style={[
                     styles.tab,
                     {

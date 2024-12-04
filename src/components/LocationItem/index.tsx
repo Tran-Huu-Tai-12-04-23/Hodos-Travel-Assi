@@ -5,10 +5,10 @@ import { normalize } from "@helper/helpers";
 import { deviceWidth } from "@helper/utils";
 import { navigate } from "@navigation/NavigationService";
 import { APP_ROUTE } from "@navigation/route";
+import { Image } from "expo-image";
 import React from "react";
-import { Image, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { ILocation } from "src/services/hooks/location/dto";
-
 function LocationItem({
   data,
   width,

@@ -4,8 +4,8 @@ import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import ArrowRightIcon from "assets/svg/arrow-right-icon";
 import LocationIcon from "assets/svg/location-icon";
+import { Image } from "expo-image";
 import React from "react";
-import { Image } from "react-native";
 import { ILocation } from "src/services/hooks/location/dto";
 import { styleGlobal } from "src/styles";
 
