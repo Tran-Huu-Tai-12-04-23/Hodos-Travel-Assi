@@ -1,25 +1,83 @@
 import { config } from "@helper/helpers";
-import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
+import { createSharedElementStackNavigator } from "react-navigation-shared-element";
+import { LoginScreen } from "src/screens/Auth";
+import IntroScreen from "src/screens/Auth/Intro";
+import RegisterScreen from "src/screens/Auth/Register";
+import ChatBoxScreen from "src/screens/Global/ChatBox";
+import RoomChatScreen from "src/screens/Global/ChatBox/Childs/Room";
+import LocationDetailScreen from "src/screens/Global/LocationDetail";
+import LocationMapSearchScreen from "src/screens/Global/LocationMapSearch";
+import NotificationScreen from "src/screens/Global/Notification";
+import PostDetailScreen from "src/screens/Global/PostDetail";
+import SettingScreen from "src/screens/Global/Profile/Setting";
+import SearchScreen from "src/screens/Global/Search";
 import BottomTabNavigator from "./BottomTabNavigator";
 import { APP_ROUTE, AUTH_ROUTE } from "./route";
-import { AppRoutes } from "./screens/app";
-import { AuthRoutes } from "./screens/auth";
-const { Navigator, Screen } = createStackNavigator();
+
+const Stack = createSharedElementStackNavigator();
+
+const screens = [
+  { name: AUTH_ROUTE.INTRO, component: IntroScreen },
+  { name: AUTH_ROUTE.LOGIN, component: LoginScreen },
+  { name: AUTH_ROUTE.REGISTER, component: RegisterScreen },
+  { name: APP_ROUTE.NOTIFICATION, component: NotificationScreen },
+  {
+    name: APP_ROUTE.CHAT_BOX,
+    component: ChatBoxScreen,
+  },
+  {
+    name: APP_ROUTE.LOCATION_DETAIL,
+    component: LocationDetailScreen,
+    sharedElements: (route: any) => {
+      const { id } = route.params;
+      console.log({
+        id: `trip.${id}.image`,
+      });
+      return [`trip.${id}.image`];
+    },
+  },
+  { name: APP_ROUTE.SEARCH_SCREEN, component: SearchScreen },
+  { name: APP_ROUTE.SETTING, component: SettingScreen },
+  {
+    name: APP_ROUTE.LOCATION_MAP_SEARCH_SCREEN,
+    component: LocationMapSearchScreen,
+  },
+  { name: APP_ROUTE.BOTTOM_TAB, component: BottomTabNavigator },
+  { name: APP_ROUTE.ROOM_CHAT, component: RoomChatScreen },
+  {
+    name: APP_ROUTE.POST_DETAIL,
+    component: PostDetailScreen,
+    sharedElements: (route: any) => {
+      const { data } = route.params;
+      console.log({
+        id: `post.${data.id}.image`,
+      });
+      return [`post.${data.id}.image`];
+    },
+  },
+];
 
 const AppNavigator = () => {
   return (
-    <Navigator
+    <Stack.Navigator
       screenOptions={{
-        headerShown: false,
         ...config,
       }}
-      initialRouteName={AUTH_ROUTE.INTRO}
+      initialRouteName={APP_ROUTE.BOTTOM_TAB}
     >
-      {AuthRoutes()}
-      {AppRoutes()}
-      <Screen name={APP_ROUTE.BOTTOM_TAB} component={BottomTabNavigator} />
-    </Navigator>
+      {screens.map((screen) => (
+        <Stack.Screen
+          key={screen.name}
+          name={screen.name}
+          component={screen.component}
+          options={{
+            ...config,
+          }}
+          sharedElements={screen.sharedElements}
+        />
+      ))}
+    </Stack.Navigator>
   );
 };
 

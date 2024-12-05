@@ -13,6 +13,9 @@ export const config = {
   headerTintColor: "#fff",
   tabBarVisible: false,
   headerBackTitleVisible: false,
+  headerShown: false,
+  useNativeDriver: true,
+  detachInactiveScreens: false,
 };
 
 export enum EKeyCheck {

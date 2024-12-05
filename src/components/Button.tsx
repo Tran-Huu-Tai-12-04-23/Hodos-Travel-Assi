@@ -214,8 +214,8 @@ const IconButton = ({
         {
           backgroundColor: theme.backgroundSecond,
           borderRadius: round,
-          width: normalize(40),
-          height: normalize(40),
+          width: normalize(30),
+          height: normalize(30),
         },
         disabled && style.disabled,
         disabled && style.disabled,

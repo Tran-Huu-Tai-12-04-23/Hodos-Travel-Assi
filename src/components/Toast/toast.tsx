@@ -1,5 +1,6 @@
 import Row from "@components/Row";
 import TextDefault from "@components/TextDefault";
+import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import CloseIcon from "assets/svg/close-icon";
 import ErrorIcon from "assets/svg/toast/error-icon";
@@ -22,19 +23,29 @@ function Toast({
   type?: ToastType;
   onClose?: () => void;
 }) {
+  const { theme } = useTheme();
   const style = useMemo(() => {
     switch (type) {
       case "success":
-        return { backgroundColor: "#F6FFF9", borderColor: "#48C1B5" };
+        return {
+          backgroundColor: theme.inputBackground,
+          borderColor: "#48C1B5",
+        };
       case "error":
         return {
-          backgroundColor: "#FFF5F3",
+          backgroundColor: theme.inputBackground,
           borderColor: "#E17D6C",
         };
       case "warning":
-        return { backgroundColor: "#FFF8EC", borderColor: "#FFB545" };
+        return {
+          backgroundColor: theme.inputBackground,
+          borderColor: "#FFB545",
+        };
       case "info":
-        return { backgroundColor: "#F5F9FF", borderColor: "#4DB6EF" };
+        return {
+          backgroundColor: theme.inputBackground,
+          borderColor: "#4DB6EF",
+        };
     }
   }, [type]);
   return (

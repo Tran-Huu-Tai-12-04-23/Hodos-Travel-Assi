@@ -5,8 +5,9 @@ import { styleGlobal } from "src/styles";
 
 type PropsType = {
   children: React.ReactNode;
+  isSafe?: boolean;
 };
-function MainLayout({ children }: PropsType) {
+function MainLayout({ children, isSafe = false }: PropsType) {
   const { theme } = useTheme();
   return (
     <View
