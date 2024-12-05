@@ -9,4 +9,6 @@ export const IMG = {
   architectImg: require("./images/architect.png"),
   parkImg: require("./images/park.png"),
   mountainImg: require("./images/mountain.png"),
+  chatBox: require("./images/chatBox.png"),
+  findLocation: require("./images/findLocation.png"),
 };

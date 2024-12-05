@@ -1,10 +1,11 @@
 import Row from "@components/Row";
-import TextDefault from "@components/TextDefault";
 import { normalize } from "@helper/helpers";
+import { deviceWidth } from "@helper/utils";
 import { IMG } from "assets/localImage";
+import PredictIcon from "assets/svg/cate/predict-icon";
 import { Image } from "expo-image";
 import React from "react";
-import { ScrollView, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity } from "react-native";
 const Cate = [
   {
     name: "Location",
@@ -29,53 +30,32 @@ const Cate = [
 ];
 function Categories() {
   return (
-    <Row full start direction="column" rowGap={10}>
-      <TextDefault
-        bold
-        size={20}
-        style={{
-          paddingHorizontal: normalize(20),
-        }}
-      >
-        Categories
-      </TextDefault>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <View
-          style={{
-            flexDirection: "row",
-            columnGap: 20,
-            paddingLeft: normalize(20),
-          }}
-        >
-          {Cate.map((item, index) => (
-            <TouchableOpacity key={index}>
-              <Row direction="column" rowGap={5} center>
-                <Row
-                  style={{
-                    borderRadius: 1000,
-                    padding: normalize(15),
-                    backgroundColor: "#F5F5F5",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Image
-                    style={{
-                      width: normalize(30),
-                      height: normalize(30),
-                    }}
-                    source={item.icon}
-                    alt={item.name}
-                  />
-                </Row>
-                <TextDefault size={16} style={{ marginLeft: 10 }}>
-                  {item.name}
-                </TextDefault>
-              </Row>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </ScrollView>
+    <Row full between wrap rowGap={10}>
+      <TouchableOpacity>
+        <PredictIcon />
+      </TouchableOpacity>
+      <Row direction="column" rowGap={10}>
+        <TouchableOpacity>
+          <Image
+            source={IMG.chatBox}
+            style={{
+              width: deviceWidth / 2 - normalize(5),
+              height: deviceWidth / 3 - normalize(21),
+              borderRadius: normalize(10),
+            }}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Image
+            source={IMG.findLocation}
+            style={{
+              width: deviceWidth / 2 - normalize(5),
+              height: deviceWidth / 3 - normalize(21),
+              borderRadius: normalize(10),
+            }}
+          />
+        </TouchableOpacity>
+      </Row>
     </Row>
   );
 }
