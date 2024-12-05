@@ -1,8 +1,10 @@
 import { useTheme } from "@context/themContext";
+import { MaterialIcons } from "@expo/vector-icons";
 import { normalize } from "@helper/helpers";
 import { APP_ROUTE, BOTTOM_TAB_ROUTE } from "@navigation/route";
 import AccountIcon from "assets/svg/account-icon";
 import HomeIcon from "assets/svg/home-icon";
+import MessageIcon from "assets/svg/message-icon";
 import SearchIcon from "assets/svg/search-icon";
 import { BlurView } from "expo-blur";
 import React from "react";
@@ -18,12 +20,16 @@ function CustomBottomBar({ state, descriptors, navigation }: any) {
       iconDefault: <HomeIcon color={theme.icon} />,
       iconActive: <HomeIcon color={theme.primary} />,
     },
-    // {
-    //   name: BOTTOM_TAB_ROUTE.CALENDER,
-    //   key: BOTTOM_TAB_ROUTE.CALENDER,
-    //   iconDefault: <CalenderIcon color={theme.icon} />,
-    //   iconActive: <CalenderIcon color={theme.primary} />,
-    // },
+    {
+      name: BOTTOM_TAB_ROUTE.EXPLORE,
+      key: BOTTOM_TAB_ROUTE.EXPLORE,
+      iconDefault: (
+        <MaterialIcons name="explore" size={24} color={theme.icon} />
+      ),
+      iconActive: (
+        <MaterialIcons name="explore" size={24} color={theme.primary} />
+      ),
+    },
     {
       name: BOTTOM_TAB_ROUTE.SEARCH,
       key: BOTTOM_TAB_ROUTE.SEARCH,
@@ -31,12 +37,12 @@ function CustomBottomBar({ state, descriptors, navigation }: any) {
       iconActive: <SearchIcon color={"white"} />,
       isCreate: true,
     },
-    // {
-    //   name: BOTTOM_TAB_ROUTE.MESSAGE,
-    //   key: BOTTOM_TAB_ROUTE.MESSAGE,
-    //   iconDefault: <MessageIcon color={theme.icon} />,
-    //   iconActive: <MessageIcon color={theme.primary} />,
-    // },
+    {
+      name: BOTTOM_TAB_ROUTE.MESSAGE,
+      key: BOTTOM_TAB_ROUTE.MESSAGE,
+      iconDefault: <MessageIcon color={theme.icon} />,
+      iconActive: <MessageIcon color={theme.primary} />,
+    },
     {
       name: BOTTOM_TAB_ROUTE.PROFILE,
       key: BOTTOM_TAB_ROUTE.PROFILE,
@@ -75,7 +81,7 @@ function CustomBottomBar({ state, descriptors, navigation }: any) {
                   alignItems: "center",
                   justifyContent: "center",
                   borderRadius: normalize(1000),
-                  paddingHorizontal: normalize(20),
+                  paddingHorizontal: normalize(40),
                 }}
               >
                 <TouchableOpacity
@@ -155,7 +161,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "transparent",
-    width: "50%",
+    width: "20%",
   },
 });
 

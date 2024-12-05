@@ -12,11 +12,9 @@ import React from "react";
 import { ActivityIndicator, TouchableOpacity, View } from "react-native";
 import { ILocation } from "src/services/hooks/location/dto";
 import useLocationPagination from "src/services/hooks/location/useLocationPagination";
-
 function BestDestination() {
   const { theme } = useTheme();
-  const { data, isLoading, isFetching, refetch, fetchNextPage } =
-    useLocationPagination({});
+  const { data, isLoading, isFetching } = useLocationPagination({});
 
   return (
     <Row full direction="column" start style={{ flex: 1 }}>
@@ -41,6 +39,7 @@ function BestDestination() {
       <Separator height={10} />
       <View style={{ flex: 1, width: deviceWidth }}>
         <FlashList
+          estimatedItemSize={200}
           data={data}
           numColumns={2}
           keyExtractor={(item: ILocation, index: number) => index.toString()}

@@ -1,4 +1,3 @@
-import Carousel from "@components/Carousel";
 import Row from "@components/Row";
 import Separator from "@components/Separator";
 import TextDefault from "@components/TextDefault";
@@ -16,9 +15,10 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import * as Animatable from "react-native-animatable";
+import { SharedElement } from "react-navigation-shared-element";
 import useLocationDetail from "src/services/hooks/location/useLocationDetail";
 import Header from "./Header";
-
 function LocationDetailScreen() {
   const { id } = useRoute().params as {
     id: string;
@@ -29,7 +29,14 @@ function LocationDetailScreen() {
 
   return (
     <MainLayout isSafe>
-      <Header title={"Chi tiết địa điểm"} />
+      <Animatable.View
+        animation="fadeIn"
+        delay={100}
+        duration={400}
+        easing="ease-in-out"
+      >
+        <Header title={"Chi tiết địa điểm"} />
+      </Animatable.View>
       <Row
         full
         direction="column"
@@ -41,69 +48,66 @@ function LocationDetailScreen() {
           <View
             style={{
               height: normalize(deviceHeight / 3),
-              margin: normalize(10),
             }}
           >
-            {data?.lstImgs && (
-              <Carousel
+            <SharedElement id={`trip.${id}.image`}>
+              <Image
+                resizeMode="cover"
+                source={{ uri: data?.lstImgs[0] }}
                 style={{
+                  width: deviceWidth,
                   height: normalize(deviceHeight / 3),
                 }}
-                pages={data?.lstImgs?.map((item, index) => (
-                  <Image
-                    key={index}
-                    resizeMode="cover"
-                    source={{ uri: item }}
-                    style={{
-                      width: "100%",
-                      height: normalize(deviceHeight / 3),
-                      borderRadius: normalize(20),
-                    }}
-                  />
-                ))}
               />
-            )}
+            </SharedElement>
           </View>
           {isLoading && (
             <Row style={{ padding: normalize(20), flex: 1 }} full center>
               <ActivityIndicator color={theme.primary} />
             </Row>
           )}
-
-          <View
-            style={{
-              flex: 0.4,
-              overflow: "hidden",
-              paddingHorizontal: normalize(15),
-              width: deviceWidth,
-              flexDirection: "column",
-              rowGap: 10,
-            }}
+          <Separator height={10} />
+          <Animatable.View
+            animation="fadeIn"
+            delay={300}
+            duration={400}
+            easing="ease-in-out"
           >
-            <TextDefault bold size={normalize(20)}>
-              {data?.name}
-            </TextDefault>
-            <Row
-              start
-              full
-              colGap={5}
+            <View
               style={{
-                paddingRight: normalize(20),
+                flex: 0.4,
+                overflow: "hidden",
+                paddingHorizontal: normalize(15),
+                width: deviceWidth,
+                flexDirection: "column",
+                rowGap: 10,
               }}
             >
-              <LocationIcon size={normalize(20)} />
-              <TextDefault>{data?.address}</TextDefault>
-            </Row>
-            <TextDefault color={theme.textSecond}>
-              {isMore
-                ? data?.description
-                : data?.description?.substring(0, 100)}
-            </TextDefault>
-            <TouchableOpacity onPress={() => setIsMore(!isMore)}>
-              <TextDefault color={theme.hightLight}>Read more</TextDefault>
-            </TouchableOpacity>
-            <Separator height={normalize(50)} />
-          </View>
+              <TextDefault bold size={normalize(20)}>
+                {data?.name}
+              </TextDefault>
+              <Row
+                start
+                full
+                colGap={5}
+                style={{
+                  paddingRight: normalize(20),
+                }}
+              >
+                <LocationIcon size={normalize(20)} />
+                <TextDefault>{data?.address}</TextDefault>
+              </Row>
+              <TextDefault color={theme.textSecond}>
+                {isMore
+                  ? data?.description
+                  : data?.description?.substring(0, 100)}
+              </TextDefault>
+              <TouchableOpacity onPress={() => setIsMore(!isMore)}>
+                <TextDefault color={theme.hightLight}>Read more</TextDefault>
+              </TouchableOpacity>
+              <Separator height={normalize(50)} />
+            </View>
+          </Animatable.View>
         </ScrollView>
       </Row>
       {/* <Row

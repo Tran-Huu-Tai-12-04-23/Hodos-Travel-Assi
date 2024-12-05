@@ -25,7 +25,7 @@ function BackBtn({ color }: { color?: string }) {
         alignItems: "center",
       }}
     >
-      <BackIcon />
+      <BackIcon color={theme.textSecond} />
     </TouchableOpacity>
   );
 }

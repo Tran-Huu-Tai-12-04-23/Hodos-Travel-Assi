@@ -7,7 +7,7 @@ export const AUTH_ROUTE = createEnum({
 
 export const BOTTOM_TAB_ROUTE = createEnum({
   HOME: "HOME",
-  CALENDER: "CALENDER",
+  EXPLORE: "EXPLORE",
   SEARCH: "SEARCH",
   MESSAGE: "MESSAGE",
   PROFILE: "PROFILE",
@@ -20,6 +20,10 @@ export const APP_ROUTE = createEnum({
   LOCATION_MAP_SEARCH_SCREEN: "LOCATION_MAP_SEARCH_SCREEN",
   SETTING: "SETTING",
   NOTIFICATION: "NOTIFICATION",
+  CHAT_BOX: "CHAT_BOX",
+  ROOM_CHAT: "ROOM_CHAT",
+  POST_DETAIL: "POST_DETAIL",
+  /// demo transaction
 });
 
 function createEnum<T extends { [P in keyof T]: P }>(o: T) {

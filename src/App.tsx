@@ -37,7 +37,7 @@ export default function App() {
                     <AuthProvider>
                       <LoadingProvider>
                         <Navigation />
-                        <StatusBar />
+                        <StatusBar barStyle={"light-content"} />
                       </LoadingProvider>
                     </AuthProvider>
                   </ToastProvider>

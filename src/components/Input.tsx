@@ -83,6 +83,8 @@ const Input = ({
               borderRadius: normalize(14),
               padding: normalize(15),
               paddingLeft: leftIcon ? normalize(35) : "auto",
+
+              color: theme.text,
             },
           ]}
           onChangeText={onChangeText}
