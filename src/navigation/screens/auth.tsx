@@ -1,4 +1,3 @@
-import { verticalTransaction } from "@navigation/config/transaction.config";
 import { AUTH_ROUTE } from "@navigation/route";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
@@ -12,24 +11,8 @@ export const AuthRoutes = () => {
   return (
     <>
       <Screen name={AUTH_ROUTE.INTRO} component={IntroScreen} />
-      <Screen
-        options={
-          {
-            ...verticalTransaction,
-          } as any
-        }
-        name={AUTH_ROUTE.LOGIN}
-        component={LoginScreen}
-      />
-      <Screen
-        options={
-          {
-            ...verticalTransaction,
-          } as any
-        }
-        name={AUTH_ROUTE.REGISTER}
-        component={RegisterScreen}
-      />
+      <Screen name={AUTH_ROUTE.LOGIN} component={LoginScreen} />
+      <Screen name={AUTH_ROUTE.REGISTER} component={RegisterScreen} />
       {/* auth route */}
     </>
   );

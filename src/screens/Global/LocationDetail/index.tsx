@@ -4,7 +4,7 @@ import Separator from "@components/Separator";
 import TextDefault from "@components/TextDefault";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
-import { deviceWidth } from "@helper/utils";
+import { deviceHeight, deviceWidth } from "@helper/utils";
 import MainLayout from "@layout/MainLayout";
 import { useRoute } from "@react-navigation/native";
 import LocationIcon from "assets/svg/location-icon";
@@ -27,9 +27,9 @@ function LocationDetailScreen() {
   const { theme } = useTheme();
   const [isMore, setIsMore] = React.useState(true);
 
-  console.log(data?.lstImgs);
   return (
-    <MainLayout>
+    <MainLayout isSafe>
+      <Header title={"Chi tiết địa điểm"} />
       <Row
         full
         direction="column"
@@ -40,22 +40,24 @@ function LocationDetailScreen() {
         <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
           <View
             style={{
-              flex: 0.6,
-              height: normalize(300),
+              height: normalize(deviceHeight / 3),
+              margin: normalize(10),
             }}
           >
             {data?.lstImgs && (
               <Carousel
                 style={{
-                  height: normalize(300),
+                  height: normalize(deviceHeight / 3),
                 }}
                 pages={data?.lstImgs?.map((item, index) => (
                   <Image
                     key={index}
+                    resizeMode="cover"
                     source={{ uri: item }}
                     style={{
-                      width: deviceWidth,
-                      height: normalize(300),
+                      width: "100%",
+                      height: normalize(deviceHeight / 3),
+                      borderRadius: normalize(20),
                     }}
                   />
                 ))}
@@ -71,12 +73,8 @@ function LocationDetailScreen() {
           <View
             style={{
               flex: 0.4,
-              borderTopEndRadius: normalize(30),
-              borderTopStartRadius: normalize(30),
               overflow: "hidden",
-              transform: [{ translateY: -normalize(20) }],
-              backgroundColor: theme.background,
-              padding: normalize(15),
+              paddingHorizontal: normalize(15),
               width: deviceWidth,
               flexDirection: "column",
               rowGap: 10,
@@ -119,13 +117,6 @@ function LocationDetailScreen() {
       >
         <ButtonPrimary minWidth={"90%" as any} title="Map" onPress={() => {}} />
       </Row> */}
-      <Header
-        title={
-          data?.name && data?.name?.length > 10
-            ? data?.name?.substring(0, 10) + "..."
-            : ""
-        }
-      />
     </MainLayout>
   );
 }

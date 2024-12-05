@@ -5,7 +5,7 @@ const themeData = {
     textSecond: "#90959F",
     background: "#FEFEFE",
     inputBackground: "#F7F7F9",
-    backgroundSecond: "#F7F7F9",
+    backgroundSecond: "rgba(0,0,0,0.5)",
     tabIconDefault: "#7D848D",
     tabIconSelected: "#48BAEC",
     primary: "#48BAEC",

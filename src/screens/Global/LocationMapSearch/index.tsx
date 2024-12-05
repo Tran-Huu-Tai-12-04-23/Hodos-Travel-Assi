@@ -1,5 +1,4 @@
 import { IconButton } from "@components/Button";
-import LoadingView from "@components/LoadingView";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { deviceWidth } from "@helper/utils";
@@ -12,6 +11,7 @@ import React, { useEffect } from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import MapView, { Marker, Polygon } from "react-native-maps";
 
+import Row from "@components/Row";
 import useFindRoute, {
   IFindRoute,
   IPoints,
@@ -73,11 +73,10 @@ const LocationMapSearchScreen = () => {
   }, []);
 
   if (isLoadingView) {
-    return <LoadingView />;
+    return;
   }
   return (
     <MainLayout>
-      {(isLoading || isLoadingFindRoute) && <LoadingView />}
       <MapView
         zoomEnabled
         ref={mapRef}
@@ -170,33 +169,35 @@ const LocationMapSearchScreen = () => {
           top: 0,
         }}
       >
-        <TouchableOpacity
-          onPress={goBack}
+        <Row
+          full
+          between
+          colGap={10}
           style={{
-            backgroundColor: theme.inputBackground,
-            borderRadius: 100,
-            padding: normalize(6),
+            alignItems: "center",
           }}
         >
-          <ArrowLeftIcon />
-        </TouchableOpacity>
-        <TextInput
-          placeholder="Tìm kiếm"
-          placeholderTextColor={theme.text}
-          style={{
-            flex: 1,
-            height: 40,
-            backgroundColor: "white",
-            borderRadius: 100,
-            ...styleGlobal.shadow,
-            padding: 10,
-            paddingHorizontal: 20,
-          }}
-        />
-        <IconButton
-          icon={<SearchIcon color={theme.text} />}
-          onPress={function (): void {}}
-        />
+          <IconButton
+            icon={<ArrowLeftIcon color={theme.background} />}
+            onPress={goBack}
+          />
+          <TextInput
+            placeholder="Tìm kiếm"
+            placeholderTextColor={theme.text}
+            style={{
+              flex: 1,
+              height: 40,
+              backgroundColor: "white",
+              borderRadius: 100,
+              padding: 10,
+              paddingHorizontal: 20,
+            }}
+          />
+          <IconButton
+            icon={<SearchIcon color={theme.background} />}
+            onPress={function (): void {}}
+          />
+        </Row>
       </View>
       {data && (
         <View
