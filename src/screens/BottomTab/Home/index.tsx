@@ -9,9 +9,10 @@ import { navigate } from "@navigation/NavigationService";
 import { APP_ROUTE } from "@navigation/route";
 import SearchIcon from "assets/svg/search-icon";
 import React from "react";
-import { Platform, TouchableOpacity } from "react-native";
+import { Platform, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import BestDestination from "./BestDestination";
+import Categories from "./Categories";
 import Header from "./Header";
 import LoginHelper from "./LoginHelper";
 
@@ -30,7 +31,7 @@ function HomeScreen() {
           full
           direction="column"
           start
-          style={{ paddingHorizontal: normalize(20) }}
+          style={{ paddingHorizontal: normalize(10) }}
         >
           <TextDefault
             style={{
@@ -60,7 +61,7 @@ function HomeScreen() {
           <Row
             between
             style={{
-              marginHorizontal: normalize(20),
+              marginHorizontal: normalize(10),
               padding: normalize(15),
               backgroundColor: theme.inputBackground,
               borderRadius: normalize(10),
@@ -69,11 +70,14 @@ function HomeScreen() {
             <SearchIcon color={theme.textSecond} />
           </Row>
         </TouchableOpacity>
-        {/* <Separator height={20} />
-        <Categories /> */}
-        <Separator height={20} />
-        {/* <BannerSlide /> */}
-        <Separator height={20} />
+
+        <View
+          style={{
+            padding: normalize(10),
+          }}
+        >
+          <Categories />
+        </View>
         <BestDestination />
         <Separator height={100} />
       </ScrollView>
