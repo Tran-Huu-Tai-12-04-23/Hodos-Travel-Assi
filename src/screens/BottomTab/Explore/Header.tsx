@@ -5,6 +5,8 @@ import { useTheme } from "@context/themContext";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { normalize } from "@helper/helpers";
 import { deviceWidth } from "@helper/utils";
+import { navigate } from "@navigation/NavigationService";
+import { APP_ROUTE } from "@navigation/route";
 import React from "react";
 import { Platform, ScrollView, TouchableOpacity, View } from "react-native";
 import { styleGlobal } from "src/styles";
@@ -48,7 +50,11 @@ function Header() {
             padding: normalize(10),
           }}
         >
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigate(APP_ROUTE.POST_CREATE);
+            }}
+          >
             <Row direction="column" rowGap={5}>
               <View
                 style={{

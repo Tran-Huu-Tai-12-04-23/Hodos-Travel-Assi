@@ -106,7 +106,7 @@ function RoomChatScreen() {
                 >
                   <TextDefault
                     size={normalize(14)}
-                    color={item?.isChatBox ? theme.background : theme.text}
+                    color={item?.isChatBox ? "white" : theme.text}
                   >
                     {item.message}
                   </TextDefault>

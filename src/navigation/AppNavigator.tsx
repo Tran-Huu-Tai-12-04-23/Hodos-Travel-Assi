@@ -6,6 +6,7 @@ import IntroScreen from "src/screens/Auth/Intro";
 import RegisterScreen from "src/screens/Auth/Register";
 import ChatBoxScreen from "src/screens/Global/ChatBox";
 import RoomChatScreen from "src/screens/Global/ChatBox/Childs/Room";
+import CreatePostScreen from "src/screens/Global/CreatePost";
 import LocationDetailScreen from "src/screens/Global/LocationDetail";
 import LocationMapSearchScreen from "src/screens/Global/LocationMapSearch";
 import NotificationScreen from "src/screens/Global/Notification";
@@ -58,6 +59,7 @@ const screens = [
     },
   },
   { name: APP_ROUTE.PREDICT, component: PredictScreen },
+  { name: APP_ROUTE.POST_CREATE, component: CreatePostScreen },
 ];
 
 const AppNavigator = () => {

@@ -1,8 +1,9 @@
 import { useIsMutating } from "@tanstack/react-query";
+import { IMG } from "assets/localImage";
 import { BlurView } from "expo-blur";
+import { Image } from "expo-image";
 import React, { createContext, useContext, useState } from "react";
-import { ActivityIndicator, Modal, StyleSheet } from "react-native";
-
+import { Modal, StyleSheet } from "react-native";
 interface LoadingContextValue {
   isLoading: boolean;
   startLoading: () => void;
@@ -45,7 +46,7 @@ export const LoadingProvider = ({ children }: PropsType) => {
         onRequestClose={() => {}}
       >
         <BlurView intensity={10} tint="light" style={styles.blurContainer}>
-          <ActivityIndicator color={"#0C66E4"} size="large" />
+          <Image source={IMG.loadingIcon} style={{ width: 100, height: 100 }} />
         </BlurView>
       </Modal>
 
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: "rgba(0,0,0,0.02)",
+    backgroundColor: "rgba(0,0,0,0.5)",
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",

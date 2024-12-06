@@ -9,12 +9,10 @@ import { navigate } from "@navigation/NavigationService";
 import { APP_ROUTE } from "@navigation/route";
 import { FlashList } from "@shopify/flash-list";
 import React from "react";
-import { ActivityIndicator, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { ILocation } from "src/services/hooks/location/dto";
-import useLocationPagination from "src/services/hooks/location/useLocationPagination";
-function BestDestination() {
+function BestDestination({ data }: { data: ILocation[] }) {
   const { theme } = useTheme();
-  const { data, isLoading, isFetching } = useLocationPagination({});
 
   return (
     <Row full direction="column" start style={{ flex: 1 }}>
@@ -31,11 +29,6 @@ function BestDestination() {
           <TextDefault color={theme.hightLight}>View all</TextDefault>
         </TouchableOpacity>
       </Row>
-      {isLoading && isFetching && (
-        <Row style={{ padding: normalize(20) }} full center>
-          <ActivityIndicator color={theme.primary} />
-        </Row>
-      )}
       <Separator height={10} />
       <View style={{ flex: 1, width: deviceWidth }}>
         <FlashList

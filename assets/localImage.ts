@@ -14,4 +14,5 @@ export const IMG = {
   predictIcon: require("./images/predict.png"),
   locationPredict: require("./images/locationPredict.png"),
   foodPredict: require("./images/foodPredict.png"),
+  loadingIcon: require("./images/gif/loading.gif"),
 };

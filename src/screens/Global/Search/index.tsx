@@ -14,7 +14,8 @@ function SearchScreen() {
         full
         direction="column"
         style={{
-          paddingHorizontal: normalize(20),
+          paddingHorizontal: normalize(10),
+          flex: 1,
         }}
       >
         <Header />

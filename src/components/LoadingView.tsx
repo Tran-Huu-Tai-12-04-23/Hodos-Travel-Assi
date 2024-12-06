@@ -1,5 +1,7 @@
+import { IMG } from "assets/localImage";
+import { Image } from "expo-image";
 import React from "react";
-import { ActivityIndicator, View } from "react-native";
+import { View } from "react-native";
 
 function LoadingView() {
   return (
@@ -15,7 +17,7 @@ function LoadingView() {
         zIndex: 9999,
       }}
     >
-      <ActivityIndicator color="blue" />
+      <Image source={IMG.loadingIcon} style={{ width: 100, height: 100 }} />
     </View>
   );
 }

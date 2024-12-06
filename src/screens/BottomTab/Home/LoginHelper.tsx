@@ -24,7 +24,7 @@ function LoginHelper() {
       }}
     >
       {Platform.OS === "ios" && <Separator height={50} />}
-      <TextDefault center bold color={theme.background}>
+      <TextDefault center bold color={"white"}>
         Register an account to get more benefits from Us!
       </TextDefault>
       <ButtonLink

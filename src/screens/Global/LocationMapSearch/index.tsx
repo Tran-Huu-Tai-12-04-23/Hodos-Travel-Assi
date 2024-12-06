@@ -8,7 +8,13 @@ import ArrowLeftIcon from "assets/svg/arrow-left-icon";
 import SearchIcon from "assets/svg/search-icon";
 import { Image } from "expo-image";
 import React, { useEffect } from "react";
-import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import MapView, { Marker, Polygon } from "react-native-maps";
 
 import Row from "@components/Row";
@@ -72,90 +78,90 @@ const LocationMapSearchScreen = () => {
     };
   }, []);
 
-  if (isLoadingView) {
-    return;
-  }
   return (
     <MainLayout>
-      <MapView
-        zoomEnabled
-        ref={mapRef}
-        style={[styles.map]}
-        initialRegion={{
-          latitude: currentLocation.latitude,
-          longitude: currentLocation.longitude,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
-        }}
-      >
-        {data && data[currentIdxLocation] && (
-          <Marker
-            coordinate={{
-              latitude: parseFloat(
-                data[currentIdxLocation].coordinates?.split(",")[0]
-              ),
-              longitude: parseFloat(
-                data[currentIdxLocation].coordinates?.split(",")[1]
-              ),
-            }}
-            title={data[currentIdxLocation].name}
-            description={data[currentIdxLocation].description}
-          >
-            <TouchableOpacity onPress={() => {}}>
-              <View style={styles.customMarker}>
-                <Image
-                  source={{ uri: data[currentIdxLocation].img }}
-                  style={[styles.markerImage, { borderColor: theme.primary }]}
-                />
-              </View>
-            </TouchableOpacity>
-          </Marker>
-        )}
-        <Marker
-          coordinate={{
+      {!isLoadingView && (
+        <MapView
+          zoomEnabled
+          ref={mapRef}
+          style={[styles.map]}
+          initialRegion={{
             latitude: currentLocation.latitude,
             longitude: currentLocation.longitude,
+            latitudeDelta: 0.05,
+            longitudeDelta: 0.05,
           }}
-          title={"Your location"}
         >
-          <View
-            style={[
-              styles.customMarker,
-              {
-                backgroundColor: theme.primary,
-                ...styleGlobal.shadow,
-              },
-            ]}
-          >
-            <Image
-              source={{
-                uri: "https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/474119Flf/hinh-nen-jack-97-full-hd_011645903.jpg",
+          {data && data[currentIdxLocation] && (
+            <Marker
+              coordinate={{
+                latitude: parseFloat(
+                  data[currentIdxLocation].coordinates?.split(",")[0]
+                ),
+                longitude: parseFloat(
+                  data[currentIdxLocation].coordinates?.split(",")[1]
+                ),
               }}
-              style={[styles.markerImage, { borderColor: theme.second }]}
+              title={data[currentIdxLocation].name}
+              description={data[currentIdxLocation].description}
+            >
+              <TouchableOpacity onPress={() => {}}>
+                <View style={styles.customMarker}>
+                  <Image
+                    source={{ uri: data[currentIdxLocation].img }}
+                    style={[styles.markerImage, { borderColor: theme.primary }]}
+                  />
+                </View>
+              </TouchableOpacity>
+            </Marker>
+          )}
+          <Marker
+            coordinate={{
+              latitude: currentLocation.latitude,
+              longitude: currentLocation.longitude,
+            }}
+            title={"Your location"}
+          >
+            <View
+              style={[
+                styles.customMarker,
+                {
+                  backgroundColor: theme.primary,
+                  ...styleGlobal.shadow,
+                },
+              ]}
+            >
+              <Image
+                source={{
+                  uri: "https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/474119Flf/hinh-nen-jack-97-full-hd_011645903.jpg",
+                }}
+                style={[styles.markerImage, { borderColor: theme.second }]}
+              />
+            </View>
+          </Marker>
+          {/* vẽ  đường dựa vào lst kinh độ vỹ độ  */}
+          {routes && routes?.length > 0 && (
+            <Polygon
+              coordinates={[
+                // {
+                //   latitude: currentLocation.latitude,
+                //   longitude: currentLocation.longitude,
+                // },
+                ...routes[0].coordinates,
+                // {
+                //   latitude: data[currentIdxLocation].coordinates?.split(",")[0],
+                //   longitude: data[currentIdxLocation].coordinates?.split(",")[1],
+                // },
+              ]}
+              fillColor="rgba(0, 200, 0, 0)"
+              strokeColor={theme.primary}
+              strokeWidth={2}
+              tappable={true}
             />
-          </View>
-        </Marker>
-        {/* vẽ  đường dựa vào lst kinh độ vỹ độ  */}
-        {routes && routes?.length > 0 && (
-          <Polygon
-            coordinates={[
-              // {
-              //   latitude: currentLocation.latitude,
-              //   longitude: currentLocation.longitude,
-              // },
-              ...routes[0].coordinates,
-              // {
-              //   latitude: data[currentIdxLocation].coordinates?.split(",")[0],
-              //   longitude: data[currentIdxLocation].coordinates?.split(",")[1],
-              // },
-            ]}
-            fillColor="rgba(0, 200, 0, 0)"
-            strokeColor={theme.primary}
-            strokeWidth={2}
-            tappable={true}
-          />
-        )}
-      </MapView>
+          )}
+        </MapView>
+      )}
+
       <View
         style={{
           width: deviceWidth - 40,
@@ -169,6 +175,7 @@ const LocationMapSearchScreen = () => {
           top: 0,
         }}
       >
+        {isLoadingView && <ActivityIndicator />}
         <Row
           full
           between
@@ -178,7 +185,7 @@ const LocationMapSearchScreen = () => {
           }}
         >
           <IconButton
-            icon={<ArrowLeftIcon color={theme.background} />}
+            icon={<ArrowLeftIcon color={theme.textSecond} />}
             onPress={goBack}
           />
           <TextInput
@@ -187,14 +194,14 @@ const LocationMapSearchScreen = () => {
             style={{
               flex: 1,
               height: 40,
-              backgroundColor: "white",
+              backgroundColor: theme.inputBackground,
               borderRadius: 100,
               padding: 10,
               paddingHorizontal: 20,
             }}
           />
           <IconButton
-            icon={<SearchIcon color={theme.background} />}
+            icon={<SearchIcon color={theme.textSecond} />}
             onPress={function (): void {}}
           />
         </Row>

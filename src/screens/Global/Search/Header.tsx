@@ -18,6 +18,7 @@ function Header() {
       between
       style={{
         alignItems: "center",
+        paddingBottom: normalize(10),
       }}
       colGap={10}
     >
@@ -27,6 +28,7 @@ function Header() {
           backgroundColor: theme.inputBackground,
           borderRadius: 100,
           padding: normalize(10),
+
           width: normalize(40),
           height: normalize(40),
           justifyContent: "center",

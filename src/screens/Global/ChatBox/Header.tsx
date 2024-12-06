@@ -39,13 +39,13 @@ function Header() {
           }}
         >
           <IconButton
-            icon={<ArrowLeftIcon color={theme.background} />}
+            icon={<ArrowLeftIcon color={"white"} />}
             onPress={goBack}
           />
-          <TextDefault size={normalize(16)} color={theme.background}>
+          <TextDefault size={normalize(16)} color={"white"}>
             Hello ,
           </TextDefault>
-          <TextDefault size={normalize(16)} bold color={theme.background}>
+          <TextDefault size={normalize(16)} bold color={"white"}>
             Arthur
           </TextDefault>
         </Row>

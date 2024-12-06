@@ -3,7 +3,7 @@ import Row from "@components/Row";
 import Separator from "@components/Separator";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
-import { deviceHeight, deviceWidth } from "@helper/utils";
+import { deviceWidth } from "@helper/utils";
 import { FlashList } from "@shopify/flash-list";
 import React from "react";
 import { ActivityIndicator, StyleSheet } from "react-native";
@@ -45,7 +45,7 @@ function LocationView() {
             <ActivityIndicator color={theme.primary} />
           ) : null
         }
-        data={data?.result}
+        data={data}
         keyExtractor={(_, index) => index.toString()}
         renderItem={renderItem}
         ListFooterComponentStyle={{ marginBottom: normalize(20) }}
@@ -57,10 +57,9 @@ function LocationView() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
-    minHeight: deviceHeight / 2,
     flexDirection: "row",
     flexWrap: "wrap",
+    flex: 1,
   },
   pagerView: {
     flex: 1,

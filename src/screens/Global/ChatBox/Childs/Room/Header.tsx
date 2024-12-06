@@ -33,11 +33,8 @@ function Header() {
         }}
         colGap={10}
       >
-        <IconButton
-          icon={<ArrowLeftIcon color={theme.background} />}
-          onPress={goBack}
-        />
-        <TextDefault size={normalize(16)} bold color={theme.background}>
+        <IconButton icon={<ArrowLeftIcon color={"white"} />} onPress={goBack} />
+        <TextDefault size={normalize(16)} bold color={"white"}>
           New Chat
         </TextDefault>
       </Row>
