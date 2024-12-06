@@ -1,16 +1,9 @@
 import { IMG } from "assets/localImage";
 import { Image } from "expo-image";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Animated,
   Dimensions,
-  Easing,
   LayoutAnimation,
   PanResponder,
   ScrollView,
@@ -27,26 +20,19 @@ type WrapperPullRefreshProps = {
 };
 
 const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
-  duration = 200,
+  duration = 1500,
   pullHeight = 100,
   isRefreshing,
   onRefresh,
   renderElement,
 }) => {
-  const scrollY = useRef(new Animated.Value(0)).current;
-  const refreshHeight = useRef(new Animated.Value(0)).current;
+  const scrollY = useMemo(() => new Animated.Value(0), []);
+  const refreshHeight = useMemo(() => new Animated.Value(0), []);
 
-  const initAnimationProgress = useRef(new Animated.Value(0)).current;
-  const repeatAnimationProgress = useRef(new Animated.Value(0)).current;
-  const finalAnimationProgress = useRef(new Animated.Value(0)).current;
-
-  const scrollViewRef = useRef<ScrollView>(null);
+  const scrollViewRef = useMemo(() => React.createRef<ScrollView>(), []);
 
   const [isScrollFree, setIsScrollFree] = useState(false);
   const [showPullAnim, setShowPullAnim] = useState(false);
-  const [isRefreshAnimationStarted, setIsRefreshAnimationStarted] =
-    useState(false);
-  const [isRefreshAnimationEnded, setIsRefreshAnimationEnded] = useState(false);
 
   const animateHeight = refreshHeight.interpolate({
     inputRange: [-pullHeight, 0],
@@ -60,10 +46,16 @@ const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
   }, []);
 
   useEffect(() => {
-    if (isRefreshAnimationStarted && !showPullAnim) {
-      handleRefresh();
+    if (!isRefreshing) {
+      Animated.spring(refreshHeight, {
+        toValue: 0,
+        useNativeDriver: false,
+      }).start(() => {
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        setShowPullAnim(false);
+      });
     }
-  }, [isRefreshAnimationStarted, showPullAnim]);
+  }, [isRefreshing, refreshHeight]);
 
   const panResponder = useMemo(
     () =>
@@ -95,31 +87,22 @@ const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
         onPanResponderRelease: () => handlePanResponderEnd(),
         onPanResponderTerminate: () => handlePanResponderEnd(),
       }),
-    [isScrollFree, isRefreshing]
+    [isScrollFree, isRefreshing, scrollY, refreshHeight, showPullAnim]
   );
 
   const handlePanResponderEnd = useCallback(() => {
     if (!isRefreshing) {
       if (refreshHeight._value <= -pullHeight) {
         Animated.parallel([
-          Animated.timing(refreshHeight, {
+          Animated.spring(refreshHeight, {
             toValue: -pullHeight,
             useNativeDriver: false,
           }),
-          Animated.timing(initAnimationProgress, {
-            toValue: 1,
-            duration: 1000,
-            useNativeDriver: false,
-          }),
         ]).start(() => {
-          initAnimationProgress.setValue(0);
-          LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-          setIsRefreshAnimationStarted(true);
-          setShowPullAnim(false);
-          startRepeatAnimation();
+          onRefresh();
         });
       } else {
-        Animated.timing(refreshHeight, {
+        Animated.spring(refreshHeight, {
           toValue: 0,
           useNativeDriver: false,
         }).start(() => {
@@ -132,73 +115,7 @@ const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
         setIsScrollFree(true);
       }
     }
-  }, [isRefreshing, pullHeight]);
-
-  const startRepeatAnimation = useCallback(() => {
-    repeatAnimationProgress.setValue(0);
-    Animated.timing(repeatAnimationProgress, {
-      toValue: 1,
-      easing: Easing.linear,
-      duration,
-      useNativeDriver: false,
-    }).start(() => {
-      if (isRefreshing) {
-        startRepeatAnimation();
-      } else {
-        repeatAnimationProgress.setValue(0);
-        endAnimation();
-      }
-    });
-  }, [isRefreshing, duration]);
-
-  const endAnimation = useCallback(() => {
-    setIsRefreshAnimationEnded(true);
-    Animated.sequence([
-      Animated.timing(finalAnimationProgress, {
-        toValue: 1,
-        easing: Easing.linear,
-        duration,
-        useNativeDriver: false,
-      }),
-      Animated.spring(refreshHeight, {
-        toValue: 0,
-        bounciness: 12,
-        useNativeDriver: false,
-      }),
-    ]).start(() => {
-      finalAnimationProgress.setValue(0);
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      setIsRefreshAnimationEnded(false);
-      setIsRefreshAnimationStarted(false);
-      setShowPullAnim(false);
-    });
-  }, [duration]);
-
-  const handleRefresh = useCallback(() => {
-    onRefresh();
-    Animated.parallel([
-      Animated.spring(refreshHeight, {
-        toValue: -pullHeight,
-        bounciness: 12,
-        useNativeDriver: false,
-      }),
-      Animated.timing(initAnimationProgress, {
-        toValue: 1,
-        duration,
-        easing: Easing.linear,
-        useNativeDriver: false,
-      }),
-    ]).start(() => {
-      initAnimationProgress.setValue(0);
-      setIsRefreshAnimationStarted(true);
-      setShowPullAnim(false);
-      startRepeatAnimation();
-    });
-  }, [pullHeight, duration]);
-
-  console.log({
-    status: animateHeight,
-  });
+  }, [isRefreshing, pullHeight, onRefresh, refreshHeight, scrollY]);
 
   return (
     <View
@@ -213,7 +130,7 @@ const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
           alignItems: "center",
         }}
       >
-        {(showPullAnim || isRefreshing) && (
+        {showPullAnim && (
           <Image
             source={IMG.loadingIcon}
             style={{
@@ -222,26 +139,9 @@ const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
             }}
           />
         )}
-        {/* {isRefreshAnimationStarted && !isRefreshAnimationEnded && (
-          <Image
-            source={IMG.loadingIcon}
-            style={{
-              width: 100,
-              height: 100,
-            }}
-          />
-        )}
-        {isRefreshAnimationEnded && (
-          <Image
-            source={IMG.loadingIcon}
-            style={{
-              width: 100,
-              height: 100,
-            }}
-          />
-        )} */}
       </Animated.View>
       <Animated.ScrollView
+        showsVerticalScrollIndicator={false}
         ref={scrollViewRef}
         scrollEnabled={isScrollFree}
         onScroll={(event) =>
