@@ -21,9 +21,6 @@ function Header() {
         backgroundColor: theme.primary,
         borderBottomEndRadius: normalize(20),
         borderBottomStartRadius: normalize(20),
-        position: "absolute",
-        top: 0,
-        zIndex: 100,
       }}
     >
       {Platform.OS === "ios" && <Separator height={50} />}

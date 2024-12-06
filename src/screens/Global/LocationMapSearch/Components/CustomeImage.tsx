@@ -1,5 +1,6 @@
 import { IconButton } from "@components/Button";
 import TextDefault from "@components/TextDefault";
+import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { navigate } from "@navigation/NavigationService";
 import { APP_ROUTE } from "@navigation/route";
@@ -13,6 +14,7 @@ import Animated, {
 } from "react-native-reanimated";
 import { SharedElement } from "react-navigation-shared-element";
 const CustomImage = ({ item, x, index, size, spacer }: any) => {
+  const { theme } = useTheme();
   const style = useAnimatedStyle(() => {
     const scale = interpolate(
       x.value,
@@ -52,7 +54,7 @@ const CustomImage = ({ item, x, index, size, spacer }: any) => {
             }}
           >
             <IconButton
-              icon={<EyeIcon color="white" />}
+              icon={<EyeIcon color={theme.text} />}
               onPress={() =>
                 navigate(APP_ROUTE.LOCATION_DETAIL, { id: item.id })
               }

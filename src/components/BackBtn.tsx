@@ -33,7 +33,7 @@ function BackBtn({ color }: { color?: string }) {
           alignItems: "center",
         }}
       >
-        <BackIcon color={theme.textSecond} />
+        <BackIcon color={theme.text} />
       </BlurView>
     </TouchableOpacity>
   );

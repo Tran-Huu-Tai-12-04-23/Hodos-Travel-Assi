@@ -9,7 +9,7 @@ import SearchIcon from "assets/svg/search-icon";
 import { Image } from "expo-image";
 import React, { useEffect } from "react";
 import {
-  ActivityIndicator,
+  Platform,
   StyleSheet,
   TextInput,
   TouchableOpacity,
@@ -82,6 +82,8 @@ const LocationMapSearchScreen = () => {
     <MainLayout>
       {!isLoadingView && (
         <MapView
+          userInterfaceStyle={theme.name as any}
+          mapType={Platform.OS == "android" ? "none" : "standard"}
           zoomEnabled
           ref={mapRef}
           style={[styles.map]}
@@ -175,7 +177,6 @@ const LocationMapSearchScreen = () => {
           top: 0,
         }}
       >
-        {isLoadingView && <ActivityIndicator />}
         <Row
           full
           between
@@ -206,7 +207,7 @@ const LocationMapSearchScreen = () => {
           />
         </Row>
       </View>
-      {data && (
+      {!isLoadingView && data && (
         <View
           style={{
             justifyContent: "space-between",

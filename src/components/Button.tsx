@@ -212,7 +212,7 @@ const IconButton = ({
       style={[
         styleGlobal.centerChild,
         {
-          backgroundColor: theme.backgroundSecond,
+          backgroundColor: theme.background,
           borderRadius: round,
           width: normalize(30),
           height: normalize(30),
