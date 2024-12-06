@@ -9,7 +9,7 @@ import MainLayout from "@layout/MainLayout";
 import { navigate } from "@navigation/NavigationService";
 import { APP_ROUTE } from "@navigation/route";
 import SearchIcon from "assets/svg/search-icon";
-import React from "react";
+import React, { useEffect } from "react";
 import { Platform, ScrollView, TouchableOpacity, View } from "react-native";
 import useLocationPagination from "src/services/hooks/location/useLocationPagination";
 import BestDestination from "./BestDestination";
@@ -24,6 +24,7 @@ function HomeScreen() {
   const { data } = useLocationPagination({});
   const [dataLocation, setDataLocation] = React.useState(data);
   const refreshSimulationHandler = () => {
+    console.log("refresh");
     setDataLocation([]);
     setIsLoading(true);
     setTimeout(async () => {
@@ -31,7 +32,12 @@ function HomeScreen() {
       setIsLoading(false);
     }, 1500);
   };
-  console.log(dataLocation);
+
+  useEffect(() => {
+    if (data) {
+      setDataLocation(data);
+    }
+  }, []);
   return (
     <MainLayout>
       {user && <Header />}
@@ -40,7 +46,6 @@ function HomeScreen() {
         isRefreshing={isLoading}
         onRefresh={refreshSimulationHandler}
         pullHeight={110}
-        backgroundColor={"#5DADE2"}
         renderElement={
           <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
             {Platform.OS === "ios" && user && <Separator height={120} />}

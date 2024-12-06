@@ -18,24 +18,19 @@ import {
   View,
 } from "react-native";
 
-const vw = Dimensions.get("window").width * 0.01;
-const vh = Dimensions.get("window").height * 0.01;
-
 type WrapperPullRefreshProps = {
   duration?: number;
   pullHeight?: number;
   isRefreshing: boolean;
   onRefresh: () => void;
-  backgroundColor?: string;
   renderElement: JSX.Element;
 };
 
 const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
-  duration = 1500,
-  pullHeight = 10 * vh,
+  duration = 200,
+  pullHeight = 100,
   isRefreshing,
   onRefresh,
-  backgroundColor,
   renderElement,
 }) => {
   const scrollY = useRef(new Animated.Value(0)).current;
@@ -58,12 +53,6 @@ const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
     outputRange: [pullHeight, 0],
   });
 
-  const animateProgress = refreshHeight.interpolate({
-    inputRange: [-pullHeight, 0],
-    outputRange: [1, 0],
-    extrapolate: "clamp",
-  });
-
   useEffect(() => {
     if (UIManager.setLayoutAnimationEnabledExperimental) {
       UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -71,10 +60,10 @@ const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
   }, []);
 
   useEffect(() => {
-    if (isRefreshing && !showPullAnim) {
+    if (isRefreshAnimationStarted && !showPullAnim) {
       handleRefresh();
     }
-  }, [isRefreshing, showPullAnim]);
+  }, [isRefreshAnimationStarted, showPullAnim]);
 
   const panResponder = useMemo(
     () =>
@@ -83,9 +72,12 @@ const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
         onMoveShouldSetPanResponder: () => !isScrollFree,
         onPanResponderMove: (e, gestureState) => {
           if (!isRefreshing) {
-            if (gestureState.dy >= 0 && scrollY._value === 0) {
-              refreshHeight.setValue(-1 * gestureState.dy * 0.35);
-              setShowPullAnim(true);
+            if (gestureState.dy >= 20 && scrollY._value === 0) {
+              const newHeight = -gestureState.dy * 0.35;
+              if (Math.abs(newHeight - refreshHeight._value) > 2) {
+                refreshHeight.setValue(newHeight);
+                setShowPullAnim(true);
+              }
             } else {
               scrollViewRef.current?.scrollTo({
                 y: -1 * gestureState.dy,
@@ -110,7 +102,7 @@ const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
     if (!isRefreshing) {
       if (refreshHeight._value <= -pullHeight) {
         Animated.parallel([
-          Animated.spring(refreshHeight, {
+          Animated.timing(refreshHeight, {
             toValue: -pullHeight,
             useNativeDriver: false,
           }),
@@ -127,7 +119,7 @@ const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
           startRepeatAnimation();
         });
       } else {
-        Animated.spring(refreshHeight, {
+        Animated.timing(refreshHeight, {
           toValue: 0,
           useNativeDriver: false,
         }).start(() => {
@@ -183,6 +175,7 @@ const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
   }, [duration]);
 
   const handleRefresh = useCallback(() => {
+    onRefresh();
     Animated.parallel([
       Animated.spring(refreshHeight, {
         toValue: -pullHeight,
@@ -203,6 +196,10 @@ const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
     });
   }, [pullHeight, duration]);
 
+  console.log({
+    status: animateHeight,
+  });
+
   return (
     <View
       style={{ width: Dimensions.get("window").width }}
@@ -216,7 +213,7 @@ const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
           alignItems: "center",
         }}
       >
-        {showPullAnim && (
+        {(showPullAnim || isRefreshing) && (
           <Image
             source={IMG.loadingIcon}
             style={{
@@ -225,16 +222,7 @@ const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
             }}
           />
         )}
-        {isRefreshing && !isRefreshAnimationStarted && (
-          <Image
-            source={IMG.loadingIcon}
-            style={{
-              width: 100,
-              height: 100,
-            }}
-          />
-        )}
-        {isRefreshAnimationStarted && !isRefreshAnimationEnded && (
+        {/* {isRefreshAnimationStarted && !isRefreshAnimationEnded && (
           <Image
             source={IMG.loadingIcon}
             style={{
@@ -251,7 +239,7 @@ const WrapperPullRefresh: React.FC<WrapperPullRefreshProps> = ({
               height: 100,
             }}
           />
-        )}
+        )} */}
       </Animated.View>
       <Animated.ScrollView
         ref={scrollViewRef}
