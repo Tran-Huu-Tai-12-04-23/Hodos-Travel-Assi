@@ -36,17 +36,15 @@ function ProfileHeader() {
           }}
         >
           <IconButton
-            icon={<ArrowLeftIcon color={theme.background} />}
+            icon={<ArrowLeftIcon color={"white"} />}
             onPress={goBack}
           />
-          <TextDefault size={normalize(14)} bold color={theme.background}>
+          <TextDefault size={normalize(14)} bold color={"white"}>
             Profile
           </TextDefault>
 
           <IconButton
-            icon={
-              <AntDesign name="setting" size={24} color={theme.background} />
-            }
+            icon={<AntDesign name="setting" size={24} color={"white"} />}
             onPress={() => navigate(APP_ROUTE.SETTING)}
           />
         </Row>

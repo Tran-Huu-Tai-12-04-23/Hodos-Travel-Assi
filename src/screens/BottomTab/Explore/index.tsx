@@ -1,3 +1,4 @@
+import TextDefault from "@components/TextDefault";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { deviceWidth } from "@helper/utils";
@@ -111,16 +112,16 @@ const PostItem = ({ item }: any) => {
           bottom: 10,
         }}
       >
-        <Text style={[styles.postTitle, { color: theme.text }]}>
+        <TextDefault style={[styles.postTitle, { color: "white" }]}>
           {item.title}
-        </Text>
+        </TextDefault>
         <View style={styles.postStats}>
-          <Text style={[styles.postStat, { color: theme.text }]}>
+          <TextDefault style={[styles.postStat, { color: "white" }]}>
             ❤️ {item.heart}
-          </Text>
-          <Text style={[styles.postStat, { color: theme.text }]}>
+          </TextDefault>
+          <TextDefault style={[styles.postStat, { color: "white" }]}>
             💬 {item.comment}
-          </Text>
+          </TextDefault>
         </View>
       </View>
     </View>

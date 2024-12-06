@@ -29,7 +29,7 @@ function Header() {
           alignItems: "center",
         }}
       >
-        <BackIcon />
+        <BackIcon color={"white"} />
       </TouchableOpacity>
       <TextDefault bold style={{ fontSize: normalize(16) }}>
         Settings

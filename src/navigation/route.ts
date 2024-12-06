@@ -23,6 +23,7 @@ export const APP_ROUTE = createEnum({
   CHAT_BOX: "CHAT_BOX",
   ROOM_CHAT: "ROOM_CHAT",
   POST_DETAIL: "POST_DETAIL",
+  PREDICT: "PREDICT",
   /// demo transaction
 });
 

@@ -39,24 +39,6 @@ function Header() {
         paddingBottom: normalize(10),
       }}
     >
-      <Row
-        full
-        between
-        colGap={10}
-        style={{
-          paddingHorizontal: normalize(20),
-        }}
-      >
-        <Row direction="column" start rowGap={5}>
-          <TextDefault>WEDNESDAY</TextDefault>
-          <TextDefault bold>NEW FEEDS</TextDefault>
-        </Row>
-        <Avatar
-          size={40}
-          url="https://cdn.dribbble.com/userupload/14580530/file/original-9fe6758a1dba392fe6e4631452e3b474.png?resize=1024x768&vertical=center"
-        />
-      </Row>
-
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <Row
           full
@@ -88,10 +70,10 @@ function Header() {
                     margin: normalize(2),
                   }}
                 >
-                  <FontAwesome6 name="add" size={24} color={theme.text} />
+                  <FontAwesome6 name="add" size={24} color={theme.textSecond} />
                 </View>
               </View>
-              <TextDefault>Add Post</TextDefault>
+              <TextDefault color="white">Add Post</TextDefault>
             </Row>
           </TouchableOpacity>
 
@@ -111,7 +93,9 @@ function Header() {
                     <Avatar size={normalize(46)} url={item.avatar} />
                   </View>
 
-                  <TextDefault center>{item.username}</TextDefault>
+                  <TextDefault center color="white">
+                    {item.username}
+                  </TextDefault>
                 </Row>
               </TouchableOpacity>
             );

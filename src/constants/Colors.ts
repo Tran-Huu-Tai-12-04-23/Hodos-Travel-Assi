@@ -18,6 +18,7 @@ const themeData = {
     icon: "#A0A3A8",
     pause: "#7D848D",
     border: "#3A3A3A",
+    bottomBar: "rgba(0,0,0,0.8)",
   },
   dark: {
     text: "#111827",
@@ -38,6 +39,7 @@ const themeData = {
     icon: "#9CA3AF",
     pause: "#7D848D",
     border: "#EEEFF2",
+    bottomBar: "rgba(255,255,255,0.8)",
   },
 };
 

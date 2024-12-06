@@ -25,7 +25,6 @@ function HomeScreen() {
       {!user && <LoginHelper />}
       <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
         {Platform.OS === "ios" && user && <Separator height={120} />}
-
         <Separator height={20} />
         <Row
           full

@@ -11,4 +11,7 @@ export const IMG = {
   mountainImg: require("./images/mountain.png"),
   chatBox: require("./images/chatBox.png"),
   findLocation: require("./images/findLocation.png"),
+  predictIcon: require("./images/predict.png"),
+  locationPredict: require("./images/locationPredict.png"),
+  foodPredict: require("./images/foodPredict.png"),
 };

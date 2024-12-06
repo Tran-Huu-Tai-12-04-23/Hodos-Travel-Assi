@@ -60,7 +60,7 @@ function CustomBottomBar({ state, descriptors, navigation }: any) {
           position: "absolute",
           bottom: 0,
           zIndex: 100,
-          backgroundColor: "rgba(255,255,255,0.2)",
+          backgroundColor: theme.bottomBar,
           left: 0,
           right: 0,
           borderTopLeftRadius: normalize(20),

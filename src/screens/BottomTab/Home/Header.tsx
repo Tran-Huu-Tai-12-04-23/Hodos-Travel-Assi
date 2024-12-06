@@ -33,7 +33,6 @@ function Header() {
         style={{
           alignItems: "center",
           paddingHorizontal: normalize(10),
-
           paddingBottom: normalize(10),
         }}
       >
@@ -44,12 +43,7 @@ function Header() {
           }}
         >
           <Avatar source={{ uri: user?.avatar }} />
-          <TextDefault
-            style={{ marginLeft: 5 }}
-            bold
-            size={16}
-            color={theme.background}
-          >
+          <TextDefault style={{ marginLeft: 5 }} bold size={16} color={"white"}>
             {user?.username}
           </TextDefault>
         </Row>
@@ -59,7 +53,7 @@ function Header() {
           }}
         >
           <IconButton
-            icon={<BellIcon color={theme.background} />}
+            icon={<BellIcon color={"white"} />}
             onPress={() => {
               navigate(APP_ROUTE.NOTIFICATION);
             }}

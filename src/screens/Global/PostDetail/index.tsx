@@ -36,11 +36,11 @@ function PostDetailScreen() {
         />
       </SharedElement>
       <View style={styles.postStats}>
-        <TextDefault style={[styles.postStat, { color: theme.text }]}>
+        <TextDefault style={[styles.postStat, { color: "white" }]}>
           ❤️
         </TextDefault>
         <TextDefault>{data.heart}</TextDefault>
-        <TextDefault style={[styles.postStat, { color: theme.text }]}>
+        <TextDefault style={[styles.postStat, { color: "white" }]}>
           💬
         </TextDefault>
         <TextDefault>{data.comment}</TextDefault>
@@ -48,10 +48,11 @@ function PostDetailScreen() {
       <View
         style={{
           position: "absolute",
-          bottom: 10,
+          bottom: 20,
+          left: 20,
         }}
       >
-        <TextDefault style={[styles.postTitle, { color: theme.text }]}>
+        <TextDefault style={[styles.postTitle, { color: "white" }]}>
           {data.title}
         </TextDefault>
       </View>

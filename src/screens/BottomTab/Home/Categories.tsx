@@ -12,7 +12,7 @@ import { TouchableOpacity } from "react-native";
 function Categories() {
   return (
     <Row full between wrap rowGap={10}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigate(APP_ROUTE.PREDICT)}>
         <PredictIcon />
       </TouchableOpacity>
       <Row direction="column" rowGap={10}>
