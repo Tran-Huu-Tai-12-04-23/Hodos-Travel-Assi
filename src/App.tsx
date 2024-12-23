@@ -31,8 +31,8 @@ export default function App() {
         <GestureHandlerRootView style={{ flex: 1 }}>
           <SafeAreaProvider>
             <KeyboardProvider>
-              <BottomSheetProvider>
-                <ThemeProvider>
+              <ThemeProvider>
+                <BottomSheetProvider>
                   <ToastProvider>
                     <AuthProvider>
                       <LoadingProvider>
@@ -41,8 +41,8 @@ export default function App() {
                       </LoadingProvider>
                     </AuthProvider>
                   </ToastProvider>
-                </ThemeProvider>
-              </BottomSheetProvider>
+                </BottomSheetProvider>
+              </ThemeProvider>
             </KeyboardProvider>
           </SafeAreaProvider>
         </GestureHandlerRootView>

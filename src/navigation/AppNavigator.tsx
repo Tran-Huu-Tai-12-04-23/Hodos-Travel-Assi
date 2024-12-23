@@ -12,6 +12,7 @@ import LocationMapSearchScreen from "src/screens/Global/LocationMapSearch";
 import NotificationScreen from "src/screens/Global/Notification";
 import PostDetailScreen from "src/screens/Global/PostDetail";
 import PredictScreen from "src/screens/Global/Predict";
+import PredictDetailScreen from "src/screens/Global/PredictDetail";
 import SettingScreen from "src/screens/Global/Profile/Setting";
 import SearchScreen from "src/screens/Global/Search";
 import BottomTabNavigator from "./BottomTabNavigator";
@@ -52,13 +53,11 @@ const screens = [
     component: PostDetailScreen,
     sharedElements: (route: any) => {
       const { data } = route.params;
-      console.log({
-        id: `post.${data.id}.image`,
-      });
       return [`post.${data.id}.image`];
     },
   },
   { name: APP_ROUTE.PREDICT, component: PredictScreen },
+  { name: APP_ROUTE.PREDICT_DETAIL, component: PredictDetailScreen },
   { name: APP_ROUTE.POST_CREATE, component: CreatePostScreen },
 ];
 

@@ -2,25 +2,44 @@ import { ButtonPrimary } from "@components/Button";
 import Row from "@components/Row";
 import Separator from "@components/Separator";
 import TextDefault from "@components/TextDefault";
+import { useBottomSheet } from "@context/bottomSheetContext";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { deviceWidth } from "@helper/utils";
 import MainLayout from "@layout/MainLayout";
 import { IMG } from "assets/localImage";
+import CameraIcon from "assets/svg/camera-icon";
+import ImageIcon from "assets/svg/image-icon";
 import SearchIcon from "assets/svg/search-icon";
 import React from "react";
-import { Image, ScrollView } from "react-native";
+import { Image, ScrollView, TouchableOpacity } from "react-native";
 import * as Animatable from "react-native-animatable";
 import Header from "./Header";
 
 const feature = [
   {
     name: "Find location",
-    icon: IMG.locationPredict,
+    icon: (
+      <Image
+        source={IMG.locationPredict}
+        style={{
+          width: normalize(40),
+          height: normalize(40),
+        }}
+      />
+    ),
   },
   {
     name: "Find delicious food",
-    icon: IMG.foodPredict,
+    icon: (
+      <Image
+        style={{
+          width: normalize(40),
+          height: normalize(40),
+        }}
+        source={IMG.foodPredict}
+      />
+    ),
   },
 ];
 
@@ -33,8 +52,50 @@ const features = [
   "Identifies food or landmarks based on keywords or images and provides user reviews, ratings, and recommendations for places in the city.",
 ];
 
+const options = [
+  {
+    name: "Select library image",
+    icon: <ImageIcon />,
+  },
+  {
+    name: "Take a photo",
+    icon: <CameraIcon />,
+  },
+];
+
 function PredictScreen() {
   const { theme } = useTheme();
+  const { openBottomSheet, hideBottomSheet } = useBottomSheet();
+
+  const handlePredict = () => {
+    openBottomSheet({
+      content: (
+        <Animatable.View delay={100} animation="fadeIn" easing="ease-out">
+          <Row direction="column" start full colGap={normalize(20)}>
+            {options.map((item, index) => (
+              <TouchableOpacity key={index}>
+                <Row
+                  full
+                  colGap={20}
+                  style={{
+                    alignItems: "center",
+                  }}
+                  start
+                  rowGap={10}
+                >
+                  {item.icon}
+                  <TextDefault size={normalize(12)} bold>
+                    {item.name}
+                  </TextDefault>
+                </Row>
+              </TouchableOpacity>
+            ))}
+          </Row>
+        </Animatable.View>
+      ),
+      snapPoints: [normalize(150)],
+    });
+  };
   return (
     <MainLayout>
       <Header />
@@ -57,13 +118,7 @@ function PredictScreen() {
             >
               {feature.map((item, index) => (
                 <Row key={index} direction="column" rowGap={10}>
-                  <Image
-                    source={item.icon}
-                    style={{
-                      width: normalize(deviceWidth / 4),
-                      height: normalize(deviceWidth / 4),
-                    }}
-                  />
+                  {item.icon}
                   <TextDefault size={normalize(14)} bold>
                     {item.name}
                   </TextDefault>
@@ -130,7 +185,7 @@ function PredictScreen() {
           <ButtonPrimary
             minWidth={deviceWidth - normalize(40)}
             title="Predict"
-            onPress={() => {}}
+            onPress={handlePredict}
             iconLeft={<SearchIcon />}
           />
         </Animatable.View>

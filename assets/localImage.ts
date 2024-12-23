@@ -15,4 +15,5 @@ export const IMG = {
   locationPredict: require("./images/locationPredict.png"),
   foodPredict: require("./images/foodPredict.png"),
   loadingIcon: require("./images/gif/loading.gif"),
+  camera: require("./images/camera.png"),
 };

@@ -76,6 +76,13 @@ export default (): ExpoConfig => ({
     buildNumber: "1",
     infoPlist: {
       CFBundleAllowMixedLocalizations: true,
+      NSPhotoLibraryAddUsageDescription:
+        "$(PRODUCT_NAME) needs photo library permissions",
+      NSPhotoLibraryUsageDescription:
+        "$(PRODUCT_NAME) needs photo library permissions",
+      NSCameraUsageDescription: "$(PRODUCT_NAME) needs to access your Camera",
+      NSMicrophoneUsageDescription:
+        "$(PRODUCT_NAME) needs to access your microphone so that you can record audio",
     },
     config: {
       usesNonExemptEncryption: false,
@@ -120,6 +127,14 @@ export default (): ExpoConfig => ({
       "expo-font",
       {
         fonts: ["./assets/fonts/Roboto.ttf"],
+      },
+    ],
+    [
+      "expo-camera",
+      {
+        cameraPermission: "Allow $(PRODUCT_NAME) to access your camera",
+        microphonePermission: "Allow $(PRODUCT_NAME) to access your microphone",
+        recordAudioAndroid: true,
       },
     ],
   ],

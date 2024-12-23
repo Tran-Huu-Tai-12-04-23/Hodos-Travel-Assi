@@ -758,6 +758,11 @@
     "@babel/helper-string-parser" "^7.25.9"
     "@babel/helper-validator-identifier" "^7.25.9"
 
+"@baronha/react-native-multiple-image-picker@2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@baronha/react-native-multiple-image-picker/-/react-native-multiple-image-picker-2.0.3.tgz#70d4dcdef277ff855b0b79031fcd7252e8976602"
+  integrity sha512-LEOFY7AUALKAhmpgX9YrgcR9ncvRMGz6vbXzg6MLW3ngIGycRZgHyL4JO7gdjoUWze4MehJZstwl8j9IZxph7g==
+
 "@egjs/hammerjs@^2.0.17":
   version "2.0.17"
   resolved "https://registry.npmjs.org/@egjs/hammerjs/-/hammerjs-2.0.17.tgz"
@@ -3738,6 +3743,13 @@ expo-build-properties@~0.12.5:
     ajv "^8.11.0"
     semver "^7.6.0"
 
+expo-camera@~15.0.16:
+  version "15.0.16"
+  resolved "https://registry.yarnpkg.com/expo-camera/-/expo-camera-15.0.16.tgz#149f25304ae7d76ae55653ca16f947e9f437c782"
+  integrity sha512-FLE02DMqkjwsb7IugKAqQvBe6s+TCQeb5LupO1+r//wAhBwmHncOrc6zV95ZEC2f9PTPK34nFH/s8CDGiVzIAA==
+  dependencies:
+    invariant "^2.2.4"
+
 expo-constants@~16.0.0, expo-constants@~16.0.2:
   version "16.0.2"
   resolved "https://registry.npmjs.org/expo-constants/-/expo-constants-16.0.2.tgz"
@@ -6453,6 +6465,11 @@ react-native-maps@1.14.0:
   integrity sha512-ai7h4UdRLGPFCguz1fI8n4sKLEh35nZXHAH4nSWyAeHGrN8K9GjICu9Xd4Q5Ok4h+WwrM6Xz5pGbF3Qm1tO6iQ==
   dependencies:
     "@types/geojson" "^7946.0.13"
+
+react-native-nitro-modules@^0.18.2:
+  version "0.18.2"
+  resolved "https://registry.yarnpkg.com/react-native-nitro-modules/-/react-native-nitro-modules-0.18.2.tgz#f1172f90ecaded0e4b3306f6e7be4b54a24b310e"
+  integrity sha512-eHsq1cRfm/Bz1Nq7KctTqxAqhzVSNo0WGX281xARZh+vOq8633Qxn1NHRZ5/Rno2Bla6HOXlUW6RoW0wKM/7kg==
 
 react-native-pager-view@6.3.0:
   version "6.3.0"
