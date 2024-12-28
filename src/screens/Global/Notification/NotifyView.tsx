@@ -1,6 +1,6 @@
-import NotifyItem from "@components/NotifyItem";
-import Row from "@components/Row";
-import SwipeWrapper from "@components/SwipeWrapper";
+import NotifyItem from "@components/@core/NotifyItem";
+import Row from "@components/@core/Row";
+import SwipeWrapper from "@components/@core/SwipeWrapper";
 import { normalize } from "@helper/helpers";
 import { deviceHeight } from "@helper/utils";
 import { FlashList } from "@shopify/flash-list";

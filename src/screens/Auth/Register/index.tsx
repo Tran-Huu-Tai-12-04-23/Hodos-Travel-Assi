@@ -1,9 +1,9 @@
-import BackBtn from "@components/BackBtn";
-import { ButtonLink, ButtonPrimary } from "@components/Button";
-import { Input } from "@components/Input";
-import Row from "@components/Row";
-import Separator from "@components/Separator";
-import TextDefault from "@components/TextDefault";
+import BackBtn from "@components/@core/BackBtn";
+import { ButtonLink, ButtonPrimary } from "@components/@core/Button";
+import { Input } from "@components/@core/Input";
+import Row from "@components/@core/Row";
+import Separator from "@components/@core/Separator";
+import TextDefault from "@components/@core/TextDefault";
 import { RegisterRequireInput } from "@constants/Require";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";

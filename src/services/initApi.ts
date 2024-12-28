@@ -1,4 +1,5 @@
 import Helper from "@helper/helpers";
+import { showToast } from "@helper/ToastEventEmitter";
 import axios from "axios";
 
 export const initApi = (url?: string, headers = {}) => {
@@ -37,7 +38,28 @@ export const initApi = (url?: string, headers = {}) => {
         error.config?.baseURL + "/" + error.config.url
       );
       console.log("\x1b[31m", "ERROR REQUEST BODY:", error.config.data);
+      console.log("=====>", error?.response?.data);
+      console.log(error?.response?.data?.httpCode);
+      let message = "";
 
+      switch (error?.response?.data?.httpCode) {
+        case 401: {
+          message =
+            "Phiên đăng nhập của bạn đã hết hạn, vui lòng đăng nhập lại!";
+          /// xử lý thông báo ở hàm user Info
+          return Promise.reject(error);
+        }
+        case 500: {
+          message =
+            "Hiện tại chúng tôi đang bảo trì để nâng cấp hệ thống. Quý khách vui lòng quay lại sau ít phút!";
+          break;
+        }
+        default: {
+          message =
+            error?.response?.data?.errors || error?.response?.data?.message;
+        }
+      }
+      showToast(message);
       return Promise.reject(error);
     }
   );

@@ -1,4 +1,4 @@
-import AppLoading from "@components/AppLoading";
+import AppLoading from "@components/@core/AppLoading";
 import { AuthProvider } from "@context/authContext";
 import BottomSheetProvider from "@context/bottomSheetContext";
 import { LoadingProvider } from "@context/loadingGlobalContext";
@@ -32,16 +32,16 @@ export default function App() {
           <SafeAreaProvider>
             <KeyboardProvider>
               <ThemeProvider>
-                <BottomSheetProvider>
-                  <ToastProvider>
+                <ToastProvider>
+                  <BottomSheetProvider>
                     <AuthProvider>
                       <LoadingProvider>
                         <Navigation />
                         <StatusBar barStyle={"light-content"} />
                       </LoadingProvider>
                     </AuthProvider>
-                  </ToastProvider>
-                </BottomSheetProvider>
+                  </BottomSheetProvider>
+                </ToastProvider>
               </ThemeProvider>
             </KeyboardProvider>
           </SafeAreaProvider>

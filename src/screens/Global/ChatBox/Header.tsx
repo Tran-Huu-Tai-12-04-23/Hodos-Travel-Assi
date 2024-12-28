@@ -1,7 +1,7 @@
-import Avatar from "@components/Avatar";
-import { IconButton } from "@components/Button";
-import Row from "@components/Row";
-import TextDefault from "@components/TextDefault";
+import Avatar from "@components/@core/Avatar";
+import { IconButton } from "@components/@core/Button";
+import Row from "@components/@core/Row";
+import TextDefault from "@components/@core/TextDefault";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { goBack } from "@navigation/NavigationService";

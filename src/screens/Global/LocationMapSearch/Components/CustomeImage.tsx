@@ -1,5 +1,5 @@
-import { IconButton } from "@components/Button";
-import TextDefault from "@components/TextDefault";
+import { IconButton } from "@components/@core/Button";
+import TextDefault from "@components/@core/TextDefault";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { navigate } from "@navigation/NavigationService";

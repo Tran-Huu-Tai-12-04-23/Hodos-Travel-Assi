@@ -1,8 +1,7 @@
-import BackBtn from "@components/BackBtn";
-import { IconButton } from "@components/Button";
-import Row from "@components/Row";
-import TextDefault from "@components/TextDefault";
-import WrapperImagePicker from "@components/WrapperImagePicker";
+import BackBtn from "@components/@core/BackBtn";
+import { IconButton } from "@components/@core/Button";
+import Row from "@components/@core/Row";
+import TextDefault from "@components/@core/TextDefault";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { deviceHeight, deviceWidth } from "@helper/utils";
@@ -51,25 +50,23 @@ function CreatePostScreen() {
           icon={<ImgIcon color={theme.primary} />}
           onPress={() => {}}
         />
-        <WrapperImagePicker>
-          <TouchableOpacity
+        <TouchableOpacity
+          style={{
+            ...styleGlobal.border,
+            borderRadius: 1000,
+            borderColor: theme.primary,
+          }}
+        >
+          <View
             style={{
-              ...styleGlobal.border,
+              width: normalize(40),
+              height: normalize(40),
+              backgroundColor: theme.primary,
               borderRadius: 1000,
-              borderColor: theme.primary,
+              margin: normalize(2),
             }}
-          >
-            <View
-              style={{
-                width: normalize(40),
-                height: normalize(40),
-                backgroundColor: theme.primary,
-                borderRadius: 1000,
-                margin: normalize(2),
-              }}
-            />
-          </TouchableOpacity>
-        </WrapperImagePicker>
+          />
+        </TouchableOpacity>
         <TouchableOpacity>
           <TextDefault bold size={normalize(16)} color={theme.primary}>
             Text

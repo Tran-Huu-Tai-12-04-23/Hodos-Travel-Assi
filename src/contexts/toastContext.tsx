@@ -1,5 +1,6 @@
-import SheetCustom, { BottomSheetMethods } from "@components/Toast";
-import Toast from "@components/Toast/toast";
+import SheetCustom, { BottomSheetMethods } from "@components/@core/Toast";
+import Toast from "@components/@core/Toast/toast";
+import { listenForToast } from "@helper/ToastEventEmitter";
 import React, {
   createContext,
   useContext,
@@ -68,6 +69,18 @@ export const ToastProvider = ({ children }: PropsType) => {
       topSheetRef.current?.close();
     }, 3000);
   };
+
+  useEffect(() => {
+    listenForToast((msg: string) => {
+      showToast({
+        title: "Gửi yêu cầu thất bại",
+        type: "ERROR",
+        message: msg,
+      });
+    });
+
+    return () => {};
+  }, [showToast]);
 
   return (
     <ToastContext.Provider value={{ showToast }}>

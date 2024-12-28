@@ -1,6 +1,6 @@
-import { IconButton } from "@components/Button";
-import { Input } from "@components/Input";
-import Row from "@components/Row";
+import { IconButton } from "@components/@core/Button";
+import { Input } from "@components/@core/Input";
+import Row from "@components/@core/Row";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { goBack } from "@navigation/NavigationService";

@@ -1,4 +1,4 @@
-import { IconButton } from "@components/Button";
+import { IconButton } from "@components/@core/Button";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { deviceWidth } from "@helper/utils";
@@ -17,7 +17,7 @@ import {
 } from "react-native";
 import MapView, { Marker, Polygon } from "react-native-maps";
 
-import Row from "@components/Row";
+import Row from "@components/@core/Row";
 import useFindRoute, {
   IFindRoute,
   IPoints,

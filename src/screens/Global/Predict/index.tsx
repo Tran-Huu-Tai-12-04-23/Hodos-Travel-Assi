@@ -1,7 +1,9 @@
-import { ButtonPrimary } from "@components/Button";
-import Row from "@components/Row";
-import Separator from "@components/Separator";
-import TextDefault from "@components/TextDefault";
+import { ButtonPrimary } from "@components/@core/Button";
+import Row from "@components/@core/Row";
+import Separator from "@components/@core/Separator";
+import TextDefault from "@components/@core/TextDefault";
+import WrapperSelectImageFromLib from "@components/@core/WrapperSelectImageFromLib";
+import WrapperTakePicture from "@components/@core/WrapperTakePicture";
 import { useBottomSheet } from "@context/bottomSheetContext";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
@@ -11,9 +13,10 @@ import { IMG } from "assets/localImage";
 import CameraIcon from "assets/svg/camera-icon";
 import ImageIcon from "assets/svg/image-icon";
 import SearchIcon from "assets/svg/search-icon";
-import React from "react";
-import { Image, ScrollView, TouchableOpacity } from "react-native";
+import React, { Fragment } from "react";
+import { Image, ScrollView, View } from "react-native";
 import * as Animatable from "react-native-animatable";
+import { styleGlobal } from "src/styles";
 import Header from "./Header";
 
 const feature = [
@@ -56,10 +59,12 @@ const options = [
   {
     name: "Select library image",
     icon: <ImageIcon />,
+    type: "library",
   },
   {
     name: "Take a photo",
     icon: <CameraIcon />,
+    type: "camera",
   },
 ];
 
@@ -70,25 +75,67 @@ function PredictScreen() {
   const handlePredict = () => {
     openBottomSheet({
       content: (
-        <Animatable.View delay={100} animation="fadeIn" easing="ease-out">
-          <Row direction="column" start full colGap={normalize(20)}>
+        <Animatable.View
+          style={{
+            width: deviceWidth,
+            padding: normalize(10),
+          }}
+          delay={100}
+          animation="fadeIn"
+          easing="ease-out"
+        >
+          <Row direction="column" start full colGap={normalize(20)} rowGap={10}>
             {options.map((item, index) => (
-              <TouchableOpacity key={index}>
-                <Row
-                  full
-                  colGap={20}
-                  style={{
-                    alignItems: "center",
-                  }}
-                  start
-                  rowGap={10}
-                >
-                  {item.icon}
-                  <TextDefault size={normalize(12)} bold>
-                    {item.name}
-                  </TextDefault>
-                </Row>
-              </TouchableOpacity>
+              <Fragment key={index}>
+                {item.type === "library" ? (
+                  <WrapperSelectImageFromLib key={index}>
+                    <Row
+                      full
+                      colGap={20}
+                      style={{
+                        alignItems: "center",
+                      }}
+                      start
+                      rowGap={10}
+                    >
+                      {item.icon}
+                      <TextDefault size={normalize(12)} bold>
+                        {item.name}
+                      </TextDefault>
+                    </Row>
+                  </WrapperSelectImageFromLib>
+                ) : (
+                  <WrapperTakePicture key={index}>
+                    <Row
+                      full
+                      colGap={20}
+                      style={{
+                        alignItems: "center",
+                      }}
+                      start
+                      rowGap={10}
+                    >
+                      {item.icon}
+                      <TextDefault size={normalize(12)} bold>
+                        {item.name}
+                      </TextDefault>
+                    </Row>
+                  </WrapperTakePicture>
+                )}
+
+                {index === 0 && (
+                  <View
+                    style={[
+                      styleGlobal.borderBottom,
+                      {
+                        borderColor: theme.border,
+                        height: 1,
+                        width: deviceWidth,
+                      },
+                    ]}
+                  />
+                )}
+              </Fragment>
             ))}
           </Row>
         </Animatable.View>

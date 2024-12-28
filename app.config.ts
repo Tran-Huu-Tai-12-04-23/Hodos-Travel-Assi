@@ -83,6 +83,8 @@ export default (): ExpoConfig => ({
       NSCameraUsageDescription: "$(PRODUCT_NAME) needs to access your Camera",
       NSMicrophoneUsageDescription:
         "$(PRODUCT_NAME) needs to access your microphone so that you can record audio",
+      NSLocationAlwaysUsageDescription: "Your request location description",
+      NSLocationWhenInUseUsageDescription: "Your request location description",
     },
     config: {
       usesNonExemptEncryption: false,
@@ -135,6 +137,13 @@ export default (): ExpoConfig => ({
         cameraPermission: "Allow $(PRODUCT_NAME) to access your camera",
         microphonePermission: "Allow $(PRODUCT_NAME) to access your microphone",
         recordAudioAndroid: true,
+      },
+    ],
+    [
+      "expo-image-picker",
+      {
+        photosPermission:
+          "The app accesses your photos to let you share them with your friends.",
       },
     ],
   ],

@@ -1,6 +1,6 @@
-import BackBtn from "@components/BackBtn";
-import Row from "@components/Row";
-import TextDefault from "@components/TextDefault";
+import BackBtn from "@components/@core/BackBtn";
+import Row from "@components/@core/Row";
+import TextDefault from "@components/@core/TextDefault";
 import { normalize } from "@helper/helpers";
 import React from "react";
 
