@@ -12,7 +12,6 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { SharedElement } from "react-navigation-shared-element";
 const CustomImage = ({ item, x, index, size, spacer }: any) => {
   const { theme } = useTheme();
   const style = useAnimatedStyle(() => {
@@ -39,12 +38,10 @@ const CustomImage = ({ item, x, index, size, spacer }: any) => {
             borderRadius: normalize(60),
           }}
         >
-          <SharedElement id={`trip.${item.id}.image`}>
-            <Image
-              source={{ uri: item.img }}
-              style={[styles.image, { aspectRatio: 1.5 }]}
-            />
-          </SharedElement>
+          <Image
+            source={{ uri: item.img }}
+            style={[styles.image, { aspectRatio: 1.5 }]}
+          />
 
           <View
             style={{

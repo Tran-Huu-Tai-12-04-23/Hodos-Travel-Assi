@@ -1,14 +1,14 @@
 import { config } from "@helper/helpers";
 import { APP_ROUTE } from "@navigation/route";
+import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import LocationDetailScreen from "src/screens/Global/LocationDetail";
 import LocationMapSearchScreen from "src/screens/Global/LocationMapSearch";
 import NotificationScreen from "src/screens/Global/Notification";
 import SettingScreen from "src/screens/Global/Profile/Setting";
 import SearchScreen from "src/screens/Global/Search";
 
-const Stack = createSharedElementStackNavigator();
+const Stack = createStackNavigator();
 
 export const AppRoutes = () => {
   return (

@@ -30,9 +30,9 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_APP_VARIANT": "pro",
+        "EXPO_PUBLIC_APP_VARIANT": "production",
         "EXPO_PUBLIC_APP_NAME": "Hodos",
-        "EXPO_PUBLIC_BUNDLE_ID": "com.genny.hodos.pro",
+        "EXPO_PUBLIC_BUNDLE_ID": "com.genny.hodos.prod",
         "EXPO_PUBLIC_API": "https://hodos-hackathon.genny.id.vn"
       }
     }

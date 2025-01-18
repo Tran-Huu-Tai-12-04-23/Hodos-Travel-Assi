@@ -4,9 +4,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const envs = {
-  EXPO_PUBLIC_APP_VARIANT: process.env.EXPO_PUBLIC_APP_VARIANT,
-  EXPO_PUBLIC_APP_NAME: process.env.EXPO_PUBLIC_APP_NAME,
-  EXPO_PUBLIC_BUNDLE_ID: process.env.EXPO_PUBLIC_BUNDLE_ID,
+  EXPO_PUBLIC_APP_VARIANT: process.env.EXPO_PUBLIC_APP_VARIANT || "development",
+  EXPO_PUBLIC_APP_NAME: process.env.EXPO_PUBLIC_APP_NAME || "Hodos DEV",
+  EXPO_PUBLIC_BUNDLE_ID:
+    process.env.EXPO_PUBLIC_BUNDLE_ID || "com.genny.hodos.dev",
 };
 
 const { EXPO_PUBLIC_APP_VARIANT, EXPO_PUBLIC_APP_NAME, EXPO_PUBLIC_BUNDLE_ID } =

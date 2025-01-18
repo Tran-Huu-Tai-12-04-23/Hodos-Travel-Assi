@@ -16,7 +16,6 @@ import {
   View,
 } from "react-native";
 import * as Animatable from "react-native-animatable";
-import { SharedElement } from "react-navigation-shared-element";
 import useLocationDetail from "src/services/hooks/location/useLocationDetail";
 import Header from "./Header";
 function LocationDetailScreen() {
@@ -50,16 +49,14 @@ function LocationDetailScreen() {
               height: normalize(deviceHeight / 3),
             }}
           >
-            <SharedElement id={`trip.${id}.image`}>
-              <Image
-                resizeMode="cover"
-                source={{ uri: data?.lstImgs[0] }}
-                style={{
-                  width: deviceWidth,
-                  height: normalize(deviceHeight / 3),
-                }}
-              />
-            </SharedElement>
+            <Image
+              resizeMode="cover"
+              source={{ uri: data?.lstImgs[0] }}
+              style={{
+                width: deviceWidth,
+                height: normalize(deviceHeight / 3),
+              }}
+            />
           </View>
           {isLoading && (
             <Row style={{ padding: normalize(20), flex: 1 }} full center>

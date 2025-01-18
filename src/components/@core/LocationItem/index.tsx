@@ -7,7 +7,6 @@ import { APP_ROUTE } from "@navigation/route";
 import { Image } from "expo-image";
 import React from "react";
 import { TouchableOpacity, View } from "react-native";
-import { SharedElement } from "react-navigation-shared-element";
 import { ILocation } from "src/services/hooks/location/dto";
 function LocationItem({
   data,
@@ -39,25 +38,23 @@ function LocationItem({
         ]}
         rowGap={10}
       >
-        <SharedElement id={`trip.${data.id}.image`} style={{ flex: 1 }}>
-          <View
+        <View
+          style={{
+            height: normalize(120),
+            width: deviceWidth / 2 - normalize(20),
+            borderRadius: normalize(10),
+            overflow: "hidden",
+          }}
+        >
+          <Image
             style={{
               height: normalize(120),
-              width: deviceWidth / 2 - normalize(20),
+              width: "100%",
               borderRadius: normalize(10),
-              overflow: "hidden",
             }}
-          >
-            <Image
-              style={{
-                height: normalize(120),
-                width: "100%",
-                borderRadius: normalize(10),
-              }}
-              source={{ uri: data?.img }}
-            />
-          </View>
-        </SharedElement>
+            source={{ uri: data?.img }}
+          />
+        </View>
 
         <Row direction="column" start rowGap={5} full>
           <TextDefault bold size={normalize(12)} numberOfLines={1}>

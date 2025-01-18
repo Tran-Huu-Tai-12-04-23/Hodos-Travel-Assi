@@ -1,6 +1,6 @@
 import { config } from "@helper/helpers";
+import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import { LoginScreen } from "src/screens/Auth";
 import IntroScreen from "src/screens/Auth/Intro";
 import RegisterScreen from "src/screens/Auth/Register";
@@ -18,7 +18,7 @@ import SearchScreen from "src/screens/Global/Search";
 import BottomTabNavigator from "./BottomTabNavigator";
 import { APP_ROUTE, AUTH_ROUTE } from "./route";
 
-const Stack = createSharedElementStackNavigator();
+const Stack = createStackNavigator();
 
 const screens = [
   { name: AUTH_ROUTE.INTRO, component: IntroScreen },
@@ -77,7 +77,6 @@ const AppNavigator = () => {
           options={{
             ...config,
           }}
-          sharedElements={screen.sharedElements}
         />
       ))}
     </Stack.Navigator>
