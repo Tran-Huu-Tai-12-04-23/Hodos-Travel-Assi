@@ -2,11 +2,13 @@
   "build": {
     "development": {
       "channel": "development",
+      "autoIncrement": true,
       "ios": {
         "cocoapods": "1.14.3",
         "scheme": "HodosDev"
       },
       "android": {
+        "gradleCommand": ":app:assembleRelease",
         "buildType": "apk"
       },
       "env": {
@@ -18,11 +20,13 @@
     },
     "production": {
       "channel": "production",
+      "autoIncrement": true,
       "ios": {
         "cocoapods": "1.14.3",
-        "scheme": "APP"
+        "scheme": "Hodos"
       },
       "android": {
+        "gradleCommand": ":app:assembleRelease",
         "buildType": "apk"
       },
       "env": {
@@ -36,6 +40,6 @@
 
   "cli": {
     "version": ">= 0.53.1",
-    "promptToConfigurePushNotifications": false
+    "appVersionSource": "remote"
   }
 }

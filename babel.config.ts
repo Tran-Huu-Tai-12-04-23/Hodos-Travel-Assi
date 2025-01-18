@@ -3,7 +3,6 @@ module.exports = function (api: any) {
   return {
     presets: [
       [
-        // 'module:metro-react-native-babel-preset',
         "babel-preset-expo",
         {
           jsxRuntime: "automatic",

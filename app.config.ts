@@ -4,22 +4,13 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const envs = {
-  development: {
-    EXPO_PUBLIC_APP_VARIANT: "development",
-    EXPO_PUBLIC_APP_NAME: "Hodos DEV",
-    EXPO_PUBLIC_BUNDLE_ID: "com.genny.hodos.dev",
-    EXPO_PUBLIC_API: "",
-  },
-  production: {
-    EXPO_PUBLIC_APP_VARIANT: "production",
-    EXPO_PUBLIC_APP_NAME: "Hodos",
-    EXPO_PUBLIC_BUNDLE_ID: "com.genny.hodos.prod",
-    EXPO_PUBLIC_API: "",
-  },
+  EXPO_PUBLIC_APP_VARIANT: process.env.EXPO_PUBLIC_APP_VARIANT,
+  EXPO_PUBLIC_APP_NAME: process.env.EXPO_PUBLIC_APP_NAME,
+  EXPO_PUBLIC_BUNDLE_ID: process.env.EXPO_PUBLIC_BUNDLE_ID,
 };
 
 const { EXPO_PUBLIC_APP_VARIANT, EXPO_PUBLIC_APP_NAME, EXPO_PUBLIC_BUNDLE_ID } =
-  envs["production"];
+  envs;
 
 if (!EXPO_PUBLIC_BUNDLE_ID) {
   throw new Error("EXPO_PUBLIC_BUNDLE_ID is not defined");
