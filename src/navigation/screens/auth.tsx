@@ -1,12 +1,12 @@
 import { config } from "@helper/helpers";
 import { AUTH_ROUTE } from "@navigation/route";
+import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import { createSharedElementStackNavigator } from "react-navigation-shared-element";
 import { LoginScreen } from "src/screens/Auth";
 import IntroScreen from "src/screens/Auth/Intro";
 import RegisterScreen from "src/screens/Auth/Register";
 
-const Stack = createSharedElementStackNavigator();
+const Stack = createStackNavigator();
 
 export const AuthRoutes = () => {
   return (

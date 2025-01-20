@@ -7,7 +7,6 @@ import { useRoute } from "@react-navigation/native";
 import { Image } from "expo-image";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { SharedElement } from "react-navigation-shared-element";
 import { styleGlobal } from "src/styles";
 
 function PostDetailScreen() {
@@ -18,23 +17,21 @@ function PostDetailScreen() {
   return (
     <View style={{ flex: 1 }}>
       <BackBtn />
-      <SharedElement id={`post.${data.id}.image`}>
-        <Image
-          source={{
-            uri: data.img,
-          }}
-          style={{
-            flex: 1,
-            position: "absolute",
-            width: deviceWidth,
-            height: deviceHeight,
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-          }}
-        />
-      </SharedElement>
+      <Image
+        source={{
+          uri: data.img,
+        }}
+        style={{
+          flex: 1,
+          position: "absolute",
+          width: deviceWidth,
+          height: deviceHeight,
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+        }}
+      />
       <View style={styles.postStats}>
         <TextDefault style={[styles.postStat, { color: "white" }]}>
           ❤️

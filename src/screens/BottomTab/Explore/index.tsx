@@ -8,7 +8,6 @@ import { APP_ROUTE } from "@navigation/route";
 import { FlashList } from "@shopify/flash-list";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { SharedElement } from "react-navigation-shared-element";
 import useLocationPagination from "src/services/hooks/location/useLocationPagination";
 import { styleGlobal } from "src/styles";
 import Header from "./Header";
@@ -103,9 +102,7 @@ const PostItem = ({ item }: any) => {
   const { theme } = useTheme();
   return (
     <View style={[styles.postContainer, { backgroundColor: theme.background }]}>
-      <SharedElement id={`post.${item.id}.image`}>
-        <Image source={{ uri: item.img }} style={styles.postImage} />
-      </SharedElement>
+      <Image source={{ uri: item.img }} style={styles.postImage} />
       <View
         style={{
           position: "absolute",

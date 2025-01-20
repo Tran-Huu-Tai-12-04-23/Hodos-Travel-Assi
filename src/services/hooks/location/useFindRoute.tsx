@@ -50,7 +50,7 @@ const useFindRoute = () => {
       destination: { lat: number; lng: number };
     }
   >({
-    mutationFn: (params) =>
+    mutationFn: (params: any) =>
       rootApi.post<any, any>(endpoints.FIND_ROUTE, params),
   });
 
