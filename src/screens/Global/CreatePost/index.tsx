@@ -1,7 +1,7 @@
-import BackBtn from "@components/BackBtn";
-import { IconButton } from "@components/Button";
-import Row from "@components/Row";
-import TextDefault from "@components/TextDefault";
+import BackBtn from "@components/@core/BackBtn";
+import { IconButton } from "@components/@core/Button";
+import Row from "@components/@core/Row";
+import TextDefault from "@components/@core/TextDefault";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { deviceHeight, deviceWidth } from "@helper/utils";

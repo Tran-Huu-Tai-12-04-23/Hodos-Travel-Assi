@@ -1,4 +1,4 @@
-import AppLoading from "@components/AppLoading";
+import AppLoading from "@components/@core/AppLoading";
 import { AuthProvider } from "@context/authContext";
 import BottomSheetProvider from "@context/bottomSheetContext";
 import { LoadingProvider } from "@context/loadingGlobalContext";
@@ -31,18 +31,18 @@ export default function App() {
         <GestureHandlerRootView style={{ flex: 1 }}>
           <SafeAreaProvider>
             <KeyboardProvider>
-              <BottomSheetProvider>
-                <ThemeProvider>
-                  <ToastProvider>
+              <ThemeProvider>
+                <ToastProvider>
+                  <BottomSheetProvider>
                     <AuthProvider>
                       <LoadingProvider>
                         <Navigation />
                         <StatusBar barStyle={"light-content"} />
                       </LoadingProvider>
                     </AuthProvider>
-                  </ToastProvider>
-                </ThemeProvider>
-              </BottomSheetProvider>
+                  </BottomSheetProvider>
+                </ToastProvider>
+              </ThemeProvider>
             </KeyboardProvider>
           </SafeAreaProvider>
         </GestureHandlerRootView>

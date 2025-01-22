@@ -1,6 +1,6 @@
-import Row from "@components/Row";
-import Separator from "@components/Separator";
-import TextDefault from "@components/TextDefault";
+import Row from "@components/@core/Row";
+import Separator from "@components/@core/Separator";
+import TextDefault from "@components/@core/TextDefault";
 import { useAuth } from "@context/authContext";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";

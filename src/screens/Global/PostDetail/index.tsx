@@ -1,5 +1,5 @@
-import BackBtn from "@components/BackBtn";
-import TextDefault from "@components/TextDefault";
+import BackBtn from "@components/@core/BackBtn";
+import TextDefault from "@components/@core/TextDefault";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { deviceHeight, deviceWidth } from "@helper/utils";

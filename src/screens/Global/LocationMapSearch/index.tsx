@@ -1,4 +1,4 @@
-import { IconButton } from "@components/Button";
+import { IconButton } from "@components/@core/Button";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { deviceWidth } from "@helper/utils";
@@ -17,7 +17,8 @@ import {
 } from "react-native";
 import MapView, { Marker, Polygon } from "react-native-maps";
 
-import Row from "@components/Row";
+import Row from "@components/@core/Row";
+import { IMG } from "assets/localImage";
 import useFindRoute, {
   IFindRoute,
   IPoints,
@@ -134,9 +135,7 @@ const LocationMapSearchScreen = () => {
               ]}
             >
               <Image
-                source={{
-                  uri: "https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/474119Flf/hinh-nen-jack-97-full-hd_011645903.jpg",
-                }}
+                source={IMG.currentLocation}
                 style={[styles.markerImage, { borderColor: theme.second }]}
               />
             </View>
@@ -252,7 +251,6 @@ const styles = StyleSheet.create({
     width: normalize(40),
     height: normalize(40),
     borderRadius: 20,
-
     ...styleGlobal.border,
     borderWidth: 2,
     backgroundColor: "white",

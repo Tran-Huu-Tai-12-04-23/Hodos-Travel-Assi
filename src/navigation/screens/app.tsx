@@ -1,4 +1,3 @@
-import { createSharedElementStackNavigator } from "";
 import { config } from "@helper/helpers";
 import { APP_ROUTE } from "@navigation/route";
 import { createStackNavigator } from "@react-navigation/stack";

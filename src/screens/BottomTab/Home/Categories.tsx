@@ -1,4 +1,4 @@
-import Row from "@components/Row";
+import Row from "@components/@core/Row";
 import { normalize } from "@helper/helpers";
 import { deviceWidth } from "@helper/utils";
 import { navigate } from "@navigation/NavigationService";

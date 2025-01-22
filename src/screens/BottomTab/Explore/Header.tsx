@@ -1,6 +1,6 @@
-import Avatar from "@components/Avatar";
-import Row from "@components/Row";
-import TextDefault from "@components/TextDefault";
+import Avatar from "@components/@core/Avatar";
+import Row from "@components/@core/Row";
+import TextDefault from "@components/@core/TextDefault";
 import { useTheme } from "@context/themContext";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { normalize } from "@helper/helpers";

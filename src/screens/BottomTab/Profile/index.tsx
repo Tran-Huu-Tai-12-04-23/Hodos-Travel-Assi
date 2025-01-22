@@ -1,12 +1,16 @@
-import Row from "@components/Row";
-import Separator from "@components/Separator";
+import Row from "@components/@core/Row";
+import Separator from "@components/@core/Separator";
 import { useAuth } from "@context/authContext";
 import { normalize } from "@helper/helpers";
 import MainLayout from "@layout/MainLayout";
 
-import Avatar from "@components/Avatar";
-import { ButtonLink, ButtonOutlined, ButtonPrimary } from "@components/Button";
-import TextDefault from "@components/TextDefault";
+import Avatar from "@components/@core/Avatar";
+import {
+  ButtonLink,
+  ButtonOutlined,
+  ButtonPrimary,
+} from "@components/@core/Button";
+import TextDefault from "@components/@core/TextDefault";
 import { useToast } from "@context/toastContext";
 import AppIcon from "assets/svg/app-icon";
 import React from "react";

@@ -1,10 +1,10 @@
-import { ButtonOutlined, ButtonPrimary } from "@components/Button";
-import Row from "@components/Row";
-import Separator from "@components/Separator";
+import { ButtonOutlined, ButtonPrimary } from "@components/@core/Button";
+import Row from "@components/@core/Row";
+import Separator from "@components/@core/Separator";
 import BottomSheetSwitchTheme, {
   BottomSheetMethods,
-} from "@components/SwitchTheme/BottomSheetSwitchTheme";
-import TextDefault from "@components/TextDefault";
+} from "@components/@core/SwitchTheme/BottomSheetSwitchTheme";
+import TextDefault from "@components/@core/TextDefault";
 import { useAuth } from "@context/authContext";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";

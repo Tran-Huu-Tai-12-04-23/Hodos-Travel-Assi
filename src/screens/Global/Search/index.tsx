@@ -1,5 +1,5 @@
-import Row from "@components/Row";
-import Separator from "@components/Separator";
+import Row from "@components/@core/Row";
+import Separator from "@components/@core/Separator";
 import { normalize } from "@helper/helpers";
 import MainLayout from "@layout/MainLayout";
 import React from "react";

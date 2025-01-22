@@ -1,3 +1,4 @@
+import { useTheme } from "@context/themContext";
 import BottomSheet, {
   BottomSheetBackdrop,
   BottomSheetView,
@@ -33,8 +34,11 @@ const CustomBottomSheet = forwardRef<Ref, Props>(
       []
     );
 
+    const { theme } = useTheme();
+
     return (
       <BottomSheet
+        backgroundStyle={{ backgroundColor: theme.inputBackground }}
         backdropComponent={renderBackdrop}
         index={-1}
         snapPoints={snapPoints}

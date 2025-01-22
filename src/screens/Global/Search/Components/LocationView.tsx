@@ -1,6 +1,6 @@
-import LocationItem from "@components/LocationItem";
-import Row from "@components/Row";
-import Separator from "@components/Separator";
+import LocationItem from "@components/@core/LocationItem";
+import Row from "@components/@core/Row";
+import Separator from "@components/@core/Separator";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { deviceWidth } from "@helper/utils";

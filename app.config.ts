@@ -122,5 +122,12 @@ export default (): ExpoConfig => ({
         fonts: ["./assets/fonts/Roboto.ttf"],
       },
     ],
+    [
+      "expo-image-picker",
+      {
+        photosPermission:
+          "The app accesses your photos to let you share them with your friends.",
+      },
+    ],
   ],
 });

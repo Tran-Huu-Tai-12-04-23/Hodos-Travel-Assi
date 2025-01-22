@@ -1,7 +1,7 @@
-import { ButtonLink } from "@components/Button";
-import Row from "@components/Row";
-import Separator from "@components/Separator";
-import TextDefault from "@components/TextDefault";
+import { ButtonLink } from "@components/@core/Button";
+import Row from "@components/@core/Row";
+import Separator from "@components/@core/Separator";
+import TextDefault from "@components/@core/TextDefault";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { navigate } from "@navigation/NavigationService";

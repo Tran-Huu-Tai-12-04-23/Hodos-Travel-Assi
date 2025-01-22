@@ -1,5 +1,5 @@
-import Carousel from "@components/Carousel";
-import Row from "@components/Row";
+import Carousel from "@components/@core/Carousel";
+import Row from "@components/@core/Row";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { Image } from "expo-image";

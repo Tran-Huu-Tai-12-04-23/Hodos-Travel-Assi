@@ -1,7 +1,7 @@
-import LocationItem from "@components/LocationItem";
-import Row from "@components/Row";
-import Separator from "@components/Separator";
-import TextDefault from "@components/TextDefault";
+import LocationItem from "@components/@core/LocationItem";
+import Row from "@components/@core/Row";
+import Separator from "@components/@core/Separator";
+import TextDefault from "@components/@core/TextDefault";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { deviceWidth } from "@helper/utils";

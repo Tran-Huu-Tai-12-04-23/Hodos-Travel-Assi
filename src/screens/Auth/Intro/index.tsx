@@ -1,8 +1,8 @@
-import { ButtonPrimary } from "@components/Button";
-import Carousel from "@components/Carousel";
-import Row from "@components/Row";
-import Separator from "@components/Separator";
-import TextDefault from "@components/TextDefault";
+import { ButtonPrimary } from "@components/@core/Button";
+import Carousel from "@components/@core/Carousel";
+import Row from "@components/@core/Row";
+import Separator from "@components/@core/Separator";
+import TextDefault from "@components/@core/TextDefault";
 import { useTheme } from "@context/themContext";
 import Helper, { normalize } from "@helper/helpers";
 import { deviceHeight, deviceWidth } from "@helper/utils";

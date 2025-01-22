@@ -1,5 +1,5 @@
-import SheetCustom, { BottomSheetMethods } from "@components/Toast";
-import Toast from "@components/Toast/toast";
+import SheetCustom, { BottomSheetMethods } from "@components/@core/Toast";
+import Toast from "@components/@core/Toast/toast";
 import React, {
   createContext,
   useContext,
