@@ -88,7 +88,14 @@ function PredictScreen() {
             {options.map((item, index) => (
               <Fragment key={index}>
                 {item.type === "library" ? (
-                  <WrapperSelectImageFromLib key={index}>
+                  <WrapperSelectImageFromLib
+                    onResult={(val) => {
+                      console.log({
+                        val,
+                      });
+                    }}
+                    key={index}
+                  >
                     <Row
                       full
                       colGap={20}

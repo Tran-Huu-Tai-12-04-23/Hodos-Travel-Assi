@@ -1,4 +1,5 @@
 import { useBottomSheet } from "@context/bottomSheetContext";
+import { useLoading } from "@context/loadingGlobalContext";
 import * as ImagePicker from "expo-image-picker";
 import React from "react";
 import { Alert, Linking, TouchableOpacity } from "react-native";
@@ -12,6 +13,7 @@ function WrapperSelectImageFromLib({
   onResult?: (data: string) => void;
 }) {
   const { onUpload } = useUploadFile();
+  const { startLoading, stopLoading } = useLoading();
   const { hideBottomSheet } = useBottomSheet();
   const handleSelectImgFromLib = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -38,16 +40,15 @@ function WrapperSelectImageFromLib({
 
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
+      // allowsEditing: true,
+      // aspect: [4, 3],
+      // quality: 1,
     });
 
     if (!result.canceled) {
       const item = result.assets[0];
       const formData: any = new FormData();
-      let uriArray = item.uri.split(".");
-      let fileType = uriArray.pop();
+
       formData.append("file", {
         uri: item.uri,
         name: item.fileName ?? new Date().getTime().toString(),
@@ -58,7 +59,9 @@ function WrapperSelectImageFromLib({
         .then((res: any) => {
           onResult && onResult(res?.data?.url);
         })
-        .catch((e) => {})
+        .catch((e) => {
+          console.log(e);
+        })
         .finally(() => {});
     }
   };

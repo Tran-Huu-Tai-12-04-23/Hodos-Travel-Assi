@@ -1,9 +1,6 @@
-import { IconButton } from "@components/@core/Button";
 import Row from "@components/@core/Row";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
-import { goBack } from "@navigation/NavigationService";
-import ArrowLeftIcon from "assets/svg/arrow-left-icon";
 import React from "react";
 import { Platform } from "react-native";
 
@@ -21,12 +18,7 @@ function Header() {
         padding: normalize(10),
       }}
       colGap={10}
-    >
-      <IconButton
-        icon={<ArrowLeftIcon color={theme.text} />}
-        onPress={goBack}
-      />
-    </Row>
+    ></Row>
   );
 }
 

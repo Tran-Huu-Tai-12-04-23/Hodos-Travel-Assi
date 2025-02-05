@@ -1,6 +1,5 @@
 import { useAuth } from "@context/authContext";
 import { useTheme } from "@context/themContext";
-import { ETheme } from "@context/useThemUtil";
 import {
   DefaultTheme,
   NavigationContainer,
@@ -38,9 +37,7 @@ const MainNavigation = () => {
       ref={navigationRef}
       onStateChange={screenTracking}
     >
-      <StatusBar
-        barStyle={themeName === ETheme.DARK ? "light-content" : "dark-content"}
-      />
+      <StatusBar barStyle={"dark-content"} />
       <NotificationHandler />
       <AppNavigator />
     </NavigationContainer>

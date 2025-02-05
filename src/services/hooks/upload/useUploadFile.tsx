@@ -1,4 +1,3 @@
-import { useToast } from "@context/toastContext";
 import { useMutation } from "@tanstack/react-query";
 import { endpoints } from "src/services/endpoints";
 import rootApi from "src/services/rootApi";
@@ -13,7 +12,6 @@ type response = {
 };
 
 const useUploadFile = () => {
-  const { showToast } = useToast();
   const { isPending, isError, data, error, mutateAsync, mutate } = useMutation({
     mutationFn: (variables: variables) => {
       return rootApi.post<variables, response>(

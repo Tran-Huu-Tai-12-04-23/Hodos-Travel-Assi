@@ -14,7 +14,6 @@ function WrapperTakePicture({
   const { hideBottomSheet } = useBottomSheet();
   const handleTakePicture = async () => {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
-    console.log(status);
     if (status !== ImagePicker.PermissionStatus.GRANTED) {
       Alert.alert(
         "Camera Permission",

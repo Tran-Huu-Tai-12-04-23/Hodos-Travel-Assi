@@ -1,4 +1,3 @@
-import { normalize } from "@helper/helpers";
 import { deviceWidth } from "@helper/utils";
 import * as React from "react";
 import Svg, {
@@ -13,8 +12,8 @@ import Svg, {
 } from "react-native-svg";
 const PredictIcon = (props: any) => (
   <Svg
-    width={deviceWidth / 2 - normalize(20)}
-    height={deviceWidth / 1.5}
+    width={deviceWidth / 2}
+    height={deviceWidth}
     viewBox="0 0 165 228"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

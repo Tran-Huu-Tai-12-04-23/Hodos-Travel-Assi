@@ -7,7 +7,6 @@ import { ToastProvider } from "@context/toastContext";
 import useFonts from "@helper/hooks";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
-import { StatusBar } from "react-native";
 import "react-native-gesture-handler";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
@@ -31,18 +30,17 @@ export default function App() {
         <GestureHandlerRootView style={{ flex: 1 }}>
           <SafeAreaProvider>
             <KeyboardProvider>
-              <ThemeProvider>
-                <ToastProvider>
-                  <BottomSheetProvider>
-                    <AuthProvider>
-                      <LoadingProvider>
+              <LoadingProvider>
+                <ThemeProvider>
+                  <ToastProvider>
+                    <BottomSheetProvider>
+                      <AuthProvider>
                         <Navigation />
-                        <StatusBar barStyle={"light-content"} />
-                      </LoadingProvider>
-                    </AuthProvider>
-                  </BottomSheetProvider>
-                </ToastProvider>
-              </ThemeProvider>
+                      </AuthProvider>
+                    </BottomSheetProvider>
+                  </ToastProvider>
+                </ThemeProvider>
+              </LoadingProvider>
             </KeyboardProvider>
           </SafeAreaProvider>
         </GestureHandlerRootView>

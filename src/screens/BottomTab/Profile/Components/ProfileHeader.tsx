@@ -10,7 +10,6 @@ import { APP_ROUTE } from "@navigation/route";
 import ArrowLeftIcon from "assets/svg/arrow-left-icon";
 import React from "react";
 import { Platform } from "react-native";
-import LoginHelper from "../../Home/LoginHelper";
 
 function ProfileHeader() {
   const { theme } = useTheme();
@@ -49,7 +48,7 @@ function ProfileHeader() {
           />
         </Row>
       )}
-      {!user && <LoginHelper />}
+      {/* {!user && <LoginHelper />} */}
     </Row>
   );
 }

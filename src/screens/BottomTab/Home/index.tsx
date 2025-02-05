@@ -5,17 +5,13 @@ import { useAuth } from "@context/authContext";
 import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import MainLayout from "@layout/MainLayout";
-import { navigate } from "@navigation/NavigationService";
-import { APP_ROUTE } from "@navigation/route";
-import SearchIcon from "assets/svg/search-icon";
 import React from "react";
-import { ScrollView, TouchableOpacity, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import useLocationPagination from "src/services/hooks/location/useLocationPagination";
 import BestDestination from "./BestDestination";
 import Categories from "./Categories";
 import Header from "./Header";
-import LoginHelper from "./LoginHelper";
 function HomeScreen() {
   const { theme } = useTheme();
   const { user } = useAuth();
@@ -41,7 +37,8 @@ function HomeScreen() {
         easing="ease-in-out"
       >
         {user && <Header />}
-        {!user && <LoginHelper />}
+        <Separator height={normalize(30)} />
+        {/* {!user && <LoginHelper />} */}
       </Animatable.View>
 
       <ScrollView
@@ -84,28 +81,6 @@ function HomeScreen() {
               </TextDefault>
             </TextDefault>
           </Row>
-          <Separator height={20} />
-        </Animatable.View>
-
-        <Animatable.View
-          animation="fadeIn"
-          delay={250}
-          duration={400}
-          easing="ease-in-out"
-        >
-          <TouchableOpacity onPress={() => navigate(APP_ROUTE.SEARCH_SCREEN)}>
-            <Row
-              between
-              style={{
-                marginHorizontal: normalize(10),
-                padding: normalize(15),
-                backgroundColor: theme.inputBackground,
-                borderRadius: normalize(10),
-              }}
-            >
-              <SearchIcon color={theme.textSecond} />
-            </Row>
-          </TouchableOpacity>
         </Animatable.View>
 
         <Animatable.View
