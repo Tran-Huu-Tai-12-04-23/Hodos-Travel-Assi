@@ -11,4 +11,7 @@ export const endpoints = {
   LOCATION: "location",
   // #endregion team
   FIND_ROUTE: "vietmap/find-route",
+
+  /** PREICT */
+  PREDICT: "ai/PREDICT",
 };

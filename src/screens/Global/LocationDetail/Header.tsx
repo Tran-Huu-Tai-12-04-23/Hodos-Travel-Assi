@@ -24,13 +24,13 @@ function Header({ title }: { title: string }) {
       }}
       colGap={10}
     >
-      <IconButton onPress={goBack} icon={<BackIcon color={"white"} />} />
+      <IconButton onPress={goBack} icon={<BackIcon color={"black"} />} />
       <TextDefault bold color={"white"} size={normalize(14)}>
         {title || "Detail"}
       </TextDefault>
       <View>
         <IconButton
-          icon={<BookmarkIcon color={"white"} />}
+          icon={<BookmarkIcon color={"black"} />}
           onPress={function (): void {}}
         />
       </View>

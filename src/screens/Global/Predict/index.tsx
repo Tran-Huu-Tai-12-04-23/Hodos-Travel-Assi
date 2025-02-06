@@ -9,6 +9,8 @@ import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { deviceWidth } from "@helper/utils";
 import MainLayout from "@layout/MainLayout";
+import { navigate } from "@navigation/NavigationService";
+import { APP_ROUTE } from "@navigation/route";
 import { IMG } from "assets/localImage";
 import CameraIcon from "assets/svg/camera-icon";
 import ImageIcon from "assets/svg/image-icon";
@@ -18,7 +20,6 @@ import { Image, ScrollView, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { styleGlobal } from "src/styles";
 import Header from "./Header";
-
 const feature = [
   {
     name: "Find location",
@@ -70,7 +71,7 @@ const options = [
 
 function PredictScreen() {
   const { theme } = useTheme();
-  const { openBottomSheet, hideBottomSheet } = useBottomSheet();
+  const { openBottomSheet } = useBottomSheet();
 
   const handlePredict = () => {
     openBottomSheet({
@@ -89,9 +90,11 @@ function PredictScreen() {
               <Fragment key={index}>
                 {item.type === "library" ? (
                   <WrapperSelectImageFromLib
-                    onResult={(val) => {
-                      console.log({
-                        val,
+                    isPredict
+                    onResultPredict={(val, preImg) => {
+                      navigate(APP_ROUTE.PREDICT_RESULT, {
+                        result: val,
+                        preImg: preImg,
                       });
                     }}
                     key={index}
@@ -112,7 +115,16 @@ function PredictScreen() {
                     </Row>
                   </WrapperSelectImageFromLib>
                 ) : (
-                  <WrapperTakePicture key={index}>
+                  <WrapperTakePicture
+                    key={index}
+                    isPredict
+                    onResultPredict={(val, preImg) => {
+                      navigate(APP_ROUTE.PREDICT_RESULT, {
+                        result: val,
+                        preImg,
+                      });
+                    }}
+                  >
                     <Row
                       full
                       colGap={20}

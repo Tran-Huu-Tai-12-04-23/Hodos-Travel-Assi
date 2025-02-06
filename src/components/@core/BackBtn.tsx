@@ -2,9 +2,8 @@ import { useTheme } from "@context/themContext";
 import { normalize } from "@helper/helpers";
 import { goBack } from "@navigation/NavigationService";
 import BackIcon from "assets/svg/back-icon";
-import { BlurView } from "expo-blur";
 import React from "react";
-import { Platform, TouchableOpacity } from "react-native";
+import { Platform, TouchableOpacity, View } from "react-native";
 
 function BackBtn({ color }: { color?: string }) {
   const { theme } = useTheme();
@@ -21,9 +20,7 @@ function BackBtn({ color }: { color?: string }) {
         overflow: "hidden",
       }}
     >
-      <BlurView
-        intensity={10}
-        tint="light"
+      <View
         style={{
           borderRadius: 100,
           padding: normalize(10),
@@ -34,7 +31,7 @@ function BackBtn({ color }: { color?: string }) {
         }}
       >
         <BackIcon color={theme.text} />
-      </BlurView>
+      </View>
     </TouchableOpacity>
   );
 }
